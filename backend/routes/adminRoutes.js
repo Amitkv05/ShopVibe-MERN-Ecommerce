@@ -1,0 +1,17 @@
+import express from "express";
+import { verifyUserAuth, roleBasedAccess } from "../middleware/userAuth.js";
+import { dashboardAnalytics } from "../controller/analyticsController.js";
+import { updateInventory, inventoryHistory, lowStockProducts } from "../controller/inventoryController.js";
+import { upload, uploadImages, deleteImage } from "../controller/mediaController.js";
+import { systemStatus } from "../controller/systemController.js";
+const router = express.Router();
+router.use("/admin", verifyUserAuth, roleBasedAccess("admin"));
+router.get("/admin/system", systemStatus);
+router.get("/admin/analytics", dashboardAnalytics);
+router.get("/admin/inventory/low-stock", lowStockProducts);
+router.get("/admin/inventory/history", inventoryHistory);
+router.get("/admin/inventory/:productId/history", inventoryHistory);
+router.patch("/admin/inventory/:productId", updateInventory);
+router.post("/admin/media/images", upload.array("images", 10), uploadImages);
+router.delete("/admin/media/image", deleteImage);
+export default router;

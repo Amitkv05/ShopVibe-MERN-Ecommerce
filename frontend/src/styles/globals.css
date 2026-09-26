@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light;
+  --app-bg: #ffffff;
+  --app-surface: #ffffff;
+  --app-surface-soft: #f8fafc;
+  --app-text: #111827;
+  --app-muted: #6b7280;
+  --app-border: #e5e7eb;
+}
+
+:root.dark {
+  color-scheme: dark;
+  --app-bg: #020617;
+  --app-surface: #0f172a;
+  --app-surface-soft: #111827;
+  --app-text: #f8fafc;
+  --app-muted: #cbd5e1;
+  --app-border: #334155;
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+  html { background: var(--app-bg); }
+  body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    background: var(--app-bg);
+    color: var(--app-text);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    transition: background-color 180ms ease, color 180ms ease;
+  }
+  button, input, textarea, select { font: inherit; }
+  ::selection { background: #7c3aed; color: #ffffff; }
+  ::-webkit-scrollbar { width: 7px; height: 7px; }
+  ::-webkit-scrollbar-track { background: var(--app-surface-soft); }
+  ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+}
+
+/* Theme adapters for the existing Tailwind utility-based UI. */
+.dark .bg-white,
+.dark .bg-white\/95,
+.dark .bg-white\/90,
+.dark .bg-white\/80 { background-color: #0f172a !important; }
+.dark .bg-gray-50,
+.dark .bg-gray-50\/50,
+.dark .bg-slate-50 { background-color: #020617 !important; }
+.dark .bg-gray-100,
+.dark .bg-slate-100 { background-color: #172033 !important; }
+.dark .bg-gray-200,
+.dark .bg-slate-200 { background-color: #253247 !important; }
+.dark .hover\:bg-gray-50:hover,
+.dark .hover\:bg-gray-100:hover,
+.dark .hover\:bg-slate-50:hover,
+.dark .hover\:bg-slate-100:hover { background-color: #1e293b !important; }
+.dark .text-gray-950,
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark .text-slate-950,
+.dark .text-slate-900,
+.dark .text-slate-800 { color: #f8fafc !important; }
+.dark .text-gray-700,
+.dark .text-gray-600,
+.dark .text-slate-700,
+.dark .text-slate-600 { color: #e2e8f0 !important; }
+.dark .text-gray-500,
+.dark .text-gray-400,
+.dark .text-slate-500,
+.dark .text-slate-400 { color: #aebed0 !important; }
+.dark .border-gray-50,
+.dark .border-gray-100,
+.dark .border-gray-200,
+.dark .border-gray-300,
+.dark .border-slate-100,
+.dark .border-slate-200,
+.dark .border-slate-300,
+.dark .border { border-color: #334155 !important; }
+.dark input,
+.dark textarea,
+.dark select { color: #f8fafc; background-color: #0f172a; border-color: #475569; }
+.dark input::placeholder,
+.dark textarea::placeholder { color: #94a3b8; }
+
+.dark .bg-violet-50 { background-color: #2e1065 !important; }
+.dark .bg-purple-50 { background-color: #3b0764 !important; }
+.dark .bg-blue-50 { background-color: #172554 !important; }
+.dark .bg-emerald-50 { background-color: #022c22 !important; }
+.dark .bg-red-50 { background-color: #450a0a !important; }
+.dark .bg-rose-50 { background-color: #4c0519 !important; }
+.dark .bg-amber-50 { background-color: #451a03 !important; }
+.dark .text-violet-700,
+.dark .text-violet-600 { color: #c4b5fd !important; }
+.dark .text-blue-700,
+.dark .text-blue-600 { color: #93c5fd !important; }
+.dark .text-emerald-700,
+.dark .text-emerald-600 { color: #6ee7b7 !important; }
+.dark .text-red-700,
+.dark .text-red-600 { color: #fca5a5 !important; }
+.dark .text-rose-700,
+.dark .text-rose-600 { color: #fda4af !important; }
+.dark .text-amber-700,
+.dark .text-amber-600 { color: #fcd34d !important; }
+
+.dark .shadow-sm,
+.dark .shadow-md,
+.dark .shadow-lg,
+.dark .shadow-xl,
+.dark .shadow-2xl { --tw-shadow-color: rgb(0 0 0 / 0.35); }
+
+@layer utilities {
+  .line-clamp-1 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; }
+  .line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+  .line-clamp-3 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+}

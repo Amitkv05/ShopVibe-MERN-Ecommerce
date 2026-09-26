@@ -1,0 +1,12 @@
+import express from "express";
+import { listCoupons, createCoupon, updateCoupon, deleteCoupon, validateCoupon } from "../controller/couponController.js";
+import { verifyUserAuth, roleBasedAccess } from "../middleware/userAuth.js";
+import { validate } from "../middleware/validate.js";
+import { couponSchema, couponUpdateSchema } from "../validators/schemas.js";
+const router = express.Router();
+router.post("/coupon/validate", verifyUserAuth, validateCoupon);
+router.get("/admin/coupons", verifyUserAuth, roleBasedAccess("admin"), listCoupons);
+router.post("/admin/coupons", verifyUserAuth, roleBasedAccess("admin"), validate(couponSchema), createCoupon);
+router.put("/admin/coupons/:id", verifyUserAuth, roleBasedAccess("admin"), validate(couponUpdateSchema), updateCoupon);
+router.delete("/admin/coupons/:id", verifyUserAuth, roleBasedAccess("admin"), deleteCoupon);
+export default router;

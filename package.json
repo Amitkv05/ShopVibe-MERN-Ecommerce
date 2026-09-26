@@ -1,0 +1,41 @@
+{
+  "name": "mern-ecommerce-production-release",
+  "version": "6.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently -n BACKEND,FRONTEND \"npm run dev --workspace backend\" \"npm run dev --workspace frontend\"",
+    "dev:backend": "npm run dev --workspace backend",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "start": "npm run start --workspace backend",
+    "check:contract": "node scripts/check-api-contract.mjs",
+    "check:backend": "npm run check --workspace backend",
+    "check:frontend": "npm run check --workspace frontend",
+    "check:api-freeze": "npm run check:api-freeze --workspace backend",
+    "check:release": "node scripts/releaseReadiness.mjs",
+    "check": "npm run check:contract && npm run check:backend && npm run check:integration && npm run check:frontend && npm run check:api-freeze && npm run check:release",
+    "test": "npm test --workspace backend",
+    "build": "npm run build --workspace frontend",
+    "verify": "npm run check && npm test && npm run build",
+    "smoke": "npm run smoke --workspace backend",
+    "smoke:staging": "node scripts/stagingSmoke.mjs",
+    "perf": "npm run perf --workspace backend",
+    "migrate:legacy": "npm run migrate:legacy --workspace backend",
+    "migrate:legacy:dry": "npm run migrate:legacy:dry --workspace backend",
+    "check:integration": "npm run check:integration --workspace frontend",
+    "preview:frontend": "npm run preview --workspace frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "razorpay": "^2.9.8"
+  }
+}

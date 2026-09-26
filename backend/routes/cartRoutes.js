@@ -1,0 +1,11 @@
+import express from "express";
+import { verifyUserAuth } from "../middleware/userAuth.js";
+import { readCart, addCartItem, updateCartItem, removeCartItem, clearCart, quoteCart } from "../controller/cartController.js";
+const router = express.Router();
+router.get("/cart", verifyUserAuth, readCart);
+router.post("/cart/items", verifyUserAuth, addCartItem);
+router.put("/cart/items/:productId", verifyUserAuth, updateCartItem);
+router.delete("/cart/items/:productId", verifyUserAuth, removeCartItem);
+router.delete("/cart", verifyUserAuth, clearCart);
+router.post("/cart/quote", verifyUserAuth, quoteCart);
+export default router;

@@ -1,0 +1,13 @@
+{
+  "contractRevision": 5,
+  "changeReason": "Category filtering updated to use categoryRef with category name and slug fallback",
+  "frozenAt": "2026-09-26T09:55:00.676Z",
+  "appVersion": "4.1.0",
+  "apiVersion": "v1",
+  "contractEntries": 74,
+  "executableRoutes": 74,
+  "routeContractHash": "6782bf8dfca1cb7163d682f92bcd42bf1f310b9cc8300a6a9a2d7cc7d958f6d8",
+  "requestSurfaceHash": "ed46986895d468999d8e2e1f8d4cc446fe739f5e7c3d906ee2bd7d7788620953",
+  "responseSurfaceHash": "6a7182b6e2cc9404177b6d4d44c523372c2868b3869ce5b5522b93a5f545a097",
+  "openApiSurfaceHash": "abe00f597ce4d3c944d25da993e7d391a6ebe574114f1bfb7ec49a55ce5d371e"
+}

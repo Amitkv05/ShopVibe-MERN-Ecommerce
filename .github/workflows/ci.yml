@@ -1,0 +1,52 @@
+name: Full-stack CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:8
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --quiet --eval 'db.adminCommand({ ping: 1 }).ok'"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      DB_URI_TEST: mongodb://127.0.0.1:27017/Ecommerce_ci
+      CLIENT_URL: http://localhost:5173
+      JWT_SECRET_KEY: ci_only_secret_that_is_long_enough_1234567890
+      MONGO_TRANSACTIONS: auto
+      REQUIRE_EMAIL_VERIFICATION: "false"
+      TAX_RATE: "0"
+      SHIPPING_FLAT_RATE: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: API contract check
+        run: npm run check:contract
+      - name: Backend source check
+        run: npm run check:backend
+      - name: Frontend integration contract check
+        run: npm run check:integration
+      - name: Frontend static check
+        run: npm run check:frontend
+      - name: API freeze check
+        run: npm run check:api-freeze
+      - name: Release-readiness static gate
+        run: npm run check:release
+      - name: Automated tests
+        run: npm test
+      - name: Frontend production build
+        run: npm run build
+      - name: Dependency audit
+        run: npm audit --audit-level=high

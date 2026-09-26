@@ -1,0 +1,522 @@
+[
+  {
+    "method": "GET",
+    "path": "/health",
+    "area": "System",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/health/live",
+    "area": "System",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/health/ready",
+    "area": "System",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/openapi.json",
+    "area": "System",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/docs",
+    "area": "System",
+    "auth": "public",
+    "frontend": true,
+    "special": true
+  },
+  {
+    "method": "POST",
+    "path": "/payment/webhook",
+    "area": "Payments",
+    "auth": "webhook",
+    "frontend": false,
+    "special": true
+  },
+  {
+    "method": "POST",
+    "path": "/register",
+    "area": "Auth",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/login",
+    "area": "Auth",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/logout",
+    "area": "Auth",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/forgot/password",
+    "area": "Auth",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "PUT",
+    "path": "/reset/:token",
+    "area": "Auth",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/verify-email/:token",
+    "area": "Auth",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/verify-email/resend",
+    "area": "Auth",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/profile",
+    "area": "Auth",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/password/update",
+    "area": "Auth",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "PUT",
+    "path": "/profile/update",
+    "area": "Auth",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/products",
+    "area": "Products",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/products/:id",
+    "area": "Products",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "PUT",
+    "path": "/review",
+    "area": "Products",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/reviews",
+    "area": "Products",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/reviews",
+    "area": "Products",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/cart",
+    "area": "Cart",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/cart",
+    "area": "Cart",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/cart/items",
+    "area": "Cart",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "PUT",
+    "path": "/cart/items/:productId",
+    "area": "Cart",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/cart/items/:productId",
+    "area": "Cart",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/cart/quote",
+    "area": "Cart",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/wishlist",
+    "area": "Wishlist",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/wishlist/:productId",
+    "area": "Wishlist",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/wishlist/:productId",
+    "area": "Wishlist",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/addresses",
+    "area": "Addresses",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/addresses",
+    "area": "Addresses",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "PUT",
+    "path": "/addresses/:id",
+    "area": "Addresses",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/addresses/:id",
+    "area": "Addresses",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/categories",
+    "area": "Categories",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/coupon/validate",
+    "area": "Coupons",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/payment/order",
+    "area": "Payments",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/new/order",
+    "area": "Orders",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/orders/user",
+    "area": "Orders",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/order/:id",
+    "area": "Orders",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/order/:id/cancel",
+    "area": "Orders",
+    "auth": "user",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/admin/products",
+    "area": "Admin Products",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/admin/products",
+    "area": "Admin Products",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "PUT",
+    "path": "/admin/products/:id",
+    "area": "Admin Products",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/admin/products/:id",
+    "area": "Admin Products",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/admin/categories",
+    "area": "Admin Categories",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/admin/categories",
+    "area": "Admin Categories",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "PUT",
+    "path": "/admin/categories/:id",
+    "area": "Admin Categories",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/admin/categories/:id",
+    "area": "Admin Categories",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/admin/coupons",
+    "area": "Admin Coupons",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/admin/coupons",
+    "area": "Admin Coupons",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "PUT",
+    "path": "/admin/coupons/:id",
+    "area": "Admin Coupons",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/admin/coupons/:id",
+    "area": "Admin Coupons",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/admin/orders",
+    "area": "Admin Orders",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/admin/order/:id",
+    "area": "Admin Orders",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "PUT",
+    "path": "/admin/order/:id",
+    "area": "Admin Orders",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/admin/order/:id",
+    "area": "Admin Orders",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/admin/users",
+    "area": "Admin Users",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/admin/user/:id",
+    "area": "Admin Users",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "PUT",
+    "path": "/admin/user/:id",
+    "area": "Admin Users",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/admin/user/:id",
+    "area": "Admin Users",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/admin/system",
+    "area": "Admin",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/admin/analytics",
+    "area": "Admin Analytics",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/admin/inventory/low-stock",
+    "area": "Admin Inventory",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/admin/inventory/history",
+    "area": "Admin Inventory",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/admin/inventory/:productId/history",
+    "area": "Admin Inventory",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "PATCH",
+    "path": "/admin/inventory/:productId",
+    "area": "Admin Inventory",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/admin/media/images",
+    "area": "Admin Media",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/admin/media/image",
+    "area": "Admin Media",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/banners",
+    "area": "Banners",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/admin/banners",
+    "area": "Admin Banners",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/admin/banners",
+    "area": "Admin Banners",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "PUT",
+    "path": "/admin/banners/:id",
+    "area": "Admin Banners",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/admin/banners/:id",
+    "area": "Admin Banners",
+    "auth": "admin",
+    "frontend": true
+  }
+]

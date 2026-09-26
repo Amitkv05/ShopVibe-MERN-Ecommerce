@@ -1,0 +1,11 @@
+import express from "express";
+import { verifyUserAuth } from "../middleware/userAuth.js";
+import { validate } from "../middleware/validate.js";
+import { addressSchema } from "../validators/schemas.js";
+import { listAddresses, addAddress, updateAddress, deleteAddress } from "../controller/addressController.js";
+const router = express.Router();
+router.get("/addresses", verifyUserAuth, listAddresses);
+router.post("/addresses", verifyUserAuth, validate(addressSchema), addAddress);
+router.put("/addresses/:id", verifyUserAuth, validate(addressSchema.partial()), updateAddress);
+router.delete("/addresses/:id", verifyUserAuth, deleteAddress);
+export default router;

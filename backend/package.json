@@ -1,0 +1,51 @@
+{
+  "name": "mern-ecommerce-backend",
+  "version": "4.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Production-hardened MERN e-commerce backend with adaptive MongoDB transactions, compensated checkout, observability, payments, inventory, cart, wishlist, coupons and admin tooling",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "test": "node --test",
+    "check": "node scripts/checkProject.js",
+    "migrate:stock": "node scripts/migrateStockField.js",
+    "smoke": "node scripts/runtimeSmoke.js",
+    "db:indexes": "node scripts/syncIndexes.js",
+    "perf": "node scripts/performanceLoad.js",
+    "check:api-freeze": "node scripts/checkApiFreeze.js",
+    "api:freeze:update": "node scripts/updateApiFreezeBaseline.js",
+    "migrate:legacy": "node scripts/migrateLegacyCompatibility.js --apply",
+    "migrate:legacy:dry": "node scripts/migrateLegacyCompatibility.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.7.0",
+    "compression": "^1.8.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
+    "hpp": "^0.2.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.18.0",
+    "multer": "^2.0.2",
+    "nodemailer": "^10.0.10",
+    "pino": "^9.9.4",
+    "pino-http": "^10.5.0",
+    "razorpay": "^2.9.6",
+    "swagger-ui-express": "^5.0.1",
+    "validator": "^13.15.15",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.4"
+  }
+}
