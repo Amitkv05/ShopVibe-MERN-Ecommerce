@@ -47,11 +47,11 @@ const checks = [
   ["Admin deep-link tabs implemented", () => /history\.pushState/.test(read("src/screens/AdminScreen.jsx")) && /tabFromPath/.test(read("src/screens/AdminScreen.jsx"))],
   ["Vite SPA entry exists", () => exists("index.html") && exists("src/main.jsx") && exists("vite.config.js")],
   ["Dark/light theme is reusable and persistent", () => exists("src/components/reusable/ThemeProvider.jsx") && exists("src/components/reusable/ThemeToggle.jsx") && /shopvibe_theme/.test(read("src/components/reusable/ThemeProvider.jsx"))],
-  ["Reusable generic UI is centralized", () => ["Badge.jsx","Button.jsx","Input.jsx","StarRating.jsx","Toast.jsx","ThemeToggle.jsx"].every((name) => exists(`src/components/reusable/${name}`))],
-  ["No bare alert/confirm globals remain", () => !/(^|[^.\w])(alert|confirm)\s*\(/m.test(fs.readdirSync(path.join(root,"src"),{recursive:true}).filter(x=>typeof x==="string"&&/\.(js|jsx)$/.test(x)).map(x=>read(path.join("src",x))).join("\n"))],
-  ["No backend secrets embedded in frontend", () => !/RAZORPAY_KEY_SECRET|CLOUDINARY_API_SECRET|JWT_SECRET_KEY|SMTP_PASSWORD|DB_URI=/.test(fs.readdirSync(path.join(root,"src"),{recursive:true}).filter(x=>typeof x==="string"&&/\.(js|jsx)$/.test(x)).map(x=>read(path.join("src",x))).join("\n"))],
+  ["Reusable generic UI is centralized", () => ["Badge.jsx", "Button.jsx", "Input.jsx", "StarRating.jsx", "Toast.jsx", "ThemeToggle.jsx"].every((name) => exists(`src/components/reusable/${name}`))],
+  ["No bare alert/confirm globals remain", () => !/(^|[^.\w])(alert|confirm)\s*\(/m.test(fs.readdirSync(path.join(root, "src"), { recursive: true }).filter(x => typeof x === "string" && /\.(js|jsx)$/.test(x)).map(x => read(path.join("src", x))).join("\n"))],
+  ["No backend secrets embedded in frontend", () => !/RAZORPAY_KEY_SECRET|CLOUDINARY_API_SECRET|JWT_SECRET_KEY|SMTP_PASSWORD|DB_URI=/.test(fs.readdirSync(path.join(root, "src"), { recursive: true }).filter(x => typeof x === "string" && /\.(js|jsx)$/.test(x)).map(x => read(path.join("src", x))).join("\n"))],
 ];
 let fail = 0;
-for (const [name, fn] of checks) { let ok = false; try { ok = Boolean(fn()); } catch {} console.log(`${ok ? "PASS" : "FAIL"} - ${name}`); if (!ok) fail++; }
+for (const [name, fn] of checks) { let ok = false; try { ok = Boolean(fn()); } catch { } console.log(`${ok ? "PASS" : "FAIL"} - ${name}`); if (!ok) fail++; }
 console.log(`\n${checks.length - fail}/${checks.length} integration checks passed`);
 process.exit(fail ? 1 : 0);
