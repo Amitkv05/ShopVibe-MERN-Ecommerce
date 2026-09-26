@@ -1,17 +1,27 @@
-ShopVibe — MERN E-Commerce Platform
-A production-focused full-stack e-commerce application built with the MERN stack, featuring a complete customer shopping experience, an admin management system, secure authentication, inventory controls, coupons, checkout workflows, media uploads, automated quality checks, and staging deployment.
-The project was designed not only as an e-commerce UI, but as an end-to-end full-stack system with emphasis on backend architecture, security, data consistency, API integration, testing, CI, and deployment readiness.
-Live Staging
-Service	URL
-Frontend	https://shopvibe-mern-ecommerce-frontend.onrender.com
-Backend API	https://shopvibe-mern-ecommerce.onrender.com
-Health Check	https://shopvibe-mern-ecommerce.onrender.com/api/v1/health
+# ShopVibe — MERN E-Commerce Platform
 
+A production-focused full-stack e-commerce application built with the **MERN stack**, featuring a complete customer shopping experience, an admin management system, secure authentication, inventory controls, coupons, checkout workflows, media uploads, automated quality checks, and staging deployment.
 
-The staging environment is intended for project review and testing. Production payment configuration is intentionally deferred until client-owned Razorpay credentials are available.
+The project was designed not only as an e-commerce UI, but as an end-to-end full-stack system with emphasis on **backend architecture, security, data consistency, API integration, testing, CI, and deployment readiness**.
 
-Tech Stack
-Frontend
+---
+
+## Live Staging
+
+| Service | URL |
+| --- | --- |
+| **Frontend** | https://shopvibe-mern-ecommerce-frontend.onrender.com |
+| **Backend API** | https://shopvibe-mern-ecommerce.onrender.com |
+| **Health Check** | https://shopvibe-mern-ecommerce.onrender.com/api/v1/health |
+
+> The staging environment is intended for project review and testing. Production payment configuration is intentionally deferred until client-owned Razorpay credentials are available.
+
+---
+
+## Tech Stack
+
+### Frontend
+
 - ReactJS
 - Vite
 - JavaScript / JSX
@@ -20,7 +30,9 @@ Frontend
 - Lucide React
 - REST API integration
 - Responsive dark/light interface
-Backend
+
+### Backend
+
 - Node.js
 - Express.js
 - MongoDB
@@ -30,7 +42,9 @@ Backend
 - Cloudinary
 - Nodemailer
 - Pino logging
-Infrastructure & Workflow
+
+### Infrastructure & Workflow
+
 - Git
 - GitHub
 - GitHub Actions CI
@@ -39,10 +53,15 @@ Infrastructure & Workflow
 - REST API architecture
 - Environment-based configuration
 - Automated release checks
-Frontend note: ShopVibe uses ReactJS + Vite + JavaScript/JSX only. No Next.js or TypeScript is used in the frontend.
 
-What ShopVibe Includes
-Customer Experience
+> **Frontend note:** ShopVibe uses **ReactJS + Vite + JavaScript/JSX only**. No Next.js or TypeScript is used in the frontend.
+
+---
+
+## What ShopVibe Includes
+
+### Customer Experience
+
 - User registration
 - Secure login/logout
 - Email verification
@@ -62,7 +81,9 @@ Customer Experience
 - Checkout
 - Order history
 - Responsive dark/light UI
-Admin Dashboard
+
+### Admin Dashboard
+
 - Dashboard overview
 - Product management
 - Simple products
@@ -79,11 +100,19 @@ Admin Dashboard
 - Analytics
 - System diagnostics
 - Cloudinary-powered image uploads
-Engineering Highlights
+
+---
+
+## Engineering Highlights
+
 ShopVibe includes more than standard CRUD functionality. Several areas were implemented with production-style behavior in mind.
-Secure Authentication
+
+### Secure Authentication
+
 Authentication uses JWT with secure HTTP-only cookies.
+
 The authentication system includes:
+
 - Protected API routes
 - Role-based authorization
 - Admin-only endpoints
@@ -97,15 +126,27 @@ The authentication system includes:
 - Rate limiting
 - Request validation
 - Security response headers
+
 A protected request is authorized by the backend, not by frontend state alone.
-Product & Variant System
-ShopVibe supports both simple products and products with variants.
-Simple Product
+
+---
+
+## Product & Variant System
+
+ShopVibe supports both **simple products** and **products with variants**.
+
+### Simple Product
+
+```text
 Product
 ├── SKU
 ├── Price
 └── Stock
-Product with Variants
+```
+
+### Product with Variants
+
+```text
 Product
 ├── Attributes
 │   ├── Size
@@ -116,9 +157,17 @@ Product
     ├── SKU
     ├── Price
     └── Stock
+```
+
 The admin product form provides a visual variant builder. Administrators can define attributes such as size and color, generate combinations, apply default stock, and edit individual variants without manually writing raw JSON.
-Category Architecture
+
+---
+
+## Category Architecture
+
 Categories use a database relationship while still supporting readable URLs and older product records.
+
+```text
 Category Name
       ↓
 Category Slug
@@ -126,9 +175,16 @@ Category Slug
 categoryRef
       ↓
 Products
+```
+
 This makes the category system suitable for both user-friendly URLs and MongoDB relationships.
-Cart & Wishlist
+
+---
+
+## Cart & Wishlist
+
 The customer cart and wishlist support:
+
 - Add to cart
 - Quantity updates
 - Remove item
@@ -140,9 +196,15 @@ The customer cart and wishlist support:
 - Wishlist add/remove
 - Duplicate wishlist protection
 - User-specific data isolation
-Coupon & Pricing Engine
+
+---
+
+## Coupon & Pricing Engine
+
 Coupon rules are evaluated on the server instead of trusting totals calculated by the browser.
+
 Supported rules include:
+
 - Percentage discounts
 - Fixed discounts
 - Expiration dates
@@ -151,10 +213,17 @@ Supported rules include:
 - Maximum discount limits
 - Global usage limits
 - Per-user usage limits
+
 The backend recalculates order totals, reducing the risk of client-side price manipulation.
-Checkout & Data Consistency
+
+---
+
+## Checkout & Data Consistency
+
 Checkout is one of the most important backend areas in the project.
+
 The implementation includes:
+
 - Server-side total calculation
 - Stock revalidation
 - Coupon revalidation
@@ -169,20 +238,37 @@ The implementation includes:
 - Coupon usage recording on success
 - Stock deduction exactly once
 - Overselling protection
+
 MongoDB Atlas replica-set transactions are enabled for transaction-sensitive checkout operations.
-Media Management
+
+---
+
+## Media Management
+
 Cloudinary is used for image storage.
+
 Stored media references use:
+
+```text
 public_id
 url
+```
+
 This allows the application to clean up replaced or deleted cloud assets instead of leaving orphaned images behind.
+
 Cloudinary-backed media is used for:
+
 - Products
 - Categories
 - Category icons
 - Promotional banners
-Banner Management
+
+---
+
+## Banner Management
+
 Admin users can manage homepage promotional banners with fields such as:
+
 - Image
 - Badge
 - Title
@@ -194,9 +280,16 @@ Admin users can manage homepage promotional banners with fields such as:
 - Overlay opacity
 - Text position
 - Text alignment
+
 Banner data is persisted in MongoDB rather than being hard-coded into the frontend.
-API Architecture
+
+---
+
+## API Architecture
+
 ShopVibe follows a separated REST API architecture.
+
+```text
 Browser
    ↓
 React Screen / Component
@@ -216,7 +309,11 @@ Service
 Mongoose Model
    ↓
 MongoDB Atlas
+```
+
 The backend separates responsibilities into:
+
+```text
 Routes
 Controllers
 Services
@@ -225,8 +322,15 @@ Middleware
 Validators
 Configuration
 Utilities
+```
+
 This helps keep validation, authorization, business logic, persistence, and HTTP handling organized.
-Project Structure
+
+---
+
+## Project Structure
+
+```text
 ShopVibe-MERN-Ecommerce/
 │
 ├── .github/
@@ -281,9 +385,16 @@ ShopVibe-MERN-Ecommerce/
 ├── START_HERE.md
 ├── package.json
 └── package-lock.json
-Testing & Quality Assurance
+```
+
+---
+
+## Testing & Quality Assurance
+
 The project includes automated and manual checks across important application areas.
+
 Coverage includes:
+
 - Authentication
 - Authorization
 - Products
@@ -305,15 +416,27 @@ Coverage includes:
 - API compatibility
 - Frontend/backend integration
 - Production build verification
+
 The latest local regression run completed with:
+
+```text
 64 tests
 63 passed
 0 failed
 1 intentionally skipped
+```
+
 The skipped test requires a gated real-MongoDB runtime environment.
-API Contract & Release Protection
+
+---
+
+## API Contract & Release Protection
+
 The project includes a frozen API contract to reduce accidental breaking changes.
+
 Release verification checks:
+
+```text
 API Contract
      ↓
 Backend Static Checks
@@ -327,10 +450,19 @@ API Freeze Verification
 Production Build
      ↓
 Release Readiness
+```
+
 The current API freeze baseline is maintained as a versioned release artifact.
-Continuous Integration
+
+---
+
+## Continuous Integration
+
 GitHub Actions runs the project's automated CI workflow.
+
 The CI pipeline verifies stages such as:
+
+```text
 Checkout Source
       ↓
 Install Dependencies
@@ -346,30 +478,62 @@ Automated Tests
 Production Build
       ↓
 Dependency Audit
+```
+
 This helps identify regressions before changes are considered release-ready.
+
 Dependabot is also configured for dependency update pull requests, allowing dependency upgrades to be tested by CI before merging.
-Performance & Lighthouse
+
+---
+
+## Performance & Lighthouse
+
 The frontend was tested using a production Vite build.
+
 A recent mobile Lighthouse run achieved:
+
+```text
 Performance      97
 Accessibility    94
 Best Practices   96
 SEO             100
+```
+
 Key performance metrics included:
+
+```text
 FCP   1.6 s
 LCP   2.4 s
 TBT   80 ms
 CLS   0.031
+```
+
 Further image optimization can improve delivery of placeholder/catalog imagery.
-Environment Configuration
-Real .env files are intentionally excluded from source control.
-Backend
+
+---
+
+## Environment Configuration
+
+Real `.env` files are intentionally excluded from source control.
+
+### Backend
+
 Create:
+
+```text
 backend/.env
+```
+
 Use:
+
+```text
 backend/.env.example
+```
+
 as the safe configuration reference.
+
 Backend environment groups include:
+
 - Application configuration
 - CORS / frontend origins
 - MongoDB Atlas
@@ -384,54 +548,111 @@ Backend environment groups include:
 - HTTP timeouts
 - Logging
 - Performance test configuration
+
 Never commit real values for:
+
+```text
 DB_URI
 JWT_SECRET_KEY
 SMTP_PASSWORD
 CLOUDINARY_API_SECRET
 RAZORPAY_KEY_SECRET
 RAZORPAY_WEBHOOK_SECRET
-Frontend
+```
+
+### Frontend
+
 Create:
+
+```text
 frontend/.env
+```
+
 Example for local development:
+
+```env
 VITE_API_URL=http://localhost:8000/api/v1
+```
+
 Example for staging:
+
+```env
 VITE_API_URL=https://shopvibe-mern-ecommerce.onrender.com/api/v1
-Only browser-safe values belong in VITE_* variables because frontend environment values are bundled into browser code.
-Local Development
-Requirements
+```
+
+Only browser-safe values belong in `VITE_*` variables because frontend environment values are bundled into browser code.
+
+---
+
+## Local Development
+
+### Requirements
+
 - Node.js 20+
 - npm
 - MongoDB / MongoDB Atlas
-Clone
+
+### Clone
+
+```bash
 git clone <repository-url>
 cd ShopVibe-MERN-Ecommerce
-Install
+```
+
+### Install
+
 The project uses npm workspaces, so dependencies can be installed from the repository root.
+
+```bash
 npm install
-Run Verification
+```
+
+### Run Verification
+
+```bash
 npm run check
 npm test
 npm run build
-Start Development
+```
+
+### Start Development
+
+```bash
 npm run dev
+```
+
 Local services:
+
+```text
 Frontend
 http://localhost:5173
 
 Backend
 http://localhost:8000
+```
+
 Backend health:
+
+```text
 http://localhost:8000/api/v1/health
-Useful Commands
+```
+
+---
+
+## Useful Commands
+
 From the project root:
+
+```bash
 npm install
 npm run dev
 npm run check
 npm test
 npm run build
+```
+
 The backend also contains maintenance and verification scripts for areas such as:
+
 - API freeze verification
 - API baseline updates
 - Runtime smoke testing
@@ -439,8 +660,14 @@ The backend also contains maintenance and verification scripts for areas such as
 - Performance testing
 - Legacy compatibility migration
 - Product/category synchronization
-Staging Deployment
+
+---
+
+## Staging Deployment
+
 Current staging architecture:
+
+```text
                          User
                            │
                            ▼
@@ -463,24 +690,52 @@ Current staging architecture:
                         │
                         ▼
                       SMTP
-Staging Frontend
+```
+
+### Staging Frontend
+
+```text
 https://shopvibe-mern-ecommerce-frontend.onrender.com
-Staging Backend
+```
+
+### Staging Backend
+
+```text
 https://shopvibe-mern-ecommerce.onrender.com
-Backend Health
+```
+
+### Backend Health
+
+```text
 https://shopvibe-mern-ecommerce.onrender.com/api/v1/health
+```
+
 Frontend and backend are deployed independently so environment configuration, scaling, and deployment can be handled separately.
-Authentication Across Staging Services
+
+---
+
+## Authentication Across Staging Services
+
 The frontend sends authenticated API requests with credentials enabled.
+
 The backend controls:
+
+```text
 CLIENT_URL
 CLIENT_URLS
 COOKIE_SAME_SITE
 COOKIE_DOMAIN
 NODE_ENV
+```
+
 For HTTPS staging, secure cookie and CORS configuration are applied through environment variables rather than hard-coded secrets or deployment-specific URLs.
-Security Measures
+
+---
+
+## Security Measures
+
 The project includes multiple security controls:
+
 - HTTP-only authentication cookies
 - Secure production cookies
 - SameSite cookie configuration
@@ -499,17 +754,30 @@ The project includes multiple security controls:
 - Secrets excluded from Git
 - Server-side pricing validation
 - Server-side stock validation
-Payment Integration
+
+---
+
+## Payment Integration
+
 Razorpay integration is wired into the backend architecture, including order creation and webhook handling.
+
 However, live payment activation is intentionally deferred because the final merchant account should be owned by the client/business responsible for:
+
 - KYC
 - Bank settlement
 - Refund ownership
 - Transaction reporting
 - Live API credentials
+
 Payment testing can be completed later using the client-owned Razorpay account.
-Release Workflow
+
+---
+
+## Release Workflow
+
 ShopVibe follows a structured release process.
+
+```text
 Development
      ↓
 Local Regression Testing
@@ -537,7 +805,13 @@ Production Smoke Test
 Monitoring / Backup
      ↓
 Client Handover
-Current Release Status
+```
+
+---
+
+## Current Release Status
+
+```text
 Database final cleanup          ✅
 Final local regression          ✅
 Responsive / Lighthouse         ✅
@@ -552,8 +826,14 @@ Production deployment           Pending
 Production smoke test           Pending
 Monitoring / backup             Pending
 Client handover                 Pending
-Documentation
+```
+
+---
+
+## Documentation
+
 The repository includes supporting documentation for:
+
 - Deployment
 - Environment variables
 - API usage
@@ -565,10 +845,18 @@ The repository includes supporting documentation for:
 - Maintenance and support
 - Known limitations
 - External/client-required inputs
+
 This makes the project easier to review, deploy, maintain, and hand over to another developer or client.
-Why I Built This Project
+
+---
+
+## Why I Built This Project
+
 The goal of ShopVibe was to go beyond creating a basic MERN CRUD application.
+
 I wanted to practice the complete lifecycle of a modern full-stack application:
+
+```text
 Requirement
     ↓
 Architecture
@@ -592,7 +880,10 @@ CI
 Deployment
     ↓
 Release Verification
+```
+
 The project helped strengthen practical experience with:
+
 - React application architecture
 - REST API development
 - MongoDB data modeling
@@ -609,19 +900,32 @@ The project helped strengthen practical experience with:
 - Environment management
 - Staging deployment
 - Production-readiness thinking
-Interview Talking Points
-Full-stack ownership
+
+---
+
+## Interview Talking Points
+
+**Full-stack ownership**  
 The application includes both the customer/admin React frontend and the Node.js/Express backend.
-Checkout consistency
+
+**Checkout consistency**  
 Stock, coupons, order creation, idempotency, rollback, and MongoDB transactions were treated as one coordinated workflow.
-Security
+
+**Security**  
 Authentication is server-controlled using JWT HTTP-only cookies, restricted CORS, secure production settings, role-based authorization, validation, rate limits, and security headers.
-Production workflow
+
+**Production workflow**  
 The project was taken through local regression testing, GitHub source control, CI, Lighthouse testing, environment separation, and real staging deployment.
-Maintainability
+
+**Maintainability**  
 The backend uses separated routes, controllers, services, models, middleware, validators, configuration, and utilities instead of placing all logic in route handlers.
-Future Improvements
+
+---
+
+## Future Improvements
+
 Possible future enhancements include:
+
 - Client-owned Razorpay live activation
 - Production custom domain
 - Enhanced image optimization
@@ -632,9 +936,16 @@ Possible future enhancements include:
 - Product recommendations
 - Redis-based caching where justified
 - Background job processing for heavier workflows
-Author
-Amit Kumar
+
+---
+
+## Author
+
+**Amit Kumar**
+
 Full-Stack / MERN Developer
+
+```text
 ReactJS
 JavaScript
 Node.js
@@ -644,6 +955,12 @@ REST APIs
 Git
 GitHub
 CI/CD
-Project Summary
-ShopVibe demonstrates a complete MERN e-commerce workflow from frontend development and backend API design through authentication, transactions, testing, CI, and staging deployment.
-It represents a practical full-stack project built with an emphasis on real application behavior, maintainable architecture, release discipline, and production-readiness.
+```
+
+---
+
+## Project Summary
+
+**ShopVibe** demonstrates a complete MERN e-commerce workflow from frontend development and backend API design through authentication, transactions, testing, CI, and staging deployment.
+
+It represents a practical full-stack project built with an emphasis on **real application behavior, maintainable architecture, release discipline, and production-readiness**.
