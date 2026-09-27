@@ -12,3 +12,6 @@ coverage/
 logs/
 *.log
 .DS_Store
+
+# Local database backups
+backups/
