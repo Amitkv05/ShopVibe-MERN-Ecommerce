@@ -8,10 +8,10 @@ The project was designed not only as an e-commerce UI, but as an end-to-end full
 
 ## Live Staging
 
-| Service | URL |
-| --- | --- |
-| **Frontend** | https://shopvibe-mern-ecommerce-frontend.onrender.com |
-| **Backend API** | https://shopvibe-mern-ecommerce.onrender.com |
+| Service          | URL                                                        |
+| ---------------- | ---------------------------------------------------------- |
+| **Frontend**     | https://shopvibe-mern-ecommerce-frontend.onrender.com      |
+| **Backend API**  | https://shopvibe-mern-ecommerce.onrender.com               |
 | **Health Check** | https://shopvibe-mern-ecommerce.onrender.com/api/v1/health |
 
 > The staging environment is intended for project review and testing. Production payment configuration is intentionally deferred until client-owned Razorpay credentials are available.
