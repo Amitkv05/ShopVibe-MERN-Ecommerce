@@ -13,7 +13,9 @@ A full-stack e-commerce application featuring secure authentication, product var
 [![Render](https://img.shields.io/badge/Deployed-Render-46E3B7?style=for-the-badge&logo=render&logoColor=black)](https://render.com/)
 
 ### 🌐 [Live Demo](https://shopvibe-mern-ecommerce-frontend.onrender.com)
+
 ### ❤️ [API Health](https://shopvibe-mern-ecommerce.onrender.com/api/v1/health)
+
 ### 📦 [Latest Release — v1.0.0](https://github.com/Amitkv05/ShopVibe-MERN-Ecommerce/releases/tag/v1.0.0)
 
 </div>
@@ -116,41 +118,41 @@ ShopVibe focuses on real e-commerce engineering concerns including:
 
 ### Frontend
 
-| Technology | Usage |
-|---|---|
-| ReactJS | Component-based UI |
-| Vite | Development and production build tooling |
-| JavaScript / JSX | Frontend language |
-| Zustand | Global state management |
-| Tailwind CSS | Responsive styling |
-| Lucide React | UI icons |
-| History API | Custom SPA navigation |
+| Technology       | Usage                                    |
+| ---------------- | ---------------------------------------- |
+| ReactJS          | Component-based UI                       |
+| Vite             | Development and production build tooling |
+| JavaScript / JSX | Frontend language                        |
+| Zustand          | Global state management                  |
+| Tailwind CSS     | Responsive styling                       |
+| Lucide React     | UI icons                                 |
+| History API      | Custom SPA navigation                    |
 
 ### Backend
 
-| Technology | Usage |
-|---|---|
-| Node.js | Server runtime |
-| Express.js | REST API |
-| MongoDB | Database |
-| Mongoose | ODM / data modeling |
-| Zod | Request validation |
-| JWT | Authentication |
+| Technology        | Usage                    |
+| ----------------- | ------------------------ |
+| Node.js           | Server runtime           |
+| Express.js        | REST API                 |
+| MongoDB           | Database                 |
+| Mongoose          | ODM / data modeling      |
+| Zod               | Request validation       |
+| JWT               | Authentication           |
 | HTTP-only Cookies | Secure session transport |
-| Pino | Structured logging |
-| Nodemailer | Email workflows |
-| Cloudinary | Cloud media storage |
+| Pino              | Structured logging       |
+| Nodemailer        | Email workflows          |
+| Cloudinary        | Cloud media storage      |
 
 ### Infrastructure
 
-| Service | Purpose |
-|---|---|
-| MongoDB Atlas | Managed MongoDB database |
-| Render | Frontend and backend deployment |
-| Cloudinary | Product/category/banner media |
-| GitHub | Source control and releases |
-| GitHub Actions | CI validation |
-| MongoDB Database Tools | Backup and restore |
+| Service                | Purpose                         |
+| ---------------------- | ------------------------------- |
+| MongoDB Atlas          | Managed MongoDB database        |
+| Render                 | Frontend and backend deployment |
+| Cloudinary             | Product/category/banner media   |
+| GitHub                 | Source control and releases     |
+| GitHub Actions         | CI validation                   |
+| MongoDB Database Tools | Backup and restore              |
 
 ---
 
@@ -369,19 +371,19 @@ Sensitive reset/verification tokens are handled by the backend rather than being
 
 ## 👨‍💼 Admin Modules
 
-| Module | Main Capabilities |
-|---|---|
-| Dashboard | Operational overview |
-| Products | Simple/variant products, images, SKU, stock |
-| Categories | Category management, images and icons |
-| Banners | Marketing banners, CTA, ordering, positioning |
-| Inventory | Stock management and activity |
-| Orders | Order details and status management |
-| Customers | Customer management |
-| Coupons | Discount and usage rules |
-| Reviews | Product review management |
-| Analytics | Store statistics |
-| System | Runtime and database diagnostics |
+| Module     | Main Capabilities                             |
+| ---------- | --------------------------------------------- |
+| Dashboard  | Operational overview                          |
+| Products   | Simple/variant products, images, SKU, stock   |
+| Categories | Category management, images and icons         |
+| Banners    | Marketing banners, CTA, ordering, positioning |
+| Inventory  | Stock management and activity                 |
+| Orders     | Order details and status management           |
+| Customers  | Customer management                           |
+| Coupons    | Discount and usage rules                      |
+| Reviews    | Product review management                     |
+| Analytics  | Store statistics                              |
+| System     | Runtime and database diagnostics              |
 
 ---
 
@@ -426,21 +428,21 @@ Covered areas include:
 
 Mobile Lighthouse optimization produced:
 
-| Category | Score |
-|---|---:|
-| Performance | **97** |
-| Accessibility | **94** |
-| Best Practices | **96** |
-| SEO | **100** |
+| Category       |   Score |
+| -------------- | ------: |
+| Performance    |  **97** |
+| Accessibility  |  **94** |
+| Best Practices |  **96** |
+| SEO            | **100** |
 
 ### Core Metrics
 
-| Metric | Result |
-|---|---:|
-| First Contentful Paint | 1.6s |
-| Largest Contentful Paint | 2.4s |
-| Total Blocking Time | 80ms |
-| Cumulative Layout Shift | 0.031 |
+| Metric                   | Result |
+| ------------------------ | -----: |
+| First Contentful Paint   |   1.6s |
+| Largest Contentful Paint |   2.4s |
+| Total Blocking Time      |   80ms |
+| Cumulative Layout Shift  |  0.031 |
 
 ---
 
@@ -820,7 +822,7 @@ GitHub: [Amitkv05](https://github.com/Amitkv05)
 **Monitoring:** Configured ✅  
 **Backup & Restore:** Verified ✅  
 **Custom Business Domain:** Environment-specific  
-**Live Razorpay Processing:** Environment-specific  
+**Live Razorpay Processing:** Environment-specific
 
 ---
 
