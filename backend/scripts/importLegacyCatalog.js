@@ -1,11 +1,21 @@
 import dotenv from "dotenv";
 import path from "node:path";
+import { setServers } from "node:dns";
 import { fileURLToPath } from "node:url";
 import mongoose from "mongoose";
 import fs from "node:fs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: process.env.ENV_FILE || path.join(__dirname, "..", ".env") });
+
+const customDnsServers = process.env.DNS_SERVERS?.split(",")
+  .map((server) => server.trim())
+  .filter(Boolean);
+
+if (customDnsServers?.length) {
+  setServers(customDnsServers);
+  console.log(`Custom DNS servers enabled for catalog migration: ${customDnsServers.join(", ")}`);
+}
 
 const args = process.argv.slice(2);
 function argValue(name) {
@@ -49,11 +59,22 @@ function legacyIdOf(value) {
 
 function mediaAsset(url) {
   const normalized = String(url || "").trim();
+
+  // Legacy media can belong to a different Cloudinary account than the
+  // current ShopVibe environment. Keep the original URL for display/reuse,
+  // but do not invent a public_id that the current Cloudinary credentials
+  // may not own. An empty public_id also makes replacement/deletion safe.
   return { public_id: "", url: normalized };
 }
 
 function hasMedia(value) {
   return Boolean(String(value?.url || "").trim());
+}
+
+function isReplaceableSeedMedia(value) {
+  const url = String(value?.url || "").trim().toLowerCase();
+  const publicId = String(value?.public_id || "").trim().toLowerCase();
+  return url.includes("placehold.co/") || publicId.startsWith("seed/");
 }
 
 function nowPair() {
@@ -69,13 +90,13 @@ function missingOnlyUpdate(existing, mapped) {
     if (value === undefined) continue;
 
     const current = existing?.[key];
+    const isMediaField = ["image", "icon", "banner"].includes(key);
     const missing =
       current === undefined ||
       current === null ||
       current === "" ||
       (Array.isArray(current) && current.length === 0) ||
-      (key === "image" && !hasMedia(current)) ||
-      (key === "banner" && !hasMedia(current));
+      (isMediaField && hasMedia(value) && (!hasMedia(current) || isReplaceableSeedMedia(current)));
 
     if (missing) update[key] = value;
   }
@@ -91,7 +112,9 @@ function mapLegacyCategory(source, id = new mongoose.Types.ObjectId()) {
     slug: slugify(source.name),
     description: "",
     image: mediaAsset(source.image),
-    icon: mediaAsset(""),
+    // Old catalog categories did not have a separate icon field. Reuse the
+    // old category image as the icon fallback so no manual re-upload is needed.
+    icon: mediaAsset(source.icon || source.image),
     banner: mediaAsset(source.banner),
     sortOrder: 0,
     active: true,
@@ -127,7 +150,7 @@ function mapLegacyProduct(source, category, subcategory, userId, id = new mongoo
     images: oldImages
       .map((url) => String(url || "").trim())
       .filter(Boolean)
-      .map((url) => ({ public_id: "", url })),
+      .map((url) => mediaAsset(url)),
     category: category.name,
     categoryRef: category._id,
     subcategory: subcategory?.name || String(source.subCategory || "").trim(),

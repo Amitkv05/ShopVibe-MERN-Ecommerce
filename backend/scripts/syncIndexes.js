@@ -1,15 +1,39 @@
+import { setServers } from "node:dns";
 import dotenv from "dotenv";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 dotenv.config({
   path: process.env.ENV_FILE || path.join(__dirname, "..", ".env"),
 });
 
+// Apply optional custom DNS before MongoDB connection.
+// Useful when Node cannot resolve MongoDB Atlas SRV records
+// using the system DNS.
+const customDnsServers = process.env.DNS_SERVERS?.split(",")
+  .map((server) => server.trim())
+  .filter(Boolean);
+
+if (customDnsServers?.length) {
+  try {
+    setServers(customDnsServers);
+
+    console.log(
+      `Custom DNS servers enabled for index sync: ${customDnsServers.join(", ")}`,
+    );
+  } catch (error) {
+    console.error("Invalid DNS_SERVERS configuration:", error.message);
+    process.exit(1);
+  }
+}
+
 const { validateEnvironment } = await import("../config/env.js");
+
 const { connectMongoDatabase, disconnectMongoDatabase } =
   await import("../config/db.js");
+
 const models = await Promise.all([
   import("../models/userModel.js"),
   import("../models/productModel.js"),
@@ -25,12 +49,17 @@ const models = await Promise.all([
 
 try {
   validateEnvironment();
+
   await connectMongoDatabase();
+
   for (const module of models) {
     const Model = module.default;
+
     await Model.createIndexes();
+
     console.log(`Indexes ensured: ${Model.modelName}`);
   }
+
   console.log("Database index creation completed.");
 } finally {
   await disconnectMongoDatabase();
