@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  Heart,
-  Menu,
-  Search,
-  ShoppingBag,
-  User,
-  X,
-} from "lucide-react";
+import { Heart, Menu, Search, ShoppingBag, User, X } from "lucide-react";
 import clsx from "clsx";
 import { useStore } from "@/lib/store";
 import ThemeToggle from "@/components/reusable/ThemeToggle";
@@ -67,9 +60,11 @@ export default function Navbar() {
                   onClick={() => goTo(link.page)}
                   className={clsx(
                     "rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200",
-                    (currentPage === link.page || (link.page === "categories" && currentPage === "subcategoryProducts"))
+                    currentPage === link.page ||
+                      (link.page === "categories" &&
+                        currentPage === "subcategoryProducts")
                       ? "bg-violet-50 text-violet-700 dark:bg-violet-950/40 dark:text-violet-300"
-                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white"
+                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white",
                   )}
                 >
                   {link.label}
@@ -103,7 +98,10 @@ export default function Navbar() {
                     }}
                     aria-label="Close search"
                   >
-                    <X size={16} className="text-gray-400 hover:text-gray-600" />
+                    <X
+                      size={16}
+                      className="text-gray-400 hover:text-gray-600"
+                    />
                   </button>
                 </div>
               ) : (
@@ -163,7 +161,7 @@ export default function Navbar() {
                   onClick={() => goTo("profile")}
                   className="ml-1 flex items-center gap-2 rounded-xl py-1.5 pl-2 pr-3 transition-all hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-purple-600 text-sm font-bold text-white">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-br from-violet-500 to-purple-600 text-sm font-bold text-white">
                     {(user?.name || "U").charAt(0)}
                   </div>
                   <span className="hidden max-w-[80px] truncate text-sm font-medium text-gray-700 dark:text-gray-200 sm:block">
@@ -203,9 +201,11 @@ export default function Navbar() {
                   onClick={() => goTo(link.page)}
                   className={clsx(
                     "rounded-xl px-4 py-3 text-left text-sm font-medium transition-all",
-                    (currentPage === link.page || (link.page === "categories" && currentPage === "subcategoryProducts"))
+                    currentPage === link.page ||
+                      (link.page === "categories" &&
+                        currentPage === "subcategoryProducts")
                       ? "bg-violet-50 text-violet-700 dark:bg-violet-950/40 dark:text-violet-300"
-                      : "text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800"
+                      : "text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800",
                   )}
                 >
                   {link.label}

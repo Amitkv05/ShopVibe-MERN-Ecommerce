@@ -14,31 +14,9 @@ const router = express.Router();
 
 router.get("/categories", listCategories);
 router.get("/categories/tree", getCategoryTree);
-router.get(
-  "/admin/categories",
-  verifyUserAuth,
-  roleBasedAccess("admin"),
-  listCategories,
-);
-router.post(
-  "/admin/categories",
-  verifyUserAuth,
-  roleBasedAccess("admin"),
-  validate(categorySchema),
-  createCategory,
-);
-router.put(
-  "/admin/categories/:id",
-  verifyUserAuth,
-  roleBasedAccess("admin"),
-  validate(categorySchema.partial()),
-  updateCategory,
-);
-router.delete(
-  "/admin/categories/:id",
-  verifyUserAuth,
-  roleBasedAccess("admin"),
-  deleteCategory,
-);
+router.get("/admin/categories", verifyUserAuth, roleBasedAccess("admin"), listCategories);
+router.post("/admin/categories", verifyUserAuth, roleBasedAccess("admin"), validate(categorySchema), createCategory);
+router.put("/admin/categories/:id", verifyUserAuth, roleBasedAccess("admin"), validate(categorySchema.partial()), updateCategory);
+router.delete("/admin/categories/:id", verifyUserAuth, roleBasedAccess("admin"), deleteCategory);
 
 export default router;

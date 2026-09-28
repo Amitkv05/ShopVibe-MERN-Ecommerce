@@ -34,8 +34,7 @@ const allowedProductFields = [
 
 function pickProductFields(body) {
   const source = { ...body };
-  if (source.stock === undefined && source.Stock !== undefined)
-    source.stock = source.Stock;
+  if (source.stock === undefined && source.Stock !== undefined) source.stock = source.Stock;
 
   return Object.fromEntries(
     allowedProductFields
@@ -98,9 +97,7 @@ async function resolveCategoryFilter(query) {
   if (!category && categoryValue) category = await findCategory(categoryValue);
 
   if (category) {
-    const aliases = [
-      ...new Set([category.name, category.slug].filter(Boolean)),
-    ];
+    const aliases = [...new Set([category.name, category.slug].filter(Boolean))];
     return {
       $or: [
         { categoryRef: category._id },
@@ -129,16 +126,13 @@ async function resolveSubcategoryFilter(query, category = null) {
 
   let subcategory = null;
   const categoryRef = category?._id || null;
-  if (subcategoryRef)
-    subcategory = await findSubcategory(subcategoryRef, categoryRef);
+  if (subcategoryRef) subcategory = await findSubcategory(subcategoryRef, categoryRef);
   if (!subcategory && subcategoryValue) {
     subcategory = await findSubcategory(subcategoryValue, categoryRef);
   }
 
   if (subcategory) {
-    const aliases = [
-      ...new Set([subcategory.name, subcategory.slug].filter(Boolean)),
-    ];
+    const aliases = [...new Set([subcategory.name, subcategory.slug].filter(Boolean))];
     return {
       $or: [
         { subcategoryRef: subcategory._id },
@@ -177,9 +171,7 @@ async function normalizeProductTaxonomy(data, current = null) {
     category = await findCategory(requestedCategory);
     if (!category) throw new HandleError("Category not found", 400);
   } else if (!categoryWasProvided && current?.categoryRef) {
-    category = await Category.findById(current.categoryRef).select(
-      "_id name slug active",
-    );
+    category = await Category.findById(current.categoryRef).select("_id name slug active");
   } else if (!categoryWasProvided && current?.category) {
     category = await findCategory(current.category);
   }
@@ -193,34 +185,21 @@ async function normalizeProductTaxonomy(data, current = null) {
   if (!explicitSubcategoryClear) {
     const requestedSubcategory = data.subcategoryRef || data.subcategory;
     if (requestedSubcategory) {
-      subcategory = await findSubcategory(
-        requestedSubcategory,
-        category?._id || null,
-      );
+      subcategory = await findSubcategory(requestedSubcategory, category?._id || null);
       if (!subcategory) throw new HandleError("Subcategory not found", 400);
 
-      const parent = await Category.findById(subcategory.categoryRef).select(
-        "_id name slug active",
-      );
-      if (!parent)
-        throw new HandleError("Subcategory parent category not found", 400);
+      const parent = await Category.findById(subcategory.categoryRef).select("_id name slug active");
+      if (!parent) throw new HandleError("Subcategory parent category not found", 400);
 
       if (category && String(category._id) !== String(parent._id)) {
-        throw new HandleError(
-          "Subcategory does not belong to the selected category",
-          400,
-        );
+        throw new HandleError("Subcategory does not belong to the selected category", 400);
       }
       category = parent;
     } else if (!subcategoryWasProvided && current?.subcategoryRef) {
       subcategory = await Subcategory.findById(current.subcategoryRef).select(
         "_id name slug categoryRef categoryName active",
       );
-      if (
-        subcategory &&
-        category &&
-        String(subcategory.categoryRef) !== String(category._id)
-      ) {
+      if (subcategory && category && String(subcategory.categoryRef) !== String(category._id)) {
         subcategory = null;
       }
     }
@@ -236,10 +215,7 @@ async function normalizeProductTaxonomy(data, current = null) {
   if (subcategory) {
     data.subcategoryRef = subcategory._id;
     data.subcategory = subcategory.name;
-  } else if (
-    explicitSubcategoryClear ||
-    (categoryWasProvided && current?.subcategoryRef)
-  ) {
+  } else if (explicitSubcategoryClear || (categoryWasProvided && current?.subcategoryRef)) {
     data.subcategoryRef = null;
     data.subcategory = "";
   }
@@ -293,11 +269,8 @@ async function listProducts(req, res, admin = false, overrideQuery = {}) {
   delete queryParams.subcategoryRef;
 
   const baseFilter = admin ? {} : { active: { $ne: false } };
-  const relationshipFilters = [categoryFilter, subcategoryFilter].filter(
-    Boolean,
-  );
-  if (relationshipFilters.length === 1)
-    Object.assign(baseFilter, relationshipFilters[0]);
+  const relationshipFilters = [categoryFilter, subcategoryFilter].filter(Boolean);
+  if (relationshipFilters.length === 1) Object.assign(baseFilter, relationshipFilters[0]);
   if (relationshipFilters.length > 1) baseFilter.$and = relationshipFilters;
 
   const baseQuery = Product.find(baseFilter);
@@ -324,9 +297,7 @@ async function listProducts(req, res, admin = false, overrideQuery = {}) {
 export const createProducts = handleAsyncError(async (req, res, next) => {
   const data = pickProductFields(req.body);
   if (!data.name || !data.description || data.price === undefined) {
-    return next(
-      new HandleError("Name, description and price are required", 400),
-    );
+    return next(new HandleError("Name, description and price are required", 400));
   }
 
   try {
@@ -405,9 +376,7 @@ export const getRelatedProducts = handleAsyncError(async (req, res, next) => {
 export const updateProduct = handleAsyncError(async (req, res, next) => {
   const updates = pickProductFields(req.body);
   if (Object.keys(updates).length === 0) {
-    return next(
-      new HandleError("No supported product fields were provided", 400),
-    );
+    return next(new HandleError("No supported product fields were provided", 400));
   }
 
   const current = await Product.findById(req.params.id);
@@ -491,51 +460,46 @@ export const getProductDetails = handleAsyncError(async (req, res, next) => {
   res.status(200).json({ success: true, product });
 });
 
-export const createReviewForProduct = handleAsyncError(
-  async (req, res, next) => {
-    const rating = Number(req.body.rating);
-    const comment = String(req.body.comment || "").trim();
-    const productId = req.body.productId;
+export const createReviewForProduct = handleAsyncError(async (req, res, next) => {
+  const rating = Number(req.body.rating);
+  const comment = String(req.body.comment || "").trim();
+  const productId = req.body.productId;
 
-    if (!Number.isFinite(rating) || rating < 1 || rating > 5) {
-      return next(new HandleError("Rating must be between 1 and 5", 400));
-    }
-    if (!comment)
-      return next(new HandleError("Review comment is required", 400));
+  if (!Number.isFinite(rating) || rating < 1 || rating > 5) {
+    return next(new HandleError("Rating must be between 1 and 5", 400));
+  }
+  if (!comment) return next(new HandleError("Review comment is required", 400));
 
-    const product = await Product.findById(productId);
-    if (!product) return next(new HandleError("Product not found", 404));
+  const product = await Product.findById(productId);
+  if (!product) return next(new HandleError("Product not found", 404));
 
-    const existingReview = product.reviews.find(
-      (review) => String(review.user) === String(req.user._id),
-    );
+  const existingReview = product.reviews.find(
+    (review) => String(review.user) === String(req.user._id),
+  );
 
-    if (existingReview) {
-      existingReview.rating = rating;
-      existingReview.comment = comment;
-      existingReview.name = req.user.name;
-    } else {
-      product.reviews.push({
-        user: req.user._id,
-        name: req.user.name,
-        rating,
-        comment,
-      });
-    }
+  if (existingReview) {
+    existingReview.rating = rating;
+    existingReview.comment = comment;
+    existingReview.name = req.user.name;
+  } else {
+    product.reviews.push({
+      user: req.user._id,
+      name: req.user.name,
+      rating,
+      comment,
+    });
+  }
 
-    product.numOfReviews = product.reviews.length;
-    product.ratings =
-      product.numOfReviews === 0
-        ? 0
-        : product.reviews.reduce((sum, review) => sum + review.rating, 0) /
-          product.numOfReviews;
+  product.numOfReviews = product.reviews.length;
+  product.ratings =
+    product.numOfReviews === 0
+      ? 0
+      : product.reviews.reduce((sum, review) => sum + review.rating, 0) /
+        product.numOfReviews;
 
-    await product.save();
-    res
-      .status(200)
-      .json({ success: true, message: "Review saved successfully" });
-  },
-);
+  await product.save();
+  res.status(200).json({ success: true, message: "Review saved successfully" });
+});
 
 export const getProductReviews = handleAsyncError(async (req, res, next) => {
   const product = await Product.findById(req.query.id).select("reviews");
@@ -565,7 +529,5 @@ export const deleteProductReview = handleAsyncError(async (req, res, next) => {
         product.numOfReviews;
 
   await product.save();
-  res
-    .status(200)
-    .json({ success: true, message: "Review deleted successfully" });
+  res.status(200).json({ success: true, message: "Review deleted successfully" });
 });

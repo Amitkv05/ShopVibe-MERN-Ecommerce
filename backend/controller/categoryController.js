@@ -20,10 +20,7 @@ async function cleanupReplacedAsset(previous, next) {
 
 export const listCategories = handleAsyncError(async (req, res) => {
   const filter = req.user?.role === "admin" ? {} : { active: { $ne: false } };
-  const categories = await Category.find(filter).sort({
-    sortOrder: 1,
-    name: 1,
-  });
+  const categories = await Category.find(filter).sort({ sortOrder: 1, name: 1 });
   res.json({ success: true, categories });
 });
 
