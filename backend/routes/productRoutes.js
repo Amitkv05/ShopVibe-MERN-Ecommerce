@@ -27,27 +27,34 @@ router.get("/products/:id/related", getRelatedProducts);
 router.get("/products/:id", getProductDetails);
 
 router.put("/review", verifyUserAuth, createReviewForProduct);
-router
-  .route("/reviews")
-  .get(getProductReviews)
-  .delete(verifyUserAuth, deleteProductReview);
-router
-  .route("/admin/products")
-  .get(verifyUserAuth, roleBasedAccess("admin"), getAdminProducts)
-  .post(
-    verifyUserAuth,
-    roleBasedAccess("admin"),
-    validate(productCreateSchema),
-    createProducts,
-  );
-router
-  .route("/admin/products/:id")
-  .put(
-    verifyUserAuth,
-    roleBasedAccess("admin"),
-    validate(productCreateSchema.partial()),
-    updateProduct,
-  )
-  .delete(verifyUserAuth, roleBasedAccess("admin"), deleteProduct);
+router.get("/reviews", getProductReviews);
+router.delete("/reviews", verifyUserAuth, deleteProductReview);
+
+router.get(
+  "/admin/products",
+  verifyUserAuth,
+  roleBasedAccess("admin"),
+  getAdminProducts,
+);
+router.post(
+  "/admin/products",
+  verifyUserAuth,
+  roleBasedAccess("admin"),
+  validate(productCreateSchema),
+  createProducts,
+);
+router.put(
+  "/admin/products/:id",
+  verifyUserAuth,
+  roleBasedAccess("admin"),
+  validate(productCreateSchema.partial()),
+  updateProduct,
+);
+router.delete(
+  "/admin/products/:id",
+  verifyUserAuth,
+  roleBasedAccess("admin"),
+  deleteProduct,
+);
 
 export default router;
