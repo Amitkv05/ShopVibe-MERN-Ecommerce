@@ -39,3 +39,43 @@ test("legacy catalog migration does not import vendor collection or vendor owner
   assert.match(migration, /IMPORT_USER_ID/);
   assert.match(migration, /legacyId/);
 });
+
+
+test("legacy catalog migration preserves old Cloudinary media and backfills category icons", () => {
+  const migration = read("scripts/importLegacyCatalog.js");
+  const source = JSON.parse(read("migration/legacy-catalog-data.json"));
+
+  assert.match(migration, /icon:\s*mediaAsset\(source\.icon \|\| source\.image\)/);
+  assert.match(migration, /\["image", "icon", "banner"\]\.includes\(key\)/);
+  assert.match(migration, /return \{ public_id: "", url: normalized \}/);
+
+  assert.equal(source.categories.length, 14);
+  assert.equal(source.categories.filter((item) => String(item.image || "").startsWith("https://res.cloudinary.com/")).length, 14);
+  assert.equal(source.categories.filter((item) => String(item.banner || "").startsWith("https://res.cloudinary.com/")).length, 14);
+
+  assert.equal(source.subcategories.length, 56);
+  assert.equal(source.subcategories.filter((item) => String(item.image || "").startsWith("https://res.cloudinary.com/")).length, 56);
+
+  assert.equal(source.products.length, 16);
+  assert.equal(source.products.filter((item) => Array.isArray(item.images) && item.images.some((url) => String(url).startsWith("https://res.cloudinary.com/"))).length, 16);
+
+  assert.equal(source.banners.length, 3);
+  assert.equal(source.banners.filter((item) => String(item.image || "").startsWith("https://res.cloudinary.com/")).length, 3);
+});
+
+
+test("catalog migration honors DNS_SERVERS for Atlas SRV resolution", () => {
+  const migration = read("scripts/importLegacyCatalog.js");
+  assert.match(migration, /import \{ setServers \} from ["']node:dns["']/);
+  assert.match(migration, /process\.env\.DNS_SERVERS/);
+  assert.match(migration, /setServers\(customDnsServers\)/);
+});
+
+
+test("legacy media replaces seed placeholders without overwriting real current media by default", () => {
+  const migration = read("scripts/importLegacyCatalog.js");
+  assert.match(migration, /function isReplaceableSeedMedia\(value\)/);
+  assert.ok(migration.includes('url.includes("placehold.co/")'));
+  assert.ok(migration.includes('publicId.startsWith("seed/")'));
+  assert.ok(migration.includes('hasMedia(value) && (!hasMedia(current) || isReplaceableSeedMedia(current))'));
+});
