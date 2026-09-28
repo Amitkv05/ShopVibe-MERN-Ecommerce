@@ -17,7 +17,13 @@
     "check:api-freeze": "node scripts/checkApiFreeze.js",
     "api:freeze:update": "node scripts/updateApiFreezeBaseline.js",
     "migrate:legacy": "node scripts/migrateLegacyCompatibility.js --apply",
-    "migrate:legacy:dry": "node scripts/migrateLegacyCompatibility.js"
+    "migrate:legacy:dry": "node scripts/migrateLegacyCompatibility.js",
+    "migrate:catalog:dry": "node scripts/importLegacyCatalog.js",
+    "migrate:catalog": "node scripts/importLegacyCatalog.js --apply",
+    "migrate:catalog:overwrite": "node scripts/importLegacyCatalog.js --apply --overwrite-existing",
+    "migrate:catalog:banners": "node scripts/importLegacyCatalog.js --apply --with-banners",
+    "catalog:contract:dry": "node scripts/patchCatalogApiContract.js",
+    "catalog:contract": "node scripts/patchCatalogApiContract.js --apply"
   },
   "engines": {
     "node": ">=20"

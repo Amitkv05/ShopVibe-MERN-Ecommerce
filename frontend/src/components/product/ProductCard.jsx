@@ -35,8 +35,8 @@ export default function ProductCard({ product, variant = "grid" }) {
           </div>
           <div className="flex items-center justify-between mt-3">
             <div className="flex items-baseline gap-2">
-              <span className="text-lg font-bold text-gray-900">${product.price}</span>
-              {product.originalPrice > product.price && (<span className="text-sm text-gray-400 line-through">${product.originalPrice}</span>)}
+              <span className="text-lg font-bold text-gray-900">₹{product.price}</span>
+              {product.originalPrice > product.price && (<span className="text-sm text-gray-400 line-through">₹{product.originalPrice}</span>)}
               <Badge variant="danger" className="text-[10px]">-{product.discount}%</Badge>
             </div>
             <button onClick={handleAddToCart} className="flex items-center gap-1.5 px-3 py-2 bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold rounded-xl transition-colors">
@@ -87,8 +87,8 @@ export default function ProductCard({ product, variant = "grid" }) {
         <h3 className="font-semibold text-gray-900 mt-0.5 line-clamp-1">{product.name}</h3>
         <StarRating rating={product.rating} showValue reviews={product.reviews} className="mt-1.5"/>
         <div className="flex items-baseline gap-2 mt-2">
-          <span className="text-lg font-bold text-gray-900">${product.price}</span>
-          {product.originalPrice > product.price && (<span className="text-sm text-gray-400 line-through">${product.originalPrice}</span>)}
+          <span className="text-lg font-bold text-gray-900">₹{product.price}</span>
+          {product.originalPrice > product.price && (<span className="text-sm text-gray-400 line-through">₹{product.originalPrice}</span>)}
         </div>
       </div>
     </div>);

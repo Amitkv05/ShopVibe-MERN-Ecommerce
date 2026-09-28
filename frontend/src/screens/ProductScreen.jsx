@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { Heart, ShoppingBag, Share2, Star, ChevronLeft, ChevronRight, Truck, Shield, RotateCcw, CheckCircle, Minus, Plus } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { api } from "@/lib/api";
-import { getVariantSku } from "@/lib/data";
+import { adaptProduct, getVariantSku } from "@/lib/data";
 import ProductCard from "@/components/product/ProductCard";
 import StarRating from "@/components/reusable/StarRating";
 import Button from "@/components/reusable/Button";
 import Badge from "@/components/reusable/Badge";
 export default function ProductScreen() {
-    const { selectedProductId, selectedProduct, products, setPage, setSelectedCategory, addToCart, toggleWishlist, wishlist, fetchProduct, fetchCatalog, isLoggedIn, showToast } = useStore();
+    const { selectedProductId, selectedProduct, products, setPage, setSelectedCategory, openSubcategory, addToCart, toggleWishlist, wishlist, fetchProduct, fetchCatalog, isLoggedIn, showToast } = useStore();
     const product = selectedProduct?.id === selectedProductId ? selectedProduct : products.find((p) => p.id === selectedProductId) || null;
     useEffect(() => { if (selectedProductId && (!product || product.id !== selectedProductId))
         void fetchProduct(selectedProductId); }, [selectedProductId, product, fetchProduct]);
@@ -22,6 +22,15 @@ export default function ProductScreen() {
     const [reviewRating, setReviewRating] = useState(5);
     const [reviewComment, setReviewComment] = useState("");
     const [reviewBusy, setReviewBusy] = useState(false);
+    const [relatedProducts, setRelatedProducts] = useState([]);
+    useEffect(() => {
+        if (!selectedProductId) return;
+        let cancelled = false;
+        api(`/products/${encodeURIComponent(selectedProductId)}/related?limit=4`)
+            .then((data) => { if (!cancelled) setRelatedProducts((data.relatedProducts || []).map(adaptProduct)); })
+            .catch(() => { if (!cancelled) setRelatedProducts([]); });
+        return () => { cancelled = true; };
+    }, [selectedProductId]);
     useEffect(() => { if (product) {
         setSelectedSize(product.sizes[0] || "Standard");
         setSelectedColor(product.colors[0] || "Default");
@@ -36,7 +45,7 @@ export default function ProductScreen() {
       </div>);
     }
     const isWishlisted = wishlist.some((p) => p.id === product.id);
-    const related = products.filter((p) => p.id !== product.id && p.category === product.category).slice(0, 4);
+    const related = relatedProducts.length ? relatedProducts : products.filter((p) => p.id !== product.id && (product.subcategory ? p.subcategory === product.subcategory : p.category === product.category)).slice(0, 4);
     const selectedSku = getVariantSku(product, selectedSize, selectedColor);
     const selectedVariant = product.variants.find((variant) => variant.sku === selectedSku);
     const currentStock = selectedVariant ? Number(selectedVariant.stock || 0) : Number(product.stock || 0);
@@ -74,6 +83,10 @@ export default function ProductScreen() {
           <button onClick={() => setPage("shop")} className="hover:text-violet-600 transition-colors">Shop</button>
           <span>/</span>
           <button onClick={() => { setSelectedCategory(product.category); setPage("categories"); }} className="hover:text-violet-600 transition-colors">{product.category}</button>
+          {product.subcategory && (<>
+            <span>/</span>
+            <button onClick={() => openSubcategory(product.subcategory)} className="hover:text-violet-600 transition-colors">{product.subcategory}</button>
+          </>)}
           <span>/</span>
           <span className="text-gray-900 font-medium line-clamp-1">{product.name}</span>
         </div>

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { api, apiMessage, ApiError } from "./api";
-import { adaptCategory, adaptProduct, getVariantSku } from "./data";
+import { adaptCategory, adaptProduct, adaptSubcategory, getVariantSku } from "./data";
 const GUEST_CART_KEY = "shopvibe_guest_cart_v1";
 function loadGuestCart() {
     if (typeof window === "undefined")
@@ -43,20 +43,31 @@ function adaptOrder(raw) {
     const ship = raw?.shippingInfo || {};
     return { id: String(raw?._id || raw?.id || ""), date: raw?.createdAt || new Date().toISOString(), status: raw?.orderStatus || "Processing", items, total: Number(raw?.totalPrice || 0), address: { id: "", name: ship.fullName || "", phone: ship.phoneNo || "", line1: ship.address || "", line2: "", city: ship.city || "", state: ship.state || "", zip: ship.pinCode || "", country: ship.country || "", isDefault: false }, trackingNumber: raw?.trackingNumber || "", paymentMethod: raw?.paymentMethod, paymentStatus: raw?.paymentInfo?.status, raw };
 }
-function routeFor(page, productId) {
+function routeFor(page, value) {
     const map = { home: "/", shop: "/shop", newArrivals: "/new-arrivals", categories: "/categories", cart: "/cart", wishlist: "/wishlist", checkout: "/checkout", addresses: "/account/addresses", orders: "/account/orders", profile: "/account", login: "/login", register: "/register", forgot: "/forgot-password", changePassword: "/account/security", admin: "/admin" };
-    if (page === "product" && productId)
-        return `/product/${productId}`;
+    if (page === "product" && value) return `/product/${encodeURIComponent(value)}`;
+    if (page === "subcategoryProducts" && value) return `/subcategory/${encodeURIComponent(value)}`;
     return map[page] || "/";
 }
 export const useStore = create((set, get) => ({
-    currentPage: "home", selectedProductId: null,
-    setPage: (page, productId) => { set({ currentPage: page, selectedProductId: productId ?? (page === "product" ? get().selectedProductId : null) }); if (typeof window !== "undefined")
-        history.pushState({}, "", routeFor(page, productId ?? null)); },
+    currentPage: "home", selectedProductId: null, selectedSubcategorySlug: "",
+    setPage: (page, value) => {
+        set({
+            currentPage: page,
+            selectedProductId: page === "product" ? (value ?? get().selectedProductId) : get().selectedProductId,
+            selectedSubcategorySlug: page === "subcategoryProducts" ? String(value || get().selectedSubcategorySlug || "") : get().selectedSubcategorySlug,
+        });
+        if (typeof window !== "undefined") history.pushState({}, "", routeFor(page, value ?? null));
+    },
+    openSubcategory: (slug) => get().setPage("subcategoryProducts", slug),
     syncPageFromLocation: () => { if (typeof window === "undefined")
-        return; const p = window.location.pathname; let page = "home", id = null; if (p.startsWith("/product/")) {
+        return; const p = window.location.pathname; let page = "home", id = null, subcategorySlug = ""; if (p.startsWith("/product/")) {
         page = "product";
         id = decodeURIComponent(p.split("/")[2] || "");
+    }
+    else if (p.startsWith("/subcategory/")) {
+        page = "subcategoryProducts";
+        subcategorySlug = decodeURIComponent(p.split("/")[2] || "");
     }
     else if (p === "/shop")
         page = "shop";
@@ -87,7 +98,7 @@ export const useStore = create((set, get) => ({
     else if (p.startsWith("/verify-email/"))
         page = "verify";
     else if (p.startsWith("/admin"))
-        page = "admin"; set({ currentPage: page, selectedProductId: id }); },
+        page = "admin"; set({ currentPage: page, selectedProductId: id, selectedSubcategorySlug: subcategorySlug }); },
     isLoggedIn: false, authLoading: true, user: null,
     hydrateSession: async () => { get().syncPageFromLocation(); if (typeof window !== "undefined" && !get().isLoggedIn)
         set({ cart: loadGuestCart() }); try {
@@ -117,10 +128,12 @@ export const useStore = create((set, get) => ({
     changePassword: async (oldPassword, newPassword, confirmPassword) => { const d = await api("/password/update", { method: "POST", body: { oldPassword, newPassword, confirmPassword } }); if (d.user)
         set(s => ({ user: s.user ? { ...s.user, ...d.user } : s.user })); get().showToast("Password updated", "success"); },
     resendVerification: async () => { const d = await api("/verify-email/resend", { method: "POST" }); get().showToast(d.message || "Verification email sent", "success"); return d.message; },
-    products: [], categories: [], productMeta: { currentPage: 1, totalPages: 1, productCount: 0, resultPerPage: 12 }, catalogLoading: false, catalogError: "", selectedProduct: null,
+    products: [], categories: [], subcategories: [], categoryTree: [], productMeta: { currentPage: 1, totalPages: 1, productCount: 0, resultPerPage: 12 }, catalogLoading: false, catalogError: "", selectedProduct: null,
     fetchCatalog: async () => { set({ catalogLoading: true, catalogError: "" }); try {
-        const [p, c] = await Promise.all([api("/products?limit=50"), api("/categories")]);
-        set({ products: (p.products || []).map(adaptProduct), categories: (c.categories || []).map(adaptCategory), productMeta: { currentPage: Number(p.currentPage || 1), totalPages: Number(p.totalPages || 1), productCount: Number(p.productCount || 0), resultPerPage: Number(p.resultPerPage || 12) } });
+        const [p, tree] = await Promise.all([api("/products?limit=50"), api("/categories/tree")]);
+        const categories = (tree.categories || []).map(adaptCategory);
+        const subcategories = categories.flatMap((category) => category.subcategories);
+        set({ products: (p.products || []).map(adaptProduct), categories, categoryTree: categories, subcategories, productMeta: { currentPage: Number(p.currentPage || 1), totalPages: Number(p.totalPages || 1), productCount: Number(p.productCount || 0), resultPerPage: Number(p.resultPerPage || 12) } });
     }
     catch (e) {
         set({ catalogError: apiMessage(e) });
@@ -128,6 +141,23 @@ export const useStore = create((set, get) => ({
     finally {
         set({ catalogLoading: false });
     } },
+    fetchTaxonomy: async () => {
+        try {
+            const tree = await api("/categories/tree");
+            const categories = (tree.categories || []).map(adaptCategory);
+            const subcategories = categories.flatMap((category) => category.subcategories);
+            set({ categories, categoryTree: categories, subcategories });
+            return categories;
+        } catch (e) {
+            set({ catalogError: apiMessage(e, "Categories could not be loaded") });
+            throw e;
+        }
+    },
+    fetchSubcategories: async (categoryRef = "") => {
+        const qs = categoryRef ? `?categoryRef=${encodeURIComponent(categoryRef)}` : "";
+        const data = await api(`/subcategories${qs}`);
+        return (data.subcategories || []).map(adaptSubcategory);
+    },
     fetchProducts: async (params = {}) => { set({ catalogLoading: true, catalogError: "" }); try {
         const qs = new URLSearchParams();
         Object.entries(params).forEach(([k, v]) => { if (v !== undefined && v !== null && v !== "")
@@ -224,6 +254,6 @@ export const useStore = create((set, get) => ({
         throw new Error("Please sign in to checkout"); const addr = get().addresses.find(a => a.id === get().selectedAddressId) || get().addresses[0]; if (!addr)
         throw new Error("Please add a shipping address"); const orderItems = get().cart.map(i => ({ product: i.product.id, quantity: i.quantity, variantSku: i.variantSku || getVariantSku(i.product, i.size, i.color) })); const key = globalThis.crypto?.randomUUID?.() || `web-${Date.now()}-${Math.random()}`; const d = await api("/new/order", { method: "POST", headers: { "Idempotency-Key": key }, body: { shippingInfo: addressPayload(addr), orderItems, paymentMethod, paymentInfo, couponCode: couponCode || undefined } }); await Promise.allSettled([get().refreshCart(), get().refreshOrders()]); get().showToast("Order placed successfully! 🎉", "success"); return adaptOrder(d.order); },
     cancelOrder: async (id, reason = "") => { await api(`/order/${id}/cancel`, { method: "POST", body: { reason } }); await get().refreshOrders(); get().showToast("Order cancelled", "success"); },
-    selectedCategory: "All", setSelectedCategory: (cat) => set({ selectedCategory: cat }), searchQuery: "", setSearchQuery: (q) => set({ searchQuery: q }), priceRange: [0, 1000], setPriceRange: (range) => set({ priceRange: range }), sortBy: "featured", setSortBy: (sort) => set({ sortBy: sort }),
+    selectedCategory: "All", setSelectedCategory: (cat) => set({ selectedCategory: cat }), selectedSubcategory: "All", setSelectedSubcategory: (sub) => set({ selectedSubcategory: sub }), searchQuery: "", setSearchQuery: (q) => set({ searchQuery: q }), priceRange: [0, 100000], setPriceRange: (range) => set({ priceRange: range }), sortBy: "featured", setSortBy: (sort) => set({ sortBy: sort }),
     toasts: [], showToast: (message, type = "success") => { const id = `toast-${Date.now()}-${Math.random()}`; set(s => ({ toasts: [...s.toasts, { id, message, type }] })); setTimeout(() => set(s => ({ toasts: s.toasts.filter(t => t.id !== id) })), 3500); }, removeToast: (id) => set(s => ({ toasts: s.toasts.filter(t => t.id !== id) })),
 }));

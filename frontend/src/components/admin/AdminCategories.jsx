@@ -20,6 +20,8 @@ const blank = {
   description: "",
   image: emptyAsset,
   icon: emptyAsset,
+  banner: emptyAsset,
+  sortOrder: "0",
   active: true,
 };
 
@@ -64,7 +66,7 @@ export default function AdminCategories() {
 
   const openNew = () => {
     setEditing({ new: true });
-    setForm({ ...blank, image: { ...emptyAsset }, icon: { ...emptyAsset } });
+    setForm({ ...blank, image: { ...emptyAsset }, icon: { ...emptyAsset }, banner: { ...emptyAsset } });
   };
 
   const openEdit = (category) => {
@@ -75,6 +77,8 @@ export default function AdminCategories() {
       description: category.description || "",
       image: normalizeAsset(category.image),
       icon: normalizeAsset(category.icon),
+      banner: normalizeAsset(category.banner),
+      sortOrder: String(category.sortOrder ?? 0),
       active: category.active !== false,
     });
   };
@@ -158,6 +162,8 @@ export default function AdminCategories() {
         description: form.description.trim(),
         image: normalizeAsset(form.image),
         icon: normalizeAsset(form.icon),
+        banner: normalizeAsset(form.banner),
+        sortOrder: Number(form.sortOrder || 0),
         active: form.active,
       };
 
@@ -351,6 +357,23 @@ export default function AdminCategories() {
                 onUpload={(files) => void uploadAsset("icon", files)}
                 onRemove={() => void removeAsset("icon")}
                 compact
+              />
+              <CategoryAssetField
+                label="Category Banner"
+                help="Optional hero image shown when customers browse this category."
+                asset={form.banner}
+                busy={uploading === "banner"}
+                onUpload={(files) => void uploadAsset("banner", files)}
+                onRemove={() => void removeAsset("banner")}
+              />
+              <AdminField
+                label="Display Order"
+                type="number"
+                min="0"
+                value={form.sortOrder}
+                onChange={(event) =>
+                  setForm((current) => ({ ...current, sortOrder: event.target.value }))
+                }
               />
             </div>
 

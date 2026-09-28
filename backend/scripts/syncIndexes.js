@@ -3,10 +3,13 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-dotenv.config({ path: process.env.ENV_FILE || path.join(__dirname, "..", ".env") });
+dotenv.config({
+  path: process.env.ENV_FILE || path.join(__dirname, "..", ".env"),
+});
 
 const { validateEnvironment } = await import("../config/env.js");
-const { connectMongoDatabase, disconnectMongoDatabase } = await import("../config/db.js");
+const { connectMongoDatabase, disconnectMongoDatabase } =
+  await import("../config/db.js");
 const models = await Promise.all([
   import("../models/userModel.js"),
   import("../models/productModel.js"),
@@ -14,6 +17,7 @@ const models = await Promise.all([
   import("../models/cartModel.js"),
   import("../models/wishlistModel.js"),
   import("../models/categoryModel.js"),
+  import("../models/subcategoryModel.js"),
   import("../models/couponModel.js"),
   import("../models/inventoryLogModel.js"),
   import("../models/paymentEventModel.js"),

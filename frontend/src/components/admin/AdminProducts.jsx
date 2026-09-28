@@ -30,6 +30,8 @@ const emptyForm = {
   price: "",
   category: "",
   categoryRef: "",
+  subcategory: "",
+  subcategoryRef: "",
   brand: "",
   sku: "",
   stock: "0",
@@ -111,6 +113,8 @@ function formFromProduct(product) {
     price: String(product.price ?? ""),
     category: product.category || "",
     categoryRef: String(product.categoryRef?._id || product.categoryRef || ""),
+    subcategory: product.subcategory || "",
+    subcategoryRef: String(product.subcategoryRef?._id || product.subcategoryRef || ""),
     brand: product.brand || "",
     sku: product.sku || "",
     stock: String(product.stock ?? 0),
@@ -131,6 +135,7 @@ function formFromProduct(product) {
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [subcategories, setSubcategories] = useState([]);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -146,13 +151,15 @@ export default function AdminProducts() {
     setError("");
 
     try {
-      const [productData, categoryData] = await Promise.all([
+      const [productData, categoryData, subcategoryData] = await Promise.all([
         api("/admin/products?limit=50"),
         api("/admin/categories"),
+        api("/admin/subcategories"),
       ]);
 
       setProducts(productData.products || []);
       setCategories(categoryData.categories || []);
+      setSubcategories(subcategoryData.subcategories || []);
     } catch (err) {
       setError(apiMessage(err, "Unable to load products"));
     } finally {
@@ -168,13 +175,20 @@ export default function AdminProducts() {
     const normalizedQuery = query.toLowerCase();
 
     return products.filter((product) =>
-      `${product.name} ${product.brand || ""} ${product.category || ""} ${
+      `${product.name} ${product.brand || ""} ${product.category || ""} ${product.subcategory || ""} ${
         product.sku || ""
       }`
         .toLowerCase()
         .includes(normalizedQuery)
     );
   }, [products, query]);
+
+  const availableSubcategories = useMemo(() => {
+    if (!form.categoryRef) return [];
+    return subcategories.filter((subcategory) =>
+      String(subcategory.categoryRef?._id || subcategory.categoryRef || "") === form.categoryRef
+    );
+  }, [subcategories, form.categoryRef]);
 
   const openNew = () => {
     setEditing({ new: true });
@@ -425,6 +439,8 @@ export default function AdminProducts() {
         description: form.description.trim(),
         price: Number(form.price),
         category: selectedCategory?.name || form.category.trim(),
+        subcategory: form.subcategory.trim(),
+        subcategoryRef: form.subcategoryRef || null,
         brand: form.brand.trim() || undefined,
         sku: form.sku.trim() || undefined,
         stock: Number(form.stock || 0),
@@ -569,7 +585,10 @@ export default function AdminProducts() {
                         </div>
                       </td>
 
-                      <td>{product.category}</td>
+                      <td>
+                        <p className="font-medium text-gray-800 dark:text-gray-200">{product.category}</p>
+                        {product.subcategory && <p className="text-xs text-gray-500 dark:text-gray-400">{product.subcategory}</p>}
+                      </td>
                       <td>{money(product.price)}</td>
 
                       <td>
@@ -680,6 +699,8 @@ export default function AdminProducts() {
                   ...current,
                   categoryRef: event.target.value,
                   category: category?.name || current.category,
+                  subcategoryRef: "",
+                  subcategory: "",
                 }));
               }}
             >
@@ -687,6 +708,29 @@ export default function AdminProducts() {
               {categories.map((category) => (
                 <option key={category._id} value={category._id}>
                   {category.name}
+                </option>
+              ))}
+            </AdminSelect>
+
+            <AdminSelect
+              label="Subcategory"
+              value={form.subcategoryRef}
+              disabled={!form.categoryRef}
+              onChange={(event) => {
+                const subcategory = subcategories.find(
+                  (item) => String(item._id) === event.target.value
+                );
+                setForm((current) => ({
+                  ...current,
+                  subcategoryRef: event.target.value,
+                  subcategory: subcategory?.name || "",
+                }));
+              }}
+            >
+              <option value="">{form.categoryRef ? "No subcategory / Select subcategory" : "Select category first"}</option>
+              {availableSubcategories.map((subcategory) => (
+                <option key={subcategory._id} value={subcategory._id}>
+                  {subcategory.name}
                 </option>
               ))}
             </AdminSelect>
