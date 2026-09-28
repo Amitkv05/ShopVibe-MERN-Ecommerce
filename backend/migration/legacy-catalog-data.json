@@ -1,0 +1,758 @@
+{
+  "source": {
+    "description": "Sanitized legacy catalog snapshot built from the uploaded MongoDB BSON exports. Vendor/user data intentionally excluded.",
+    "database": "test"
+  },
+  "categories": [
+    {
+      "_id": "679b83594fd5cfd936afb283",
+      "name": "Furniture",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738244952/categoryImages/vxasvcn0zlg4e7glgpi7.png",
+      "banner": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738244952/categoryImages/j4tjvduhoxzd2jw41xve.jpg"
+    },
+    {
+      "_id": "679b83334fd5cfd936afb281",
+      "name": "Fitness",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738244913/categoryImages/x2wrwdu3s30xosnkozlb.png",
+      "banner": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738244915/categoryImages/nweb3ndg9ew42xx7dkao.jpg"
+    },
+    {
+      "_id": "679b82b04fd5cfd936afb279",
+      "name": "Bags",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738244781/categoryImages/msmyhzjxoseuzw9syvne.png",
+      "banner": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738244783/categoryImages/qkdgly3lab7awnjcmiog.jpg"
+    },
+    {
+      "_id": "679b83ed4fd5cfd936afb28f",
+      "name": "Necklace",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738245100/categoryImages/ce0jiwvrgjxaavbqvvoi.png",
+      "banner": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738245100/categoryImages/vkvh6xhanxt3usp7nfh1.jpg"
+    },
+    {
+      "_id": "679b83b34fd5cfd936afb28b",
+      "name": "Kitchen",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738245042/categoryImages/yi5iasalelicwjwi5x7l.png",
+      "banner": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738245043/categoryImages/dk5u3ao3p5kcpoohyowl.jpg"
+    },
+    {
+      "_id": "679b84414fd5cfd936afb293",
+      "name": "Watches",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738245184/categoryImages/vdzbf2blryxxpd7ftoui.png",
+      "banner": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738245184/categoryImages/ijlffipx8h4zxaf8y5wa.jpg"
+    },
+    {
+      "_id": "679b83884fd5cfd936afb287",
+      "name": "Glasses",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738244999/categoryImages/yoh3w4jipgj4pugif0f5.png",
+      "banner": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738245000/categoryImages/x1fzhcyryuu62pa2oxvv.jpg"
+    },
+    {
+      "_id": "679b82ce4fd5cfd936afb27b",
+      "name": "Camera",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738244813/categoryImages/fvuizutxwxacj4ltbo6g.png",
+      "banner": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738244813/categoryImages/tqhmncfmkls2leypkopa.jpg"
+    },
+    {
+      "_id": "679b841c4fd5cfd936afb291",
+      "name": "Shoes",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738245147/categoryImages/ihsf7h5jgmk1t2qecxue.png",
+      "banner": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738245148/categoryImages/etbnq7chnljvtynda3ap.jpg"
+    },
+    {
+      "_id": "679b83224fd5cfd936afb27f",
+      "name": "Electronics",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738244897/categoryImages/badtr0fvifmwrdr6j9kz.png",
+      "banner": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738244898/categoryImages/yzz32pljfmituwmzztl1.jpg"
+    },
+    {
+      "_id": "679b836c4fd5cfd936afb285",
+      "name": "Gifts",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738244971/categoryImages/zykxvmhzku06vsq7c0dz.png",
+      "banner": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738244972/categoryImages/hvovgulgcdj5twmu3muq.jpg"
+    },
+    {
+      "_id": "679b839f4fd5cfd936afb289",
+      "name": "Hardwares",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738245023/categoryImages/zzqcskupzwokiqnn8hvr.png",
+      "banner": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738245023/categoryImages/pd5vf7is22go7vj4tsgb.jpg"
+    },
+    {
+      "_id": "679b83c44fd5cfd936afb28d",
+      "name": "Mobiles",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738245059/categoryImages/qierh4fdagyxgamlr8j6.png",
+      "banner": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738245060/categoryImages/jytcofshtiq1ojx4mygn.jpg"
+    },
+    {
+      "_id": "679b82fe4fd5cfd936afb27d",
+      "name": "Clothes",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738244862/categoryImages/ak8hsh8ntqmwxlgey8lj.png",
+      "banner": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738244862/categoryImages/p9levm8k7w8wexwvsnnm.jpg"
+    }
+  ],
+  "subcategories": [
+    {
+      "_id": "679c5ea9263ebaab561236ab",
+      "categoryName": "Bags",
+      "categoryId": "679b82b04fd5cfd936afb279",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301097/subcategoryImages/wkkc1vwweqpuphd4mbfw.webp",
+      "subCategoryName": "Travel Bags"
+    },
+    {
+      "_id": "679c5f35263ebaab561236b4",
+      "categoryName": "Bags",
+      "categoryId": "679b82b04fd5cfd936afb279",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301236/subcategoryImages/krqea1zvkapkswep0rjh.webp",
+      "subCategoryName": "Sports & Gym Bags"
+    },
+    {
+      "_id": "679c5fa8263ebaab561236ba",
+      "categoryName": "Camera",
+      "categoryId": "679b82ce4fd5cfd936afb27b",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301352/subcategoryImages/yqj8peyoingbs7sln9bj.jpg",
+      "subCategoryName": "Action & Sports Camera"
+    },
+    {
+      "_id": "679c60f5263ebaab561236d0",
+      "categoryName": "Mobiles",
+      "categoryId": "679b83c44fd5cfd936afb28d",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301685/subcategoryImages/pk6nbtlwoy6wacc0ovwo.jpg",
+      "subCategoryName": "IOS Phones"
+    },
+    {
+      "_id": "679c5f14263ebaab561236b2",
+      "categoryName": "Bags",
+      "categoryId": "679b82b04fd5cfd936afb279",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301204/subcategoryImages/vrm3lvmsxbt4p95kwk0l.jpg",
+      "subCategoryName": "Hand bags"
+    },
+    {
+      "_id": "679c5ee0263ebaab561236ad",
+      "categoryName": "Bags",
+      "categoryId": "679b82b04fd5cfd936afb279",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301152/subcategoryImages/nspaoyv2snu3espaj8o3.jpg",
+      "subCategoryName": "Hiking & Trekking Bags"
+    },
+    {
+      "_id": "679c6063263ebaab561236c7",
+      "categoryName": "Clothes",
+      "categoryId": "679b82fe4fd5cfd936afb27d",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301538/subcategoryImages/nhiug2t5nigo6zgdkaau.webp",
+      "subCategoryName": "Sports & Active wear"
+    },
+    {
+      "_id": "679c6007263ebaab561236c1",
+      "categoryName": "Clothes",
+      "categoryId": "679b82fe4fd5cfd936afb27d",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301447/subcategoryImages/vsqam0azzaiguff54von.jpg",
+      "subCategoryName": "Men's Clothing"
+    },
+    {
+      "_id": "679c610b263ebaab561236d2",
+      "categoryName": "Mobiles",
+      "categoryId": "679b83c44fd5cfd936afb28d",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301706/subcategoryImages/fxwz6knmaq8djgtbwkzr.png",
+      "subCategoryName": "Gaming Phones"
+    },
+    {
+      "_id": "679c6083263ebaab561236c9",
+      "categoryName": "Clothes",
+      "categoryId": "679b82fe4fd5cfd936afb27d",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301570/subcategoryImages/zwnr2yoq9kvcinoguytb.jpg",
+      "subCategoryName": "Winter & Seasonal Wear"
+    },
+    {
+      "_id": "679c6149263ebaab561236d4",
+      "categoryName": "Mobiles",
+      "categoryId": "679b83c44fd5cfd936afb28d",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301768/subcategoryImages/pgzrvlriew4t3epm1r9t.webp",
+      "subCategoryName": "Foldable Phones"
+    },
+    {
+      "_id": "679c5fc5263ebaab561236bc",
+      "categoryName": "Camera",
+      "categoryId": "679b82ce4fd5cfd936afb27b",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301380/subcategoryImages/npna8yrkoxcwwovxfbir.jpg",
+      "subCategoryName": "Camera Accessories"
+    },
+    {
+      "_id": "679c6047263ebaab561236c5",
+      "categoryName": "Clothes",
+      "categoryId": "679b82fe4fd5cfd936afb27d",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301511/subcategoryImages/ffnjsj2odxaqzxwkqrfa.jpg",
+      "subCategoryName": "Kids Clothing"
+    },
+    {
+      "_id": "679c615a263ebaab561236d6",
+      "categoryName": "Mobiles",
+      "categoryId": "679b83c44fd5cfd936afb28d",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301786/subcategoryImages/uaru8nxoq9u5sjlth5ir.webp",
+      "subCategoryName": "Mobile Accessories"
+    },
+    {
+      "_id": "679c6033263ebaab561236c3",
+      "categoryName": "Clothes",
+      "categoryId": "679b82fe4fd5cfd936afb27d",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301491/subcategoryImages/geydj4pkjh7rh0dr0tki.png",
+      "subCategoryName": "Women's Clothing"
+    },
+    {
+      "_id": "679c5e6a263ebaab561236a6",
+      "categoryName": "Bags",
+      "categoryId": "679b82b04fd5cfd936afb279",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301033/subcategoryImages/rxr7jee5l0sglrim1rkk.webp",
+      "subCategoryName": "Laptop Bags"
+    },
+    {
+      "_id": "679c60e7263ebaab561236ce",
+      "categoryName": "Mobiles",
+      "categoryId": "679b83c44fd5cfd936afb28d",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301671/subcategoryImages/jtrjg9a164nda8nwbbxs.webp",
+      "subCategoryName": "Android Phones"
+    },
+    {
+      "_id": "679c5f5a263ebaab561236b6",
+      "categoryName": "Camera",
+      "categoryId": "679b82ce4fd5cfd936afb27b",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738301273/subcategoryImages/mmaykahgaq6in6lowkhx.jpg",
+      "subCategoryName": "DSLR Camera"
+    },
+    {
+      "_id": "68ef1de2f48c07b889a4173c",
+      "categoryName": "Furniture",
+      "categoryId": "679b83594fd5cfd936afb283",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760501217/subcategoryImages/mncvdeakggtc11yg7gdv.png",
+      "subCategoryName": "Dining Tables"
+    },
+    {
+      "_id": "68ef1f52f48c07b889a41743",
+      "categoryName": "Furniture",
+      "categoryId": "679b83594fd5cfd936afb283",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760501584/subcategoryImages/kghblmadexftqp41giog.png",
+      "subCategoryName": "Bunk & Loft Beds"
+    },
+    {
+      "_id": "68ef1f62f48c07b889a41745",
+      "categoryName": "Furniture",
+      "categoryId": "679b83594fd5cfd936afb283",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760501601/subcategoryImages/wjzrlidswvbnxzztmsnc.png",
+      "subCategoryName": "Dressers & Chests"
+    },
+    {
+      "_id": "68efb9367ee5b52c52238313",
+      "categoryName": "Furniture",
+      "categoryId": "679b83594fd5cfd936afb283",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760540981/subcategoryImages/xlgzv5f1gax0eweht9fn.png",
+      "subCategoryName": "Bed Frames"
+    },
+    {
+      "_id": "68efbb637ee5b52c5223831b",
+      "categoryName": "Furniture",
+      "categoryId": "679b83594fd5cfd936afb283",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760541537/subcategoryImages/gm3f6rqbta5ab8lwaopf.png",
+      "subCategoryName": "Loveseats"
+    },
+    {
+      "_id": "68efbbcb7ee5b52c5223831e",
+      "categoryName": "Furniture",
+      "categoryId": "679b83594fd5cfd936afb283",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760541641/subcategoryImages/a7tw7nfiyfjcgxzc5ju4.png",
+      "subCategoryName": "Office & Desk Chairs"
+    },
+    {
+      "_id": "68efbc0d7ee5b52c52238321",
+      "categoryName": "Furniture",
+      "categoryId": "679b83594fd5cfd936afb283",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760541707/subcategoryImages/sth6dwpvqqnieawrq8b4.png",
+      "subCategoryName": "Desks & Work Tables"
+    },
+    {
+      "_id": "68efbef47ee5b52c52238324",
+      "categoryName": "Fitness",
+      "categoryId": "679b83334fd5cfd936afb281",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760542451/subcategoryImages/i3k5tcq4krsux5j5hweb.jpg",
+      "subCategoryName": "Home Gym"
+    },
+    {
+      "_id": "68efbf2c7ee5b52c52238327",
+      "categoryName": "Fitness",
+      "categoryId": "679b83334fd5cfd936afb281",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760542505/subcategoryImages/ebi8ojqryfkdfoqopjgb.jpg",
+      "subCategoryName": "Strength & Cardio Equipment"
+    },
+    {
+      "_id": "68efbf7c7ee5b52c5223832a",
+      "categoryName": "Fitness",
+      "categoryId": "679b83334fd5cfd936afb281",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760542587/subcategoryImages/nldcnjqfmf6dketezrht.webp",
+      "subCategoryName": "Supports"
+    },
+    {
+      "_id": "68efbfab7ee5b52c5223832d",
+      "categoryName": "Fitness",
+      "categoryId": "679b83334fd5cfd936afb281",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760542634/subcategoryImages/piegvusyvvit4lua1dd0.jpg",
+      "subCategoryName": "Dumbbells"
+    },
+    {
+      "_id": "68efbfee7ee5b52c52238330",
+      "categoryName": "Fitness",
+      "categoryId": "679b83334fd5cfd936afb281",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760542699/subcategoryImages/ll5e3yawdllwlxktyr7c.webp",
+      "subCategoryName": "Shakers And Sippers"
+    },
+    {
+      "_id": "68efc00b7ee5b52c52238333",
+      "categoryName": "Fitness",
+      "categoryId": "679b83334fd5cfd936afb281",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760542730/subcategoryImages/foctialw3oejvq0keugv.jpg",
+      "subCategoryName": "Yoga Mats"
+    },
+    {
+      "_id": "68efc0867ee5b52c52238336",
+      "categoryName": "Necklace",
+      "categoryId": "679b83ed4fd5cfd936afb28f",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760542852/subcategoryImages/c6tf0rsvgbmvx2ti9wqa.webp",
+      "subCategoryName": "Artificial Jewellery"
+    },
+    {
+      "_id": "68efc0bd7ee5b52c52238339",
+      "categoryName": "Necklace",
+      "categoryId": "679b83ed4fd5cfd936afb28f",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760542907/subcategoryImages/spc1cxjebt4uu1b0vp4x.jpg",
+      "subCategoryName": "Silver Jewellery"
+    },
+    {
+      "_id": "68efc0eb7ee5b52c5223833c",
+      "categoryName": "Necklace",
+      "categoryId": "679b83ed4fd5cfd936afb28f",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760542951/subcategoryImages/teswyz5oikiyczhwrjnm.jpg",
+      "subCategoryName": "Precious Jewellery"
+    },
+    {
+      "_id": "68efc1537ee5b52c5223833f",
+      "categoryName": "Kitchen",
+      "categoryId": "679b83b34fd5cfd936afb28b",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543057/subcategoryImages/hjw5smcwmzfl8qxxuvft.jpg",
+      "subCategoryName": "Pans"
+    },
+    {
+      "_id": "68efc16e7ee5b52c52238342",
+      "categoryName": "Kitchen",
+      "categoryId": "679b83b34fd5cfd936afb28b",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543085/subcategoryImages/wf0vzmvhrt2pf9y0isli.webp",
+      "subCategoryName": "Tawas"
+    },
+    {
+      "_id": "68efc1877ee5b52c52238345",
+      "categoryName": "Kitchen",
+      "categoryId": "679b83b34fd5cfd936afb28b",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543110/subcategoryImages/lowzkze6ywgi0rfgmkg4.webp",
+      "subCategoryName": "Pressure Cookers"
+    },
+    {
+      "_id": "68efc1a07ee5b52c52238348",
+      "categoryName": "Kitchen",
+      "categoryId": "679b83b34fd5cfd936afb28b",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543134/subcategoryImages/tgzzznwys43uav9uttow.webp",
+      "subCategoryName": "Kitchen Tools"
+    },
+    {
+      "_id": "68efc1b37ee5b52c5223834b",
+      "categoryName": "Kitchen",
+      "categoryId": "679b83b34fd5cfd936afb28b",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543154/subcategoryImages/dzsym8fqtz99bx1mz7ik.webp",
+      "subCategoryName": "Gas Stoves"
+    },
+    {
+      "_id": "68efc1ef7ee5b52c52238352",
+      "categoryName": "Watches",
+      "categoryId": "679b84414fd5cfd936afb293",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543214/subcategoryImages/g3uenctq9e9ia4joe8ca.webp",
+      "subCategoryName": "Fastrack Watches"
+    },
+    {
+      "_id": "68efc20f7ee5b52c52238355",
+      "categoryName": "Watches",
+      "categoryId": "679b84414fd5cfd936afb293",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543246/subcategoryImages/wngw1wt7mjfi8mvtwarx.webp",
+      "subCategoryName": "Casio Watches"
+    },
+    {
+      "_id": "68efc2297ee5b52c52238358",
+      "categoryName": "Watches",
+      "categoryId": "679b84414fd5cfd936afb293",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543272/subcategoryImages/si5ucx9glb6uvpw2ymcq.webp",
+      "subCategoryName": "Titan Watches"
+    },
+    {
+      "_id": "68efc23f7ee5b52c5223835b",
+      "categoryName": "Watches",
+      "categoryId": "679b84414fd5cfd936afb293",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543294/subcategoryImages/ekyczgwstzc9jjclegeo.webp",
+      "subCategoryName": "Fossil Watches"
+    },
+    {
+      "_id": "68efc2577ee5b52c5223835e",
+      "categoryName": "Watches",
+      "categoryId": "679b84414fd5cfd936afb293",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543318/subcategoryImages/mjtw7a3sv1ifhxmtpjlq.webp",
+      "subCategoryName": "Sonata Watches"
+    },
+    {
+      "_id": "68efc3227ee5b52c52238361",
+      "categoryName": "Glasses",
+      "categoryId": "679b83884fd5cfd936afb287",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543520/subcategoryImages/y3ls9wjitbuu6deru0k0.jpg",
+      "subCategoryName": "Aviator"
+    },
+    {
+      "_id": "68efc3427ee5b52c52238364",
+      "categoryName": "Glasses",
+      "categoryId": "679b83884fd5cfd936afb287",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543552/subcategoryImages/goedk47umzxomyivdzan.png",
+      "subCategoryName": "Round"
+    },
+    {
+      "_id": "68efc36a7ee5b52c52238367",
+      "categoryName": "Glasses",
+      "categoryId": "679b83884fd5cfd936afb287",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543593/subcategoryImages/ye3zg6jwcx147iekapuc.jpg",
+      "subCategoryName": "Oversized"
+    },
+    {
+      "_id": "68efc3897ee5b52c5223836a",
+      "categoryName": "Glasses",
+      "categoryId": "679b83884fd5cfd936afb287",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543623/subcategoryImages/tl2upvslq6hhnfoz1oap.jpg",
+      "subCategoryName": "Wayfarer"
+    },
+    {
+      "_id": "68efc3aa7ee5b52c5223836d",
+      "categoryName": "Glasses",
+      "categoryId": "679b83884fd5cfd936afb287",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543656/subcategoryImages/cd7bhxvorod2winoxpjw.png",
+      "subCategoryName": "Cateye"
+    },
+    {
+      "_id": "68efc3d47ee5b52c52238370",
+      "categoryName": "Glasses",
+      "categoryId": "679b83884fd5cfd936afb287",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543699/subcategoryImages/gbkuxs5j4hj1xm08eomr.png",
+      "subCategoryName": "Rectangular"
+    },
+    {
+      "_id": "68efc42b7ee5b52c52238373",
+      "categoryName": "Shoes",
+      "categoryId": "679b841c4fd5cfd936afb291",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543785/subcategoryImages/mzsnfnbwaiasmuzabpjz.jpg",
+      "subCategoryName": "Casual Shoes"
+    },
+    {
+      "_id": "68efc4527ee5b52c52238376",
+      "categoryName": "Shoes",
+      "categoryId": "679b841c4fd5cfd936afb291",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543825/subcategoryImages/g5x2fd9cpgsairpqzpbt.jpg",
+      "subCategoryName": "Loafers & Moccasins"
+    },
+    {
+      "_id": "68efc4847ee5b52c52238379",
+      "categoryName": "Shoes",
+      "categoryId": "679b841c4fd5cfd936afb291",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543875/subcategoryImages/aeh5f1z4l9iwsc9ckrr2.jpg",
+      "subCategoryName": "Boots"
+    },
+    {
+      "_id": "68efc4bd7ee5b52c5223837c",
+      "categoryName": "Shoes",
+      "categoryId": "679b841c4fd5cfd936afb291",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543932/subcategoryImages/oodwygxea0b42yd7zz53.jpg",
+      "subCategoryName": "Sports & Outdoor Shoes"
+    },
+    {
+      "_id": "68efc4e67ee5b52c5223837f",
+      "categoryName": "Shoes",
+      "categoryId": "679b841c4fd5cfd936afb291",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760543973/subcategoryImages/crt55tk7cdvqvfosyiay.jpg",
+      "subCategoryName": "Formal Shoes"
+    },
+    {
+      "_id": "68efc5117ee5b52c52238382",
+      "categoryName": "Shoes",
+      "categoryId": "679b841c4fd5cfd936afb291",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1760544016/subcategoryImages/wlon9yjgdkqyosd1rdrh.jpg",
+      "subCategoryName": "Sandals & Floaters"
+    }
+  ],
+  "products": [
+    {
+      "_id": "67ae0a90d67684edc2a10f23",
+      "productName": "SIRGAWAIN Action Camera 1080P 12MP Sports Camera Full HD 2.0 Inch Action Cam 30m/98ft Underwater Waterproof Camera with Mounting Accessories (CAM3)",
+      "productPrice": 1399,
+      "quantity": 10,
+      "description": "FULL HD VIDEO AND PHOTO RESOLUTION: 12MP and 1080P together can make sure you capture pictures and videos easily And 140wide-angle lens allows you to shoot wider scenes and catch more amazing moment of your surroundings\nyou can dive into water without any worry, Perfect for water sports, such as swimming, diving, surfing and so on hence, You can explore the unknown underwater world\nSHOOTING MODE: Single Shot, Continuous Shooting, Self-timer; EXPOSURE: The brightness can be adjusted to take a better photos (darker or brighter) This sport action camera with mounting accessories which can support to attach to helmets, bike, surfboards, cars and other objects easily\nIt Has A Variety Of Industry-Leading Features Including Digital Video Recording, Photo Shooting, Audio Recording, Video Display\nyou can dive into water without any worry, Perfect for water sports, such as swimng, diving, surfing and so on hence, You can explore the unknown underwater world Support Loop recording, 180° Turnover ",
+      "category": "Camera",
+      "subCategory": "Action & Sports Camera",
+      "images": [
+        "https://res.cloudinary.com/dbpmte8mh/image/upload/v1739459216/SIRGAWAIN%20Action%20Camera%201080P%2012MP%20Sports%20Camera%20Full%20HD%202.0%20Inch%20Action%20Cam%2030m/98ft%20Underwater%20Waterproof%20Camera%20with%20Mounting%20Accessories%20%28CAM3%29/vzsfh004mwmsdwpzett4.jpg"
+      ],
+      "popular": true,
+      "recommend": false,
+      "averageRating": 0,
+      "totalRatings": 0
+    },
+    {
+      "_id": "67ae1978d67684edc2a10f3c",
+      "productName": "SanDisk Ultra UHS I 64GB SD Card 140MB/s for DSLR and Mirrorless Cameras",
+      "productPrice": 699,
+      "quantity": 10,
+      "description": "Great choice for compact to mid-range point-and-shoot cameras\nQuick transfer speeds up to 140MB/s to back up those moments\nUp to 512GB* to store tons of pictures and even more Full HD video\nExceptional video recording performance with UHS Speed Class 1 (U1) and Class 10 rating for Full HD video (1080p)",
+      "category": "Camera",
+      "subCategory": "Camera Accessories",
+      "images": [
+        "https://res.cloudinary.com/dbpmte8mh/image/upload/v1739463031/SanDisk%20Ultra%20UHS%20I%2064GB%20SD%20Card%20140MB/s%20for%20DSLR%20and%20Mirrorless%20Cameras/gyqszjtgteamrjix3hoi.jpg"
+      ],
+      "popular": true,
+      "recommend": false,
+      "averageRating": 0,
+      "totalRatings": 0
+    },
+    {
+      "_id": "679defe9ecb1627ea46017a6",
+      "productName": "Apple iPhone 14 (128 GB) – Blue",
+      "productPrice": 54900,
+      "quantity": 10,
+      "description": "•\t15.40 cm (6.1-inch) Super Retina XDR display\n•\tAdvanced camera system for better photos in any light\n•\tCinematic mode now in 4K Dolby Vision up to 30 fps\n•\tAction mode for smooth, steady, handheld videos\n•\tVital safety technology — Crash Detection calls for help when you can’t\n•\tAll-day battery life and up to 20 hours of video playback\n•\tIndustry-leading durability features with Ceramic Shield and water resistance\n",
+      "category": "Mobiles",
+      "subCategory": "IOS Phones",
+      "images": [
+        "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738403817/Apple%20iPhone%2014%20%28128%20GB%29%20%E2%80%93%20Blue/nkvahodqwk2obh2ezoiy.jpg"
+      ],
+      "popular": true,
+      "recommend": true,
+      "averageRating": 0,
+      "totalRatings": 0
+    },
+    {
+      "_id": "67ae1702d67684edc2a10f32",
+      "productName": "HIFFIN E27 Studio Double Holder KIT Umbrella White + Studio Light Stand 9 FT+ Umbrella and Double Holder KIT Set of 2 (2 x Double Holder | 2 x Light Stand 9 feet | 2 x Umbrella | 1 x Bag)",
+      "productPrice": 3500,
+      "quantity": 10,
+      "description": "Content : 2 x E27 Double Holder | 2 x 9ft Light Stand | 2 x Umbrella | 1 x Bag for Kit\nFor simple storage and transport, the stand collapses easily and is very lightweight to carry.\nConstructed from aluminum alloy, giving it exceptional strength for heavy duty work.\nFolded height: 3FT,Maximum height: 9 FT Size: 9FT Comes with a Light Stand Package Dimensions: 101.6x17.8x10.2cm",
+      "category": "Camera",
+      "subCategory": "Camera Accessories",
+      "images": [
+        "https://res.cloudinary.com/dbpmte8mh/image/upload/v1739462402/HIFFIN%20E27%20Studio%20Double%20Holder%20KIT%20Umbrella%20White%20%2B%20Studio%20Light%20Stand%209%20FT%2B%20Umbrella%20and%20Double%20Holder%20KIT%20Set%20of%202%20%282%20x%20Double%20Holder%20%7C%202%20x%20Light%20Stand%209%20feet%20%7C%202%20x%20Umbrella%20%7C%201%20x%20Bag%29/cemmsi5m6wsurt4zseql.jpg"
+      ],
+      "popular": true,
+      "recommend": false,
+      "averageRating": 0,
+      "totalRatings": 0
+    },
+    {
+      "_id": "67ae01d0d67684edc2a10ef0",
+      "productName": "American Tourister Valex The Laptop Backpack with 17'' Inch Laptop Compartment, 28 L Capacity",
+      "productPrice": 1299,
+      "quantity": 10,
+      "description": "Fashionably Functional Made with the finest material, it ensures lasting durability for everyday use without adding excess weight. The breathable Mesh Padding combines support and durability to provide superior comfort.\nSpace For All Your +1s: With dimensions of 32.5 x 47.5 x 20 cms (LxHxW) and multiple compartments, this backpack offers ample space for electronics, books, snacks, and more! Your everyday essentials don't need to be left behind anymore.\nTech Haven: Securely carry your laptop and other gadgets in the dedicated 17-inch padded compartment, ensuring peace of mind during your travels or busy workdays.\nPassed Quality Tests With Flying Colours: This backpack undergoes rigorous quality checks to ensure it can handle your everyday adventures. So you can explore stress-free knowing your bag is up for any challenge.\nBy Your Side Worldwide: Get a 1-year Global Warranty across 120+ countries for stress-free adventures. Go travel the world, with us by your side.",
+      "category": "Bags",
+      "subCategory": "Laptop Bags",
+      "images": [
+        "https://res.cloudinary.com/dbpmte8mh/image/upload/v1739456976/American%20Tourister%20Valex%20The%20Laptop%20Backpack%20with%2017%27%27%20Inch%20Laptop%20Compartment%2C%2028%20L%20Capacity/i4ocxgdeufouzlpca2un.jpg"
+      ],
+      "popular": true,
+      "recommend": false,
+      "averageRating": 0,
+      "totalRatings": 0
+    },
+    {
+      "_id": "67ae03b5d67684edc2a10f00",
+      "productName": "PETRICE Travel Organizer, Packing Cubes for Travel, Travel Essentials, Toiletry Bag, Packing Bags for Clothes, Travel Organizer for Women, Travel Pouch, Packing Cubes Travel Organizer (Grey)",
+      "productPrice": 499,
+      "quantity": 10,
+      "description": "Travel Packing cube Toiletry Bag set includes 3 different size packing cubes (large:8-10 shirts, medium:5-6 shirts, small: 4-5 shirts), 1 Bra Underwear Bag, 1 Toiletry Bag, 1 Laundry Bag And 1 Zippered Bag . Travel Packing Organizers In Different sizes to meet all your needs. Keep your suitcase neat and orderly, save space and store more items\nTravel Pouch Packing cubes for travel made of tear-resistant nylon fabric, durable and waterproof. Travel cubes can prevent wrinkles and stains on clothes. High performance features ensure that the packing organizer can withstand high-intensity wear, and the smooth and solid double zipper ensures that you can quickly open the travel organizer cubes for luggage. More durable and rugged\nTravel packing cubes' soft and smooth mesh top panel not only protect your delicate clothes from wrinkles and odor, but also help you identify your clothes through its see-through mesh, saving you time.",
+      "category": "Bags",
+      "subCategory": "Travel Bags",
+      "images": [
+        "https://res.cloudinary.com/dbpmte8mh/image/upload/v1739457461/PETRICE%20Travel%20Organizer%2C%20Packing%20Cubes%20for%20Travel%2C%20Travel%20Essentials%2C%20Toiletry%20Bag%2C%20Packing%20Bags%20for%20Clothes%2C%20Travel%20Organizer%20for%20Women%2C%20Travel%20Pouch%2C%20Packing%20Cubes%20Travel%20Organizer%20%28Grey%29/wt4mzzf61u485bujz5it.jpg"
+      ],
+      "popular": true,
+      "recommend": false,
+      "averageRating": 0,
+      "totalRatings": 0
+    },
+    {
+      "_id": "67ae03ebd67684edc2a10f05",
+      "productName": "Safari Thorium Neo 8 Wheels 55 Cm Small Cabin Trolley Bag Hard Case Polycarbonate 360 Degree Wheeling System Luggage, Trolley Bags for Travel, Suitcase for Travel, Graphite Blue",
+      "productPrice": 2199,
+      "quantity": 10,
+      "description": "Textured Scratch resistant Polycarbonate shell\nThis light weight trolley luggage comes with a Fixed combination Lock, 8 wheels with smooth manoeuvrability, and contrast beading that gives a premium look to the product\nDimensions - 55X40X23\nColor - Graphite Blue\nMeets most domestic carry-on size requirements",
+      "category": "Bags",
+      "subCategory": "Travel Bags",
+      "images": [
+        "https://res.cloudinary.com/dbpmte8mh/image/upload/v1739457515/Safari%20Thorium%20Neo%208%20Wheels%2055%20Cm%20Small%20Cabin%20Trolley%20Bag%20Hard%20Case%20Polycarbonate%20360%20Degree%20Wheeling%20System%20Luggage%2C%20Trolley%20Bags%20for%20Travel%2C%20Suitcase%20for%20Travel%2C%20Graphite%20Blue/no5ecil6cdnwthsxhxun.jpg"
+      ],
+      "popular": true,
+      "recommend": false,
+      "averageRating": 0,
+      "totalRatings": 0
+    },
+    {
+      "_id": "67ae09e5d67684edc2a10f1d",
+      "productName": "insta360 X3 Action Camera, 1/2\" Sensor, 5.7K 360 Capture, Optical Zoom 3X, 72 MP 360 Photo, 4K Single Lens Mode, Black",
+      "productPrice": 29990,
+      "quantity": 10,
+      "description": "1/2” Sensor Capture photos and videos with more detail thanks to a brand-new 1/2” sensor.\n5.7K 360° Capture, Capture everything around you with 5.7K 360-degree capture.\nThe magic of 360 capture is the ability to choose the best angle after the fact. Easy AI-powered reframing tools in the Insta360 app make it easy to find the perfect, so you’ll never miss a shot again.\n72 MP 360 Photo, 360 photos just got a huge upgrade. Now capture 72 megapixel stills with more detail than ever before.\nSingle Lens Mode in Stunning 4K, Just want to shoot first-person videos without reframing? Shoot wide-angle videos in Single Lens Mode and share instantly to social media. Now upgraded to 4K30fps. At 2.7K resolution, you can also shoot an extremely wide 170° video with MaxView.",
+      "category": "Camera",
+      "subCategory": "Action & Sports Camera",
+      "images": [
+        "https://res.cloudinary.com/dbpmte8mh/image/upload/v1739459045/insta360%20X3%20Action%20Camera%2C%201/2%22%20Sensor%2C%205.7K%20360%20Capture%2C%20Optical%20Zoom%203X%2C%2072%20MP%20360%20Photo%2C%204K%20Single%20Lens%20Mode%2C%20Black/ya5iwjhccrmlso6f7ol2.jpg"
+      ],
+      "popular": true,
+      "recommend": false,
+      "averageRating": 0,
+      "totalRatings": 0
+    },
+    {
+      "_id": "67ae1940d67684edc2a10f37",
+      "productName": "HIFFIN PU Leather Soft Camera Hand Grip/Wrist Strap for Canon Nikon Sony SLR DSLR (Black)",
+      "productPrice": 324,
+      "quantity": 10,
+      "description": "Camera Not Included. Camera Shown On Listing Is for Product Usage representation.\nCompatible To All Major Brand DSLR/SLR Camera's\nMaterial : Leather\nWeight : 120 g\nDirect Camera Tripod Chuck nut Mounting\nFor any Product related query reach out to brand @ Toll free Number 1800121000251 Mon to sat 6 days a week 10am to 6pm, Email : contact@hiffin.in",
+      "category": "Camera",
+      "subCategory": "Camera Accessories",
+      "images": [
+        "https://res.cloudinary.com/dbpmte8mh/image/upload/v1739462976/HIFFIN%20PU%20Leather%20Soft%20Camera%20Hand%20Grip/Wrist%20Strap%20for%20Canon%20Nikon%20Sony%20SLR%20DSLR%20%28Black%29/aqh5vd8nybx3b9ks0zvo.jpg"
+      ],
+      "popular": true,
+      "recommend": false,
+      "averageRating": 0,
+      "totalRatings": 0
+    },
+    {
+      "_id": "67ae091ed67684edc2a10f11",
+      "productName": "Canon EOS 3000D 18MP Digital SLR Camera (Black) with 18-55mm is II Lens, 16GB Card and Carry Case",
+      "productPrice": 35690,
+      "quantity": 10,
+      "description": "18-megapixel APS-C-size CMOS sensor and DIGIC 4+ image processor;9-point AF with 1 centre cross-type AF point\nStandard ISO 100 - 6400 (expandable to 12800);Wi-Fi supported\n18.0 megapixels;Canon EF lenses (including EF-S lenses) compaitable.\nCMOS sensor;Recording format : Design rule for Camera File System (DCF) 2.0; JPEG, RAW (14-bit Canon original);Auto Lighting Optimizer\nWireless Communication Technology: Registered Web Services; Compatible Mountings: Canon Ef-Scanon Ef",
+      "category": "Camera",
+      "subCategory": "DSLR Camera",
+      "images": [
+        "https://res.cloudinary.com/dbpmte8mh/image/upload/v1739458846/Canon%20EOS%203000D%2018MP%20Digital%20SLR%20Camera%20%28Black%29%20with%2018-55mm%20is%20II%20Lens%2C%2016GB%20Card%20and%20Carry%20Case/acheltsxaunkzjxpfmbo.jpg"
+      ],
+      "popular": true,
+      "recommend": false,
+      "averageRating": 0,
+      "totalRatings": 0
+    },
+    {
+      "_id": "67ae0955d67684edc2a10f16",
+      "productName": "Fujifilm X-T5 40MP APS-C X-trans sensor|Pixel Shift|IBIS System|Ultra high resolution mirrorless camera|6k 30p|1/180000 shutter speed|quick lever for photo/video with XF 16-50mm f/2.8-4.8 lens -Silver",
+      "productPrice": 188000,
+      "quantity": 10,
+      "description": "The high-resolution 40.2MP X-Trans CMOS 5 HR sensor has an enhanced image – processing algorithm that boosts resolution without compromising the signal-to-noise ratio, delivering astonishing image quality. 20 Film Simulation modes inside of X-T5 digitally replicate the look of the classic photographic film stocks developed by Fujifilm for over 85 years. Reproduce the classic colors and tones that Fujifilm are known for.\nX-T5 is packed with many features such as pixel shift which give 160mp image after compiling Shift Multi-Shot|fastest shutter - 1/180000|2x digital teleconverter for photo|wireless tethering|camera to cloud with frame.io|touchtracking and dial operation for photo and video|quick lever to switch from photo to video or otherwise.\n6.2K movies can be recorded internally at 30p in 4:2:2 10-bit color, delivering high-definition footage with rich color detail. In addition, you can record 4k 60fps and FHD 240fps.",
+      "category": "Camera",
+      "subCategory": "DSLR Camera",
+      "images": [
+        "https://res.cloudinary.com/dbpmte8mh/image/upload/v1739458900/Fujifilm%20X-T5%2040MP%20APS-C%20X-trans%20sensor%7CPixel%20Shift%7CIBIS%20System%7CUltra%20high%20resolution%20mirrorless%20camera%7C6k%2030p%7C1/180000%20shutter%20speed%7Cquick%20lever%20for%20photo/video%20with%20XF%2016-50mm%20f/2.8-4.8%20lens%20-Silver/sinijmb3eblhrqt9cons.jpg"
+      ],
+      "popular": true,
+      "recommend": false,
+      "averageRating": 0,
+      "totalRatings": 0
+    },
+    {
+      "_id": "67ae020dd67684edc2a10ef5",
+      "productName": "MOKOBARA The Transit Backpack 2.0 30L Premium Polyester 15.6\" Unisex Multipurpose Laptop Backpack (Crypto 2.0)",
+      "productPrice": 5999,
+      "quantity": 10,
+      "description": "CRAFTED WITH INDUSTRY BEST PREMIUM MATERIALS: Materials: Vegan leather and nylon fabric, Casing: Soft, Water resistant: Yes\nMOST FEATURE RICH BACKPACK: Front bucket pocket: Slip pockets, Zippered pocket, Flat opening tech compartment: Pockets to store all your tech accessories, Padded laptop compartment with lock strap, Fits up to a 15.6\" laptop inTransit Backpack - 30L\nINDUSTRY BEST FUNCTIONAL BACKPACK: 2 Hidden bottle/umbrella pocket, Luggage sleeve, Silicon grab handle, Ergonomic padded shoulder straps, Breathable air mesh, Easy length adjustment buckles\nMAXED OUT STORAGE: Dimension: Transit Backpack - 30L (48 x 31 x 16 cm), Capacity: 30L\nMORE REASONS TO LOVE YOUR MOKOBARA: Warranty type: 12 Months, Care Instruction : Wipe with damp cloth",
+      "category": "Bags",
+      "subCategory": "Laptop Bags",
+      "images": [
+        "https://res.cloudinary.com/dbpmte8mh/image/upload/v1739457037/MOKOBARA%20The%20Transit%20Backpack%202.0%2030L%20Premium%20Polyester%2015.6%22%20Unisex%20Multipurpose%20Laptop%20Backpack%20%28Crypto%202.0%29/xf3bgezraxqkqxiwwjtu.webp"
+      ],
+      "popular": true,
+      "recommend": false,
+      "averageRating": 0,
+      "totalRatings": 0
+    },
+    {
+      "_id": "679defa4ecb1627ea46017a1",
+      "productName": "Apple iPhone 15 (128 GB) – Black",
+      "productPrice": 59999,
+      "quantity": 10,
+      "description": "•\tDYNAMIC ISLAND COMES TO IPHONE 15 — Dynamic Island bubbles up alerts and Live Activities — so you don’t miss them while you’re doing something else. You can see who’s calling, track your next ride, check your flight status, and so much more.\n•\tINNOVATIVE DESIGN — iPhone 15 features a durable color-infused glass and aluminum design. It’s splash, water, and dust resistant. The Ceramic Shield front is tougher than any smartphone glass. And the 6.1\" Super Retina XDR display is up to 2x brighter in the sun compared to iPhone 14.\n•\t48MP MAIN CAMERA WITH 2X TELEPHOTO — The 48MP Main camera shoots in super-high resolution. So it’s easier than ever to take standout photos with amazing detail. The 2x optical-quality Telephoto lets you frame the perfect close-up.\n•\tNEXT-GENERATION PORTRAITS — Capture portraits with dramatically more detail and color. Just tap to shift the focus between subjects — even after you take the shot.\n•\tPOWERHOUSE A16 BIONIC CHIP — The superfast chip",
+      "category": "Mobiles",
+      "subCategory": "IOS Phones",
+      "images": [
+        "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738403749/Apple%20iPhone%2015%20%28128%20GB%29%20%E2%80%93%20Black/d0ayhfkjs92oldl4rcol.jpg"
+      ],
+      "popular": true,
+      "recommend": false,
+      "averageRating": 0,
+      "totalRatings": 0
+    },
+    {
+      "_id": "679dee82ecb1627ea4601797",
+      "productName": "POCO C61 Mystical Green 4GB RAM 64GB ROM",
+      "productPrice": 50,
+      "quantity": 10,
+      "description": "•\tHigh performance MediaTek Helio G36,upto 2.2GHz; | 6.71\" HD+ 90Hz Display with GG3 Protection | Upto 8GB RAM including 4GB Virtual RAM |64GB Storage | Fast Side fingerprint sensor\n•\tDisplay: Large 17.04 cm 90Hz dot display with Corning Gorilla Glass 3 protection | 500nits peak brightness | 180Hz Touch sampling Rate\n•\tCamera: 8MP AI Dual camera with Google lens, Portrait mode and classic film filters| 5MP Front camera\n•\t5000mAh(typ) battery and 10W charger in-box with USB Type-C\n•\tExpandable Storage to upto 1TB with Dedicated MicroSD card Slot | 3.5mm headphone jack | Android 14 | Side fingerprint sensor\n",
+      "category": "Mobiles",
+      "subCategory": "Android Phones",
+      "images": [
+        "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738403459/POCO%20C61%20Mystical%20Green%204GB%20RAM%2064GB%20ROM/zt2sy5sotlelru8gfkgz.jpg"
+      ],
+      "popular": true,
+      "recommend": false,
+      "averageRating": 0,
+      "totalRatings": 0
+    },
+    {
+      "_id": "67ae02c6d67684edc2a10efb",
+      "productName": "Impulse Rucksack bags 80 litres travel bag for men tourist bag for travel backpack for hiking trekking Bag for men camping Curve N Bag",
+      "productPrice": 1002,
+      "quantity": 10,
+      "description": "The hiking traveling bag is 80 Liters, which means it has large space thrice normal requirement of a backpack. This backpack bag comes with a convenient inside the main compartment. And has a powerful suspension system that can transport more items. The rain cover is made of polyester material, which can prevent water from immersing in the bag\nThis Hiking bag has Widened and Thickened S-shaped shoulder pad conforms to the ergonomic design, which can minimize the shoulder pressure; the rich sponge padding has high elasticity, which greatly improves the shock resistance of the backpack during hiking, The breathable back support ensures a good air circulation; the chest strap and safety belt can be adjusted according to needs to ensure the comfort.",
+      "category": "Bags",
+      "subCategory": "Travel Bags",
+      "images": [
+        "https://res.cloudinary.com/dbpmte8mh/image/upload/v1739457222/Impulse%20Rucksack%20bags%2080%20litres%20travel%20bag%20for%20men%20tourist%20bag%20for%20travel%20backpack%20for%20hiking%20trekking%20Bag%20for%20men%20camping%20Curve%20N%20Bag/g31dziuumeanhovdnjct.jpg"
+      ],
+      "popular": true,
+      "recommend": false,
+      "averageRating": 0,
+      "totalRatings": 0
+    },
+    {
+      "_id": "679def10ecb1627ea460179c",
+      "productName": "Samsung Galaxy S25 Ultra",
+      "productPrice": 129999,
+      "quantity": 10,
+      "description": "•\tMeet Galaxy S25 Ultra, your true AI companion. Powered by the next chapter of Galaxy AI with multi-modality, and the most advanced Galaxy fundamentals, Galaxy S25 Ultra naturally adapts to you: learning your patterns, anticipating your needs, and connecting your world seamlessly. With Now Brief, it also offers you personalized insights to get you through your day.\n•\tNeed to do multiple tasks? Galaxy S25 Ultra performs seamless actions across apps and will get them done for you instantly.\n•\tLive to create? Galaxy S25 Ultra’s cutting-edge camera and visual creation tools offer you the best camera and editing experience, thanks to its most advanced AI ProVisual Engine. Go from Wide to Tele and even Ultra Wide and get the sharpest details.\n•\tLove gaming? Enjoy hyper-realistic, ultra-smooth gameplay with the most powerful processor, customized for Galaxy - Snapdragon 8 Elite.\n",
+      "category": "Mobiles",
+      "subCategory": "Android Phones",
+      "images": [
+        "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738403601/Samsung%20Galaxy%20S25%20Ultra/hu8sob0ctt7iewygtyzy.jpg"
+      ],
+      "popular": true,
+      "recommend": false,
+      "averageRating": 0,
+      "totalRatings": 0
+    }
+  ],
+  "banners": [
+    {
+      "_id": "679b78544fd5cfd936afb25d",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738242132/banners/gyksagqjgiqd9km48ntl.jpg"
+    },
+    {
+      "_id": "679b785d4fd5cfd936afb25f",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738242141/banners/ewmkkd5a1ql2v7b3t1xl.jpg"
+    },
+    {
+      "_id": "679b78304fd5cfd936afb259",
+      "image": "https://res.cloudinary.com/dbpmte8mh/image/upload/v1738242095/banners/hubwgo5e3ot5q9llrntq.jpg"
+    }
+  ]
+}

@@ -518,5 +518,68 @@
     "area": "Admin Banners",
     "auth": "admin",
     "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/products/category/:category",
+    "area": "Products",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/products/subcategory/:subcategory",
+    "area": "Products",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/products/:id/related",
+    "area": "Products",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/categories/tree",
+    "area": "Categories",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/subcategories",
+    "area": "Subcategories",
+    "auth": "public",
+    "frontend": true
+  },
+  {
+    "method": "GET",
+    "path": "/admin/subcategories",
+    "area": "Admin Subcategories",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "POST",
+    "path": "/admin/subcategories",
+    "area": "Admin Subcategories",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "PUT",
+    "path": "/admin/subcategories/:id",
+    "area": "Admin Subcategories",
+    "auth": "admin",
+    "frontend": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/admin/subcategories/:id",
+    "area": "Admin Subcategories",
+    "auth": "admin",
+    "frontend": true
   }
 ]
