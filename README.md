@@ -20,6 +20,10 @@ A full-stack e-commerce application featuring secure authentication, product var
 
 </div>
 
+> **Portfolio Notice:**  
+> This repository is intended for portfolio review, recruitment evaluation, educational inspection, and demonstration purposes.  
+> Do not commit or publish real customer data, production credentials, payment secrets, private keys, or private business assets.
+
 ---
 
 ## 📖 Overview
@@ -46,6 +50,10 @@ The project covers the complete application lifecycle:
 - Cloud deployment
 
 The application uses a modular architecture that separates frontend presentation, API communication, backend business logic, persistence, and external services.
+
+GitHub Actions is used for automated validation of the project. Workflow status can be reviewed from the repository's **Actions** tab.
+
+“Production-oriented” describes the engineering practices demonstrated by this portfolio project; it is not a claim that the demo environment is a fully managed production service for real customer transactions.
 
 ---
 
@@ -191,7 +199,7 @@ ShopVibe focuses on real e-commerce engineering concerns including:
               └────────┬────────┘      ├─────────────────┤
                        │               │ Cloudinary      │
                        ▼               │ SMTP / Email    │
-              ┌─────────────────┐      │ Razorpay Layer  │
+              ┌─────────────────┐      │ Razorpay Layer* │
               │ Mongoose Models │      └─────────────────┘
               └────────┬────────┘
                        │
@@ -485,7 +493,7 @@ https://shopvibe-mern-ecommerce.onrender.com/api/v1/health
 
 ---
 
-## 📊 Monitoring & Recovery
+## 📊 Monitoring, Backup & Restore
 
 Operational readiness includes:
 
@@ -575,7 +583,18 @@ After adding them, replace this comment with:
 
 -->
 
-Screenshots will be added to showcase the customer storefront, checkout flow, responsive interface, and admin dashboard.
+Screenshots should showcase the customer storefront, product details, cart/checkout flow, responsive interface, and admin dashboard.
+
+Recommended portfolio set:
+
+- Storefront / home page
+- Product details with variants
+- Cart or checkout flow
+- Admin dashboard
+- Admin product management
+- Mobile responsive view
+
+Use only demo or sanitized data. Do not expose real customer details, credentials, private URLs, access tokens, or payment secrets.
 
 ---
 
@@ -764,6 +783,8 @@ The repository/project documentation covers:
 - Release process
 - Production launch preparation
 - Known environment-specific requirements
+- Security policy
+- Portfolio source-code license
 
 ---
 
@@ -797,8 +818,40 @@ ShopVibe demonstrates practical experience with:
 - CI workflows
 - Cloud deployment
 - Monitoring
-- Backup and disaster recovery
+- Backup and restore validation
 - Technical documentation
+
+---
+
+## 🔐 Security
+
+Security reporting guidance and repository security rules are documented in:
+
+[`SECURITY.md`](SECURITY.md)
+
+Before making the repository public, verify that the Git history does not contain:
+
+- Real `.env` files
+- MongoDB credentials or connection strings
+- JWT secrets
+- SMTP credentials
+- Cloudinary API secrets
+- Razorpay secrets or webhook secrets
+- Access or refresh tokens
+- Real customer/order data
+- Private business documents
+
+If a secret was ever committed, removing it from the latest commit is not sufficient. Rotate or revoke the credential and remove it from Git history when necessary.
+
+---
+
+## 📄 License
+
+This repository uses a **portfolio-source, all-rights-reserved license**.
+
+The source code may be viewed, downloaded, or cloned for private portfolio review, recruitment evaluation, educational inspection, and demonstration purposes only.
+
+See [`LICENSE`](LICENSE) for the complete terms.
 
 ---
 
