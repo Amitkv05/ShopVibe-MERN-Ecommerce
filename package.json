@@ -30,7 +30,7 @@
     "preview:frontend": "npm run preview --workspace frontend"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^10.0.5"
   },
   "engines": {
     "node": ">=20"
