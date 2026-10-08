@@ -30,7 +30,12 @@ test("T-174 authentication automated coverage: validation, rate limits, password
   ]);
   mustMatch(auth, [/jwt\.verify/, /changedPasswordAfter/, /User\.findById/]);
   mustMatch(jwt, [/httpOnly:\s*true/, /secure:/, /sameSite(?:\s*:|\s*,)/]);
-  mustMatch(model, [/bcrypt/, /select:\s*false/, /verifyPassword/, /changedPasswordAfter/]);
+  mustMatch(model, [
+    /bcrypt/,
+    /select:\s*false/,
+    /verifyPassword/,
+    /changedPasswordAfter/,
+  ]);
 });
 
 test("T-175 product automated coverage: CRUD validation, search/pagination, variants, reviews and Cloudinary cleanup exist", async () => {
@@ -47,9 +52,18 @@ test("T-175 product automated coverage: CRUD validation, search/pagination, vari
     /\/review["']/,
     /\/reviews["']/,
   ]);
-  mustMatch(schemas, [/variants:\s*z\.array/, /stock:\s*z\.coerce\.number\(\)\.int\(\)\.min\(0\)/, /images:\s*z\.array/]);
+  mustMatch(schemas, [
+    /variants:\s*z\.array/,
+    /stock:\s*z\.coerce\.number\(\)\.int\(\)\.min\(0\)/,
+    /images:\s*z\s*\.array\s*\(/,
+  ]);
   mustMatch(api, [/pagination/, /search/, /filter/]);
-  mustMatch(controller, [/cleanupCloudinaryImages/, /deleteCloudinaryImage/, /reviews/, /averageRating|rating/i]);
+  mustMatch(controller, [
+    /cleanupCloudinaryImages/,
+    /deleteCloudinaryImage/,
+    /reviews/,
+    /averageRating|rating/i,
+  ]);
 });
 
 test("T-176 cart automated coverage: ownership, quantity bounds, stock checks, clear and quote paths exist", async () => {
@@ -69,7 +83,11 @@ test("T-176 cart automated coverage: ownership, quantity bounds, stock checks, c
     /items:\s*\[\]/,
     /buildOrderQuote/,
   ]);
-  mustMatch(service, [/quantity\s*<\s*1\s*\|\|\s*quantity\s*>\s*99/, /Insufficient stock/, /variantSku/]);
+  mustMatch(service, [
+    /quantity\s*<\s*1\s*\|\|\s*quantity\s*>\s*99/,
+    /Insufficient stock/,
+    /variantSku/,
+  ]);
 });
 
 test("T-177 wishlist automated coverage: authenticated user-scoped add/list/remove logic exists", async () => {
@@ -94,11 +112,28 @@ test("T-178 coupon automated coverage: validation, lifecycle limits, server quot
   const cart = await read("services/cartService.js");
   const persistence = await read("services/orderPersistenceService.js");
 
-  mustMatch(schemas, [/Percent coupon cannot exceed 100/, /Coupon expiry must be after the start date/, /perUserLimit/, /usageLimit/]);
-  mustMatch(routes, [/\/coupon\/validate["'],\s*verifyUserAuth/, /roleBasedAccess\(["']admin["']\)/]);
+  mustMatch(schemas, [
+    /Percent coupon cannot exceed 100/,
+    /Coupon expiry must be after the start date/,
+    /perUserLimit/,
+    /usageLimit/,
+  ]);
+  mustMatch(routes, [
+    /\/coupon\/validate["'],\s*verifyUserAuth/,
+    /roleBasedAccess\(["']admin["']\)/,
+  ]);
   mustMatch(controller, [/couponSchema\.safeParse\(mergedCoupon\)/]);
-  mustMatch(cart, [/coupon\.expiresAt/, /coupon\.usageLimit/, /coupon\.perUserLimit/, /maxDiscountAmount/, /buildOrderQuote/]);
-  mustMatch(persistence, [/filter\.usedCount\s*=\s*\{\s*\$lt:/, /\$inc:\s*\{\s*usedCount:\s*1\s*\}/]);
+  mustMatch(cart, [
+    /coupon\.expiresAt/,
+    /coupon\.usageLimit/,
+    /coupon\.perUserLimit/,
+    /maxDiscountAmount/,
+    /buildOrderQuote/,
+  ]);
+  mustMatch(persistence, [
+    /filter\.usedCount\s*=\s*\{\s*\$lt:/,
+    /\$inc:\s*\{\s*usedCount:\s*1\s*\}/,
+  ]);
 });
 
 test("T-179 order automated coverage: authenticated ownership, idempotency, server totals, transactions/rollback and cancellation rules exist", async () => {
@@ -119,7 +154,12 @@ test("T-179 order automated coverage: authenticated ownership, idempotency, serv
     /findOne\(\{\s*_id:\s*req\.params\.id,\s*user:\s*req\.user\._id\s*\}\)/,
     /Only processing orders can be cancelled/,
   ]);
-  mustMatch(persistence, [/withTransaction/, /persistWithCompensation/, /restoreInventory/, /clearCartBestEffort/]);
+  mustMatch(persistence, [
+    /withTransaction/,
+    /persistWithCompensation/,
+    /restoreInventory/,
+    /clearCartBestEffort/,
+  ]);
   mustMatch(cart, [/reserveInventory/, /stock:\s*\{\s*\$gte:/]);
 });
 
@@ -135,16 +175,36 @@ test("T-180 payment code coverage: server-side amount/signature verification and
     /payment\.status\s*!==\s*["']captured["']/,
     /Razorpay is not configured on the server/,
   ]);
-  mustMatch(controller, [/x-razorpay-signature/, /timingSafeEqual/, /PaymentEvent\.findOne/, /duplicate:\s*true/, /refund\.processed/]);
+  mustMatch(controller, [
+    /x-razorpay-signature/,
+    /timingSafeEqual/,
+    /PaymentEvent\.findOne/,
+    /duplicate:\s*true/,
+    /refund\.processed/,
+  ]);
 });
 
 test("T-181 inventory automated coverage: negative stock protection, atomic reservation, variant support and audit logs exist", async () => {
   const service = await read("services/inventoryService.js");
   const cart = await read("services/cartService.js");
   const controller = await read("controller/inventoryController.js");
-  mustMatch(service, [/Number\.isInteger\(delta\)/, /newStock\s*<\s*0/, /InventoryLog\.create/, /variantSku/]);
-  mustMatch(cart, [/\$gte:\s*item\.quantity/, /\$inc/, /InventoryLog\.create/, /restoreInventory/]);
-  mustMatch(controller, [/lowStockProducts/, /lowStockThreshold/, /limit\s*=\s*Math\.min/]);
+  mustMatch(service, [
+    /Number\.isInteger\(delta\)/,
+    /newStock\s*<\s*0/,
+    /InventoryLog\.create/,
+    /variantSku/,
+  ]);
+  mustMatch(cart, [
+    /\$gte:\s*item\.quantity/,
+    /\$inc/,
+    /InventoryLog\.create/,
+    /restoreInventory/,
+  ]);
+  mustMatch(controller, [
+    /lowStockProducts/,
+    /lowStockThreshold/,
+    /limit\s*=\s*Math\.min/,
+  ]);
 });
 
 test("T-182 permission automated coverage: admin routes require authentication and role authorization; user resources are owner-scoped", async () => {
@@ -158,8 +218,16 @@ test("T-182 permission automated coverage: admin routes require authentication a
   const orderController = await read("controller/orderController.js");
   const addressController = await read("controller/addressController.js");
 
-  mustMatch(admin, [/router\.use\(["']\/admin["'],\s*verifyUserAuth,\s*roleBasedAccess\(["']admin["']\)\)/]);
-  for (const src of [userRoutes, productRoutes, categoryRoutes, couponRoutes, orderRoutes]) {
+  mustMatch(admin, [
+    /router\.use\(["']\/admin["'],\s*verifyUserAuth,\s*roleBasedAccess\(["']admin["']\)\)/,
+  ]);
+  for (const src of [
+    userRoutes,
+    productRoutes,
+    categoryRoutes,
+    couponRoutes,
+    orderRoutes,
+  ]) {
     assert.match(src, /roleBasedAccess\(["']admin["']\)/);
   }
   mustMatch(auth, [/roles\.includes\(req\.user\.role\)/, /403/]);
@@ -180,8 +248,16 @@ test("T-183 validation automated coverage: Zod schemas enforce IDs, strings, ran
     /paymentMethod:\s*z\.enum\(\[["']COD["'],\s*["']RAZORPAY["']\]\)/,
     /z\.array\(variantSchema\)\.max\(100\)/,
   ]);
-  mustMatch(validate, [/schema\.safeParse/, /Validation failed/, /req\[source\]\s*=\s*result\.data/]);
-  mustMatch(error, [/CastError/, /ValidationError|validation/i, /413|entity\.too\.large/]);
+  mustMatch(validate, [
+    /schema\.safeParse/,
+    /Validation failed/,
+    /req\[source\]\s*=\s*result\.data/,
+  ]);
+  mustMatch(error, [
+    /CastError/,
+    /ValidationError|validation/i,
+    /413|entity\.too\.large/,
+  ]);
 });
 
 test("T-184 integration test harness exists for real MongoDB COD checkout and is safely gated by DB_URI_TEST", async () => {
