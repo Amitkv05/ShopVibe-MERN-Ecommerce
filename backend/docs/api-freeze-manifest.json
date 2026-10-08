@@ -1,13 +1,13 @@
 {
-  "contractRevision": 6,
-  "changeReason": "Add category subcategory hierarchy and catalog APIs",
-  "frozenAt": "2026-09-28T13:52:39.999Z",
+  "contractRevision": 7,
+  "changeReason": "Allow image-only banners with optional banner content",
+  "frozenAt": "2026-10-08T14:21:22.230Z",
   "appVersion": "4.1.0",
   "apiVersion": "v1",
   "contractEntries": 83,
   "executableRoutes": 83,
   "routeContractHash": "deac53eb773e700ce58a74b893e898b75fdfb7daa7aa13b3dbf0db13c06c79dc",
-  "requestSurfaceHash": "512c1809a5946689ab3811c7036ae215963cdb05d92b227715ecfe80360c7ac7",
+  "requestSurfaceHash": "11844fe9b1688fb1d5ded6bc40ffe5dadf698f077ff04d443e4bdfb4f9cb0e45",
   "responseSurfaceHash": "82a4b6749d5eb7a50fd6e349161de37ae2fba844fdc70e7eef7466c89398be12",
   "openApiSurfaceHash": "07827176a48e649092b1b0de445596c44b02456cc111ad249b2e3a8f14d78ca8"
 }

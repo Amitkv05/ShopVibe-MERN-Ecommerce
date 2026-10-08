@@ -33,23 +33,23 @@ export default function AdminDashboard() {
         ["Customers", summary.users ?? 0, Users], ["Products", summary.products ?? 0, Package],
         ["Low stock", summary.lowStockProducts ?? 0, Box],
     ];
-    return <div className="space-y-5">
-    <div className="flex justify-end"><AdminButton tone="ghost" onClick={() => void load()}><RefreshCw size={15}/>Refresh</AdminButton></div>
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">{cards.map(([label, value, Icon]) => <div key={label} className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm"><div className="flex items-center justify-between"><span className="text-sm text-gray-500">{label}</span><div className="rounded-xl bg-violet-50 p-2 text-violet-600"><Icon size={18}/></div></div><p className="mt-3 text-2xl font-bold text-gray-900">{value}</p></div>)}</div>
-    <div className="grid gap-5 xl:grid-cols-2">
+    return <div className="sv-admdashboard-001">
+    <div className="sv-admdashboard-002"><AdminButton tone="ghost" onClick={() => void load()}><RefreshCw size={15}/>Refresh</AdminButton></div>
+    <div className="sv-admdashboard-003">{cards.map(([label, value, Icon]) => <div key={label} className="sv-admdashboard-004"><div className="sv-admdashboard-005"><span className="sv-admdashboard-006">{label}</span><div className="sv-admdashboard-007"><Icon size={18}/></div></div><p className="sv-admdashboard-008">{value}</p></div>)}</div>
+    <div className="sv-admdashboard-009">
       <Panel title="Order status" subtitle="Current analytics range">
-        <div className="space-y-3">{(data?.orderStats || []).map((row) => <div key={row._id} className="flex items-center justify-between rounded-xl bg-gray-50 p-3"><div><p className="font-semibold text-gray-800">{row._id}</p><p className="text-xs text-gray-500">{row.count} orders</p></div><p className="font-bold text-gray-900">{money(row.revenue)}</p></div>)}{!(data?.orderStats || []).length && <p className="text-sm text-gray-500">No orders in this range.</p>}</div>
+        <div className="sv-admdashboard-010">{(data?.orderStats || []).map((row) => <div key={row._id} className="sv-admdashboard-011"><div><p className="sv-admdashboard-012">{row._id}</p><p className="sv-admdashboard-013">{row.count} orders</p></div><p className="sv-admdashboard-014">{money(row.revenue)}</p></div>)}{!(data?.orderStats || []).length && <p className="sv-admdashboard-006">No orders in this range.</p>}</div>
       </Panel>
       <Panel title="Top products" subtitle="By quantity sold">
-        <div className="space-y-3">{(data?.topProducts || []).map((row) => <div key={row._id || row.name} className="flex items-center justify-between rounded-xl border border-gray-100 p-3"><div><p className="font-semibold text-gray-800">{row.name}</p><p className="text-xs text-gray-500">{row.quantity} sold</p></div><p className="font-semibold">{money(row.revenue)}</p></div>)}{!(data?.topProducts || []).length && <p className="text-sm text-gray-500">No product sales yet.</p>}</div>
+        <div className="sv-admdashboard-010">{(data?.topProducts || []).map((row) => <div key={row._id || row.name} className="sv-admdashboard-015"><div><p className="sv-admdashboard-012">{row.name}</p><p className="sv-admdashboard-013">{row.quantity} sold</p></div><p className="sv-admdashboard-016">{money(row.revenue)}</p></div>)}{!(data?.topProducts || []).length && <p className="sv-admdashboard-006">No product sales yet.</p>}</div>
       </Panel>
     </div>
     <Panel title="System health" subtitle="Read-only backend diagnostics">
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-xl bg-gray-50 p-4"><p className="text-xs text-gray-500">Database</p><div className="mt-2"><StatusPill tone={system?.database?.connected ? "success" : "danger"}>{system?.database?.connected ? "Connected" : "Disconnected"}</StatusPill></div><p className="mt-2 text-xs text-gray-500">{system?.database?.name || "—"} · {system?.database?.pingMs ?? "—"} ms</p></div>
-        <div className="rounded-xl bg-gray-50 p-4"><p className="text-xs text-gray-500">Runtime</p><p className="mt-2 font-semibold">{system?.runtime?.node || "—"}</p><p className="text-xs text-gray-500">Uptime {Math.floor(Number(system?.runtime?.uptimeSeconds || 0) / 60)} min</p></div>
-        <div className="rounded-xl bg-gray-50 p-4"><p className="text-xs text-gray-500">Memory</p><p className="mt-2 font-semibold">{system?.runtime?.memoryMb?.heapUsed ?? "—"} MB heap</p><p className="text-xs text-gray-500">RSS {system?.runtime?.memoryMb?.rss ?? "—"} MB</p></div>
-        <div className="rounded-xl bg-gray-50 p-4"><p className="text-xs text-gray-500">Features</p><div className="mt-2 flex flex-wrap gap-1.5">{Object.entries(system?.features || {}).map(([k, v]) => <StatusPill key={k} tone={v ? "success" : "neutral"}>{k}</StatusPill>)}</div></div>
+      <div className="sv-admdashboard-017">
+        <div className="sv-admdashboard-018"><p className="sv-admdashboard-013">Database</p><div className="sv-admdashboard-019"><StatusPill tone={system?.database?.connected ? "success" : "danger"}>{system?.database?.connected ? "Connected" : "Disconnected"}</StatusPill></div><p className="sv-admdashboard-020">{system?.database?.name || "—"} · {system?.database?.pingMs ?? "—"} ms</p></div>
+        <div className="sv-admdashboard-018"><p className="sv-admdashboard-013">Runtime</p><p className="sv-admdashboard-021">{system?.runtime?.node || "—"}</p><p className="sv-admdashboard-013">Uptime {Math.floor(Number(system?.runtime?.uptimeSeconds || 0) / 60)} min</p></div>
+        <div className="sv-admdashboard-018"><p className="sv-admdashboard-013">Memory</p><p className="sv-admdashboard-021">{system?.runtime?.memoryMb?.heapUsed ?? "—"} MB heap</p><p className="sv-admdashboard-013">RSS {system?.runtime?.memoryMb?.rss ?? "—"} MB</p></div>
+        <div className="sv-admdashboard-018"><p className="sv-admdashboard-013">Features</p><div className="sv-admdashboard-022">{Object.entries(system?.features || {}).map(([k, v]) => <StatusPill key={k} tone={v ? "success" : "neutral"}>{k}</StatusPill>)}</div></div>
       </div>
     </Panel>
   </div>;

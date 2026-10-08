@@ -199,19 +199,19 @@ export default function AdminSubcategories() {
         subtitle={`${items.length} subcategories across ${categories.length} categories`}
         actions={
           <>
-            <div className="relative">
-              <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <div className="sv-admsubcategories-001">
+              <Search size={15} className="sv-admsubcategories-002" />
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Search subcategories"
-                className="rounded-xl border border-gray-200 bg-white py-2 pl-9 pr-3 text-sm outline-none dark:border-gray-700 dark:bg-gray-900"
+                className="sv-admsubcategories-003"
               />
             </div>
             <select
               value={categoryFilter}
               onChange={(event) => setCategoryFilter(event.target.value)}
-              className="rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-900"
+              className="sv-admsubcategories-004"
             >
               <option value="">All categories</option>
               {categories.map((category) => (
@@ -224,32 +224,32 @@ export default function AdminSubcategories() {
         }
       >
         {filtered.length ? (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+          <div className="sv-admsubcategories-005">
+            <table className="sv-admsubcategories-006">
               <thead>
-                <tr className="text-left text-xs text-gray-500 dark:text-gray-400">
-                  <th className="pb-3">Subcategory</th>
-                  <th className="pb-3">Parent category</th>
-                  <th className="pb-3">Order</th>
-                  <th className="pb-3">Status</th>
-                  <th className="pb-3 text-right">Actions</th>
+                <tr className="sv-admsubcategories-007">
+                  <th className="sv-admsubcategories-008">Subcategory</th>
+                  <th className="sv-admsubcategories-008">Parent category</th>
+                  <th className="sv-admsubcategories-008">Order</th>
+                  <th className="sv-admsubcategories-008">Status</th>
+                  <th className="sv-admsubcategories-009">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.map((subcategory) => (
-                  <tr key={subcategory._id} className="border-t border-gray-100 dark:border-gray-800">
-                    <td className="py-3 pr-4">
-                      <div className="flex items-center gap-3">
-                        <div className="h-12 w-12 overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800">
+                  <tr key={subcategory._id} className="sv-admsubcategories-010">
+                    <td className="sv-admsubcategories-011">
+                      <div className="sv-admsubcategories-012">
+                        <div className="sv-admsubcategories-013">
                           {subcategory.image?.url ? (
-                            <img src={subcategory.image.url} alt="" className="h-full w-full object-cover" />
+                            <img src={subcategory.image.url} alt="" className="sv-admsubcategories-014" />
                           ) : (
-                            <div className="flex h-full items-center justify-center text-lg">🛍️</div>
+                            <div className="sv-admsubcategories-015">🛍️</div>
                           )}
                         </div>
                         <div>
-                          <p className="font-semibold text-gray-900 dark:text-gray-100">{subcategory.name}</p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">/{subcategory.slug}</p>
+                          <p className="sv-admsubcategories-016">{subcategory.name}</p>
+                          <p className="sv-admsubcategories-017">/{subcategory.slug}</p>
                         </div>
                       </div>
                     </td>
@@ -257,7 +257,7 @@ export default function AdminSubcategories() {
                     <td>{subcategory.sortOrder ?? 0}</td>
                     <td><StatusPill tone={subcategory.active === false ? "neutral" : "success"}>{subcategory.active === false ? "Inactive" : "Active"}</StatusPill></td>
                     <td>
-                      <div className="flex justify-end gap-2">
+                      <div className="sv-admsubcategories-018">
                         <AdminButton tone="ghost" onClick={() => openEdit(subcategory)}><Edit2 size={14} /></AdminButton>
                         <AdminButton tone="danger" onClick={() => void del(subcategory)}><Trash2 size={14} /></AdminButton>
                       </div>
@@ -274,7 +274,7 @@ export default function AdminSubcategories() {
 
       {editing && (
         <AdminModal title={editing.new ? "Create subcategory" : "Edit subcategory"} onClose={() => setEditing(null)}>
-          <div className="space-y-4">
+          <div className="sv-admsubcategories-019">
             <AdminSelect
               label="Parent Category"
               required
@@ -316,32 +316,32 @@ export default function AdminSubcategories() {
               onChange={(event) => setForm((current) => ({ ...current, sortOrder: event.target.value }))}
             />
 
-            <div className="rounded-2xl border border-gray-200 p-4 dark:border-gray-700">
-              <div className="flex items-start justify-between gap-3">
+            <div className="sv-admsubcategories-020">
+              <div className="sv-admsubcategories-021">
                 <div>
-                  <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">Subcategory Image</p>
-                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Shown in the customer category browser.</p>
+                  <p className="sv-admsubcategories-022">Subcategory Image</p>
+                  <p className="sv-admsubcategories-023">Shown in the customer category browser.</p>
                 </div>
                 {form.image?.url && (
-                  <button type="button" onClick={() => void removeImage()} className="rounded-lg p-1.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"><X size={16} /></button>
+                  <button type="button" onClick={() => void removeImage()} className="sv-admsubcategories-024"><X size={16} /></button>
                 )}
               </div>
-              <div className="mt-3 h-36 overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800">
-                {form.image?.url ? <img src={form.image.url} alt="" className="h-full w-full object-cover" /> : <div className="flex h-full items-center justify-center text-xs text-gray-400">No image</div>}
+              <div className="sv-admsubcategories-025">
+                {form.image?.url ? <img src={form.image.url} alt="" className="sv-admsubcategories-014" /> : <div className="sv-admsubcategories-026">No image</div>}
               </div>
-              <label className="mt-3 inline-flex cursor-pointer items-center gap-2 rounded-xl border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800">
+              <label className="sv-admsubcategories-027">
                 <ImagePlus size={15} />
                 {uploading ? "Uploading…" : form.image?.url ? "Replace" : "Upload"}
-                <input type="file" accept="image/*" className="hidden" disabled={uploading} onChange={(event) => void uploadImage(event.target.files)} />
+                <input type="file" accept="image/*" className="sv-admsubcategories-028" disabled={uploading} onChange={(event) => void uploadImage(event.target.files)} />
               </label>
             </div>
 
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="sv-admsubcategories-029">
               <input type="checkbox" checked={form.active} onChange={(event) => setForm((current) => ({ ...current, active: event.target.checked }))} />
               Active
             </label>
 
-            <div className="flex justify-end gap-2">
+            <div className="sv-admsubcategories-018">
               <AdminButton tone="ghost" onClick={() => setEditing(null)}>Cancel</AdminButton>
               <AdminButton loading={saving} onClick={() => void save()}>Save subcategory</AdminButton>
             </div>

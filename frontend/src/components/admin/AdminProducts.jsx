@@ -510,16 +510,16 @@ export default function AdminProducts() {
         subtitle={`${products.length} products loaded`}
         actions={
           <>
-            <div className="relative">
+            <div className="sv-admproducts-001">
               <Search
                 size={15}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                className="sv-admproducts-002"
               />
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Search products"
-                className="rounded-xl border border-gray-200 bg-white py-2 pl-9 pr-3 text-sm text-gray-900 outline-none focus:border-violet-400 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+                className="sv-admproducts-003"
               />
             </div>
 
@@ -536,17 +536,17 @@ export default function AdminProducts() {
         }
       >
         {filtered.length ? (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+          <div className="sv-admproducts-004">
+            <table className="sv-admproducts-005">
               <thead>
-                <tr className="text-left text-xs text-gray-500 dark:text-gray-400">
-                  <th className="pb-3">Product</th>
-                  <th className="pb-3">Category</th>
-                  <th className="pb-3">Price</th>
-                  <th className="pb-3">Stock</th>
-                  <th className="pb-3">Type</th>
-                  <th className="pb-3">Status</th>
-                  <th className="pb-3 text-right">Actions</th>
+                <tr className="sv-admproducts-006">
+                  <th className="sv-admproducts-007">Product</th>
+                  <th className="sv-admproducts-007">Category</th>
+                  <th className="sv-admproducts-007">Price</th>
+                  <th className="sv-admproducts-007">Stock</th>
+                  <th className="sv-admproducts-007">Type</th>
+                  <th className="sv-admproducts-007">Status</th>
+                  <th className="sv-admproducts-008">Actions</th>
                 </tr>
               </thead>
 
@@ -560,24 +560,24 @@ export default function AdminProducts() {
                   return (
                     <tr
                       key={product._id}
-                      className="border-t border-gray-100 dark:border-gray-800"
+                      className="sv-admproducts-009"
                     >
-                      <td className="py-3 pr-4">
-                        <div className="flex items-center gap-3">
+                      <td className="sv-admproducts-010">
+                        <div className="sv-admproducts-011">
                           <img
                             src={
                               product.images?.[0]?.url ||
                               "https://placehold.co/80x80?text=P"
                             }
                             alt=""
-                            className="h-12 w-12 rounded-xl bg-gray-100 object-cover dark:bg-gray-800"
+                            className="sv-admproducts-012"
                           />
 
                           <div>
-                            <p className="font-semibold text-gray-900 dark:text-gray-100">
+                            <p className="sv-admproducts-013">
                               {product.name}
                             </p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                            <p className="sv-admproducts-014">
                               {product.brand || "No brand"} ·{" "}
                               {product.sku || "No base SKU"}
                             </p>
@@ -586,8 +586,8 @@ export default function AdminProducts() {
                       </td>
 
                       <td>
-                        <p className="font-medium text-gray-800 dark:text-gray-200">{product.category}</p>
-                        {product.subcategory && <p className="text-xs text-gray-500 dark:text-gray-400">{product.subcategory}</p>}
+                        <p className="sv-admproducts-015">{product.category}</p>
+                        {product.subcategory && <p className="sv-admproducts-014">{product.subcategory}</p>}
                       </td>
                       <td>{money(product.price)}</td>
 
@@ -618,7 +618,7 @@ export default function AdminProducts() {
                       </td>
 
                       <td>
-                        <div className="flex justify-end gap-2">
+                        <div className="sv-admproducts-016">
                           <AdminButton
                             tone="ghost"
                             onClick={() => openEdit(product)}
@@ -651,7 +651,7 @@ export default function AdminProducts() {
           onClose={() => setEditing(null)}
           wide
         >
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="sv-admproducts-017">
             <AdminField
               label="Name"
               value={form.name}
@@ -748,7 +748,7 @@ export default function AdminProducts() {
               }
             />
 
-            <label className="flex items-center gap-2 self-end pb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="sv-admproducts-018">
               <input
                 type="checkbox"
                 checked={form.active}
@@ -766,7 +766,7 @@ export default function AdminProducts() {
           <AdminTextArea
             label="Description"
             rows={5}
-            className="mt-4"
+            className="sv-admproducts-019"
             value={form.description}
             onChange={(event) =>
               setForm((current) => ({
@@ -776,38 +776,38 @@ export default function AdminProducts() {
             }
           />
 
-          <div className="mt-5 rounded-2xl border border-gray-200 p-4 dark:border-gray-700">
-            <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+          <div className="sv-admproducts-020">
+            <p className="sv-admproducts-021">
               Product Type
             </p>
-            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            <p className="sv-admproducts-022">
               Choose a simple product or create inventory variants without
               writing JSON.
             </p>
 
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <div className="sv-admproducts-023">
               <label
-                className={`cursor-pointer rounded-xl border p-4 transition ${
+                className={`sv-admproducts-024 ${
                   form.productType === "simple"
-                    ? "border-violet-500 bg-violet-50 dark:bg-violet-950/30"
-                    : "border-gray-200 dark:border-gray-700"
+                    ? "sv-admproducts-025"
+                    : "sv-admproducts-026"
                 }`}
               >
-                <div className="flex items-start gap-3">
+                <div className="sv-admproducts-027">
                   <input
                     type="radio"
                     name="productType"
                     value="simple"
                     checked={form.productType === "simple"}
                     onChange={() => setProductType("simple")}
-                    className="mt-1"
+                    className="sv-admproducts-028"
                   />
 
                   <div>
-                    <p className="font-semibold text-gray-900 dark:text-gray-100">
+                    <p className="sv-admproducts-013">
                       Simple Product
                     </p>
-                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    <p className="sv-admproducts-022">
                       One SKU and one stock quantity.
                     </p>
                   </div>
@@ -815,27 +815,27 @@ export default function AdminProducts() {
               </label>
 
               <label
-                className={`cursor-pointer rounded-xl border p-4 transition ${
+                className={`sv-admproducts-024 ${
                   form.productType === "variant"
-                    ? "border-violet-500 bg-violet-50 dark:bg-violet-950/30"
-                    : "border-gray-200 dark:border-gray-700"
+                    ? "sv-admproducts-025"
+                    : "sv-admproducts-026"
                 }`}
               >
-                <div className="flex items-start gap-3">
+                <div className="sv-admproducts-027">
                   <input
                     type="radio"
                     name="productType"
                     value="variant"
                     checked={form.productType === "variant"}
                     onChange={() => setProductType("variant")}
-                    className="mt-1"
+                    className="sv-admproducts-028"
                   />
 
                   <div>
-                    <p className="font-semibold text-gray-900 dark:text-gray-100">
+                    <p className="sv-admproducts-013">
                       Product with Variants
                     </p>
-                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    <p className="sv-admproducts-022">
                       Use Size, Color, or manually managed combinations.
                     </p>
                   </div>
@@ -845,7 +845,7 @@ export default function AdminProducts() {
           </div>
 
           {form.productType === "simple" ? (
-            <div className="mt-4 grid gap-4 md:grid-cols-2">
+            <div className="sv-admproducts-029">
               <AdminField
                 label="SKU"
                 value={form.sku}
@@ -871,13 +871,13 @@ export default function AdminProducts() {
               />
             </div>
           ) : (
-            <div className="mt-4 rounded-2xl border border-gray-200 p-4 dark:border-gray-700">
-              <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-start">
+            <div className="sv-admproducts-030">
+              <div className="sv-admproducts-031">
                 <div>
-                  <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                  <p className="sv-admproducts-021">
                     Variant Builder
                   </p>
-                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  <p className="sv-admproducts-022">
                     Enter Size and/or Color values separated by commas, then
                     generate combinations.
                   </p>
@@ -889,7 +889,7 @@ export default function AdminProducts() {
                 </AdminButton>
               </div>
 
-              <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <div className="sv-admproducts-029">
                 <AdminField
                   label="Base SKU / SKU prefix"
                   placeholder="Example: TS"
@@ -941,13 +941,13 @@ export default function AdminProducts() {
                 />
               </div>
 
-              <div className="mt-4">
+              <div className="sv-admproducts-019">
                 <AdminButton onClick={generateVariants}>
                   Generate Variants
                 </AdminButton>
               </div>
 
-              <div className="mt-5 space-y-3">
+              <div className="sv-admproducts-032">
                 {form.variants.length ? (
                   form.variants.map((variant, index) => {
                     const size = getVariantSize(variant);
@@ -959,14 +959,14 @@ export default function AdminProducts() {
                     return (
                       <div
                         key={`${variant.sku || "variant"}-${index}`}
-                        className="rounded-xl border border-gray-200 p-4 dark:border-gray-700"
+                        className="sv-admproducts-033"
                       >
-                        <div className="mb-4 flex items-center justify-between gap-3">
+                        <div className="sv-admproducts-034">
                           <div>
-                            <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                            <p className="sv-admproducts-021">
                               {label}
                             </p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                            <p className="sv-admproducts-014">
                               Variant {index + 1}
                             </p>
                           </div>
@@ -974,14 +974,14 @@ export default function AdminProducts() {
                           <button
                             type="button"
                             onClick={() => removeVariant(index)}
-                            className="rounded-lg p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"
+                            className="sv-admproducts-035"
                             aria-label={`Remove ${label}`}
                           >
                             <Trash2 size={16} />
                           </button>
                         </div>
 
-                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                        <div className="sv-admproducts-036">
                           <AdminField
                             label="Size"
                             value={size}
@@ -1029,7 +1029,7 @@ export default function AdminProducts() {
                           />
                         </div>
 
-                        <label className="mt-4 flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                        <label className="sv-admproducts-037">
                           <input
                             type="checkbox"
                             checked={variant.active !== false}
@@ -1045,7 +1045,7 @@ export default function AdminProducts() {
                     );
                   })
                 ) : (
-                  <div className="rounded-xl border border-dashed border-gray-300 p-5 text-sm text-gray-500 dark:border-gray-700 dark:text-gray-400">
+                  <div className="sv-admproducts-038">
                     No variants yet. Add Size/Color options and click
                     <strong> Generate Variants</strong>, or add one manually.
                   </div>
@@ -1054,42 +1054,42 @@ export default function AdminProducts() {
             </div>
           )}
 
-          <div className="mt-4">
-            <div className="mb-2 flex items-center justify-between">
-              <p className="text-xs font-semibold text-gray-600 dark:text-gray-300">
+          <div className="sv-admproducts-019">
+            <div className="sv-admproducts-039">
+              <p className="sv-admproducts-040">
                 Images
               </p>
 
-              <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800">
+              <label className="sv-admproducts-041">
                 <ImagePlus size={15} />
                 {uploading ? "Uploading…" : "Upload images"}
                 <input
                   type="file"
                   accept="image/*"
                   multiple
-                  className="hidden"
+                  className="sv-admproducts-042"
                   onChange={(event) => void uploadFiles(event.target.files)}
                   disabled={uploading}
                 />
               </label>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="sv-admproducts-043">
               {form.images.map((image, index) => (
                 <div
                   key={`${image.public_id || image.url}-${index}`}
-                  className="relative"
+                  className="sv-admproducts-001"
                 >
                   <img
                     src={image.url}
                     alt=""
-                    className="h-24 w-24 rounded-xl border object-cover dark:border-gray-700"
+                    className="sv-admproducts-044"
                   />
 
                   <button
                     type="button"
                     onClick={() => void removeImage(index)}
-                    className="absolute -right-2 -top-2 rounded-full bg-red-500 p-1 text-white"
+                    className="sv-admproducts-045"
                   >
                     <X size={12} />
                   </button>
@@ -1097,12 +1097,12 @@ export default function AdminProducts() {
               ))}
 
               {!form.images.length && (
-                <p className="text-sm text-gray-400">No images attached.</p>
+                <p className="sv-admproducts-046">No images attached.</p>
               )}
             </div>
           </div>
 
-          <div className="mt-6 flex justify-end gap-2">
+          <div className="sv-admproducts-047">
             <AdminButton tone="ghost" onClick={() => setEditing(null)}>
               Cancel
             </AdminButton>

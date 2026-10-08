@@ -2,11 +2,11 @@ import mongoose from "mongoose";
 
 const bannerSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true, trim: true, maxlength: 140 },
+    title: { type: String, trim: true, maxlength: 140, default: "" },
     subtitle: { type: String, trim: true, maxlength: 300, default: "" },
     badge: { type: String, trim: true, maxlength: 80, default: "" },
-    ctaText: { type: String, trim: true, maxlength: 60, default: "Shop Now" },
-    ctaPath: { type: String, trim: true, maxlength: 200, default: "/shop" },
+    ctaText: { type: String, trim: true, maxlength: 60, default: "" },
+    ctaPath: { type: String, trim: true, maxlength: 200, default: "" },
     image: {
       public_id: { type: String, default: "" },
       url: { type: String, default: "" },

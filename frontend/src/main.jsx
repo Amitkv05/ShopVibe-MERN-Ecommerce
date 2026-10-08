@@ -3,6 +3,10 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import { ThemeProvider } from "@/components/reusable/ThemeProvider";
 import "./styles/globals.css";
+import "./styles/reference-parity.css";
+import "./styles/premium-v4.css";
+import "./styles/premium-v5.css";
+import "./styles/admin-premium-normal.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

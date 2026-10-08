@@ -49,3 +49,6 @@ src/
   App.jsx
   main.jsx
 ```
+
+## Latest UX repair pass
+See `UX_FIX_PASS_V4.md` for the latest checkout simplification, home catalog-state fix, Shop/Admin Calendar removal, premium admin forms, optional banner copy/CTA, cart rebuild, and ShopVibe-colored login refresh.

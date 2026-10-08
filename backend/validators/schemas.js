@@ -84,7 +84,7 @@ export const subcategorySchema = z.object({
 });
 
 export const bannerSchema = z.object({
-  title: nonEmpty(140),
+  title: z.string().trim().max(140).optional(),
   subtitle: z.string().trim().max(300).optional(),
   badge: z.string().trim().max(80).optional(),
   ctaText: z.string().trim().max(60).optional(),
