@@ -10,8 +10,10 @@
     "start": "npm run preview",
     "lint": "eslint src",
     "check:vite": "node scripts/check-vite.mjs",
-    "check": "npm run lint && npm run check:vite",
-    "check:integration": "node scripts/check-integration.mjs"
+    "check:styles": "node scripts/check-css-architecture.mjs",
+    "check": "npm run lint && npm run check:vite && npm run check:styles && npm run check:theme",
+    "check:integration": "node scripts/check-integration.mjs",
+    "check:theme": "node scripts/check-theme-coverage.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

@@ -1,206 +1,209 @@
-import { ShoppingBag, Minus, Plus, Trash2, ArrowRight, Tag, X, ShoppingCart } from "lucide-react";
-import { useStore } from "@/lib/store";
-import { api } from "@/lib/api";
-import Button from "@/components/reusable/Button";
 import { useState } from "react";
+import { ArrowRight, Minus, Plus, ShieldCheck, ShoppingBag, Tag, Trash2, X } from "lucide-react";
+import { useStore } from "@/lib/store";
+import { api, apiMessage } from "@/lib/api";
+import Button from "@/components/reusable/Button";
+
+function money(value) {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 2,
+  }).format(Number(value || 0));
+}
+
 export default function CartScreen() {
-    const { cart, removeFromCart, updateQty, clearCart, setPage, isLoggedIn, couponCode, setCouponCode, showToast } = useStore();
-    const [coupon, setCoupon] = useState("");
-    const [couponApplied, setCouponApplied] = useState(Boolean(couponCode));
-    const [discountAmount, setDiscountAmount] = useState(0);
-    const [serverTotal, setServerTotal] = useState(null);
-    const [couponError, setCouponError] = useState("");
-    const subtotal = cart.reduce((acc, i) => acc + i.product.price * i.quantity, 0);
-    const shipping = subtotal > 50 ? 0 : 9.99;
-    const discount = couponApplied ? discountAmount : 0;
-    const tax = 0;
-    const total = serverTotal ?? (subtotal - discount + shipping);
-    const handleCoupon = async () => {
-        if (!isLoggedIn) {
-            setCouponError("Sign in to validate and use a coupon.");
-            return;
-        }
-        try {
-            const orderItems = cart.map((i) => ({ product: i.product.id, quantity: i.quantity, variantSku: i.variantSku || "" }));
-            const data = await api("/coupon/validate", { method: "POST", body: { couponCode: coupon.trim().toUpperCase(), orderItems } });
-            setCouponApplied(true);
-            setCouponError("");
-            setDiscountAmount(Number(data.discountPrice || 0));
-            setServerTotal(Number(data.totalPrice || 0));
-            setCouponCode(data.couponCode || coupon.trim().toUpperCase());
-            showToast("Coupon applied", "success");
-        }
-        catch (error) {
-            setCouponApplied(false);
-            setDiscountAmount(0);
-            setServerTotal(null);
-            setCouponCode("");
-            setCouponError(error instanceof Error ? error.message : "Invalid coupon");
-        }
-    };
-    if (cart.length === 0) {
-        return (<div className="min-h-[70vh] flex items-center justify-center px-4">
-        <div className="text-center max-w-sm">
-          <div className="w-24 h-24 rounded-full bg-violet-50 flex items-center justify-center mx-auto mb-6">
-            <ShoppingCart size={40} className="text-violet-300"/>
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Your cart is empty</h2>
-          <p className="text-gray-500 mb-8">Looks like you haven&apos;t added any items yet. Start shopping!</p>
-          <Button onClick={() => setPage("shop")} size="lg" iconRight={<ArrowRight size={18}/>}>
-            Start Shopping
-          </Button>
-        </div>
-      </div>);
+  const {
+    cart,
+    removeFromCart,
+    updateQty,
+    clearCart,
+    setPage,
+    isLoggedIn,
+    couponCode,
+    setCouponCode,
+    showToast,
+  } = useStore();
+
+  const [coupon, setCoupon] = useState(couponCode || "");
+  const [couponApplied, setCouponApplied] = useState(Boolean(couponCode));
+  const [discountAmount, setDiscountAmount] = useState(0);
+  const [serverTotal, setServerTotal] = useState(null);
+  const [couponError, setCouponError] = useState("");
+  const [couponLoading, setCouponLoading] = useState(false);
+
+  const subtotal = cart.reduce((amount, item) => amount + item.product.price * item.quantity, 0);
+  const shipping = subtotal > 50 ? 0 : 9.99;
+  const discount = couponApplied ? discountAmount : 0;
+  const total = serverTotal ?? subtotal - discount + shipping;
+  const itemCount = cart.reduce((amount, item) => amount + item.quantity, 0);
+
+  const handleCoupon = async () => {
+    if (!isLoggedIn) {
+      setCouponError("Sign in to validate and use a coupon.");
+      return;
     }
-    return (<div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Shopping Cart</h1>
-            <p className="text-gray-500 text-sm mt-1">{cart.reduce((a, i) => a + i.quantity, 0)} items</p>
-          </div>
-          <button onClick={clearCart} className="flex items-center gap-2 text-sm text-red-500 hover:text-red-700 font-medium transition-colors">
-            <Trash2 size={16}/>
-            Clear Cart
-          </button>
-        </div>
+    if (!coupon.trim()) {
+      setCouponError("Enter a promo code first.");
+      return;
+    }
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Cart Items */}
-          <div className="lg:col-span-2 space-y-4">
-            {cart.map((item) => (<div key={`${item.product.id}-${item.size}-${item.color}`} className="bg-white rounded-2xl border border-gray-100 p-4 sm:p-5 flex gap-4">
-                <div onClick={() => setPage("product", item.product.id)} className="w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden bg-gray-50 cursor-pointer shrink-0">
-                  <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover hover:scale-105 transition-transform"/>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex justify-between gap-2">
-                    <div className="min-w-0">
-                      <p className="text-xs text-violet-600 font-semibold">{item.product.brand}</p>
-                      <button onClick={() => setPage("product", item.product.id)} className="text-sm sm:text-base font-semibold text-gray-900 hover:text-violet-600 line-clamp-2 text-left transition-colors">
-                        {item.product.name}
-                      </button>
-                      <div className="flex gap-3 mt-1.5">
-                        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-lg">Size: {item.size}</span>
-                        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-lg">{item.color}</span>
-                      </div>
-                    </div>
-                    <button onClick={() => removeFromCart(item.product.id, item.size, item.color)} className="p-1.5 rounded-xl text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all shrink-0">
-                      <X size={18}/>
-                    </button>
-                  </div>
+    setCouponLoading(true);
+    try {
+      const orderItems = cart.map((item) => ({
+        product: item.product.id,
+        quantity: item.quantity,
+        variantSku: item.variantSku || "",
+      }));
+      const data = await api("/coupon/validate", {
+        method: "POST",
+        body: { couponCode: coupon.trim().toUpperCase(), orderItems },
+      });
+      setCouponApplied(true);
+      setCouponError("");
+      setDiscountAmount(Number(data.discountPrice || 0));
+      setServerTotal(Number(data.totalPrice || 0));
+      setCouponCode(data.couponCode || coupon.trim().toUpperCase());
+      showToast("Coupon applied", "success");
+    } catch (error) {
+      setCouponApplied(false);
+      setDiscountAmount(0);
+      setServerTotal(null);
+      setCouponCode("");
+      setCouponError(apiMessage(error, "Invalid coupon"));
+    } finally {
+      setCouponLoading(false);
+    }
+  };
 
-                  <div className="flex items-center justify-between mt-4">
-                    {/* Qty */}
-                    <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden">
-                      <button onClick={() => {
-                if (item.quantity === 1)
-                    removeFromCart(item.product.id, item.size, item.color);
-                else
-                    updateQty(item.product.id, item.size, item.color, item.quantity - 1);
-            }} className="w-9 h-9 flex items-center justify-center text-gray-500 hover:bg-gray-50 transition-colors">
-                        <Minus size={14}/>
-                      </button>
-                      <span className="w-10 text-center text-sm font-semibold text-gray-900">{item.quantity}</span>
-                      <button onClick={() => updateQty(item.product.id, item.size, item.color, item.quantity + 1)} className="w-9 h-9 flex items-center justify-center text-gray-500 hover:bg-gray-50 transition-colors">
-                        <Plus size={14}/>
-                      </button>
-                    </div>
-                    {/* Price */}
-                    <div className="text-right">
-                      <p className="font-bold text-gray-900">₹{(item.product.price * item.quantity).toFixed(2)}</p>
-                      {item.quantity > 1 && (<p className="text-xs text-gray-400">₹{item.product.price} each</p>)}
-                    </div>
-                  </div>
-                </div>
-              </div>))}
+  const removeCoupon = () => {
+    setCouponApplied(false);
+    setCoupon("");
+    setCouponCode("");
+    setDiscountAmount(0);
+    setServerTotal(null);
+    setCouponError("");
+  };
 
-            {/* Continue Shopping */}
-            <button onClick={() => setPage("shop")} className="flex items-center gap-2 text-sm text-violet-600 font-medium hover:text-violet-800 transition-colors mt-2">
-              <ShoppingBag size={16}/>
-              Continue Shopping
-            </button>
-          </div>
-
-          {/* Order Summary */}
-          <div className="space-y-4">
-            {/* Coupon */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-5">
-              <h3 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                <Tag size={16} className="text-violet-600"/>
-                Promo Code
-              </h3>
-              {couponApplied ? (<div className="flex items-center justify-between p-3 bg-emerald-50 rounded-xl border border-emerald-200">
-                  <div>
-                    <p className="text-sm font-semibold text-emerald-700">{couponCode || coupon} applied!</p>
-                    <p className="text-xs text-emerald-600">Discount (-₹{discount.toFixed(2)})</p>
-                  </div>
-                  <button onClick={() => { setCouponApplied(false); setCoupon(""); setCouponCode(""); setDiscountAmount(0); setServerTotal(null); }} className="text-emerald-600 hover:text-emerald-800">
-                    <X size={16}/>
-                  </button>
-                </div>) : (<>
-                  <div className="flex gap-2">
-                    <input value={coupon} onChange={(e) => { setCoupon(e.target.value.toUpperCase()); setCouponError(""); }} placeholder="Enter promo code" className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:border-violet-400 uppercase"/>
-                    <button onClick={handleCoupon} className="px-4 py-2 bg-violet-600 text-white text-sm font-semibold rounded-xl hover:bg-violet-700 transition-colors">
-                      Apply
-                    </button>
-                  </div>
-                  {couponError && <p className="text-xs text-red-500 mt-2">{couponError}</p>}
-                </>)}
-            </div>
-
-            {/* Summary */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-5">
-              <h3 className="text-base font-bold text-gray-900 mb-5">Order Summary</h3>
-              <div className="space-y-3">
-                {[
-            { label: "Subtotal", value: `₹${subtotal.toFixed(2)}` },
-            couponApplied ? { label: "Discount", value: `-₹${discount.toFixed(2)}`, className: "text-emerald-600" } : null,
-            { label: `Shipping ${subtotal > 50 ? "(Free)" : ""}`, value: shipping === 0 ? "FREE" : `₹${shipping.toFixed(2)}`, className: shipping === 0 ? "text-emerald-600" : undefined },
-        ].filter(Boolean).map((item) => item && (<div key={item.label} className="flex justify-between text-sm">
-                    <span className="text-gray-600">{item.label}</span>
-                    <span className={`font-medium text-gray-900 ${item.className ?? ""}`}>{item.value}</span>
-                  </div>))}
-                <div className="pt-3 border-t border-gray-100 flex justify-between">
-                  <span className="font-bold text-gray-900">Total</span>
-                  <span className="font-bold text-lg text-gray-900">₹{total.toFixed(2)}</span>
-                </div>
-              </div>
-
-              <Button fullWidth size="lg" className="mt-5" iconRight={<ArrowRight size={18}/>} onClick={() => {
-            if (!isLoggedIn) {
-                if (typeof window !== "undefined")
-                    sessionStorage.setItem("shopvibe_after_login", "checkout");
-                setPage("login");
-            }
-            else
-                setPage("checkout");
-        }}>
-                Proceed to Checkout
-              </Button>
-
-              <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400">
-                <span>🔒</span>
-                <span>Secure SSL Encrypted Checkout</span>
-              </div>
-
-              {subtotal < 50 && (<div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-xl">
-                  <p className="text-xs text-amber-700 text-center font-medium">
-                    Add ₹{(50 - subtotal).toFixed(2)} more for free shipping! 🚚
-                  </p>
-                </div>)}
-            </div>
-
-            {/* Payment Methods */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-4">
-              <p className="text-xs text-gray-500 text-center mb-3">We accept</p>
-              <div className="flex justify-center gap-3 flex-wrap">
-                {["VISA", "MC", "PayPal", "Apple Pay", "Google Pay"].map((p) => (<span key={p} className="px-3 py-1.5 border border-gray-200 rounded-lg text-xs font-semibold text-gray-600">
-                    {p}
-                  </span>))}
-              </div>
-            </div>
-          </div>
+  if (!cart.length) {
+    return (
+      <div className="premium-cart-empty-page">
+        <div className="premium-cart-empty-card">
+          <span><ShoppingBag size={34} /></span>
+          <small>YOUR BAG</small>
+          <h1>Your cart is empty</h1>
+          <p>Add something you love and it will be waiting for you here.</p>
+          <Button onClick={() => setPage("home")} size="lg" iconRight={<ArrowRight size={17} />}>Explore products</Button>
         </div>
       </div>
-    </div>);
+    );
+  }
+
+  return (
+    <div className="premium-cart-page">
+      <div className="premium-cart-shell">
+        <header className="premium-cart-heading">
+          <div>
+            <span>YOUR BAG</span>
+            <h1>Shopping cart</h1>
+            <p>{itemCount} {itemCount === 1 ? "item" : "items"} ready for checkout</p>
+          </div>
+          <button type="button" className="premium-cart-clear" onClick={() => void clearCart()}>
+            <Trash2 size={15} /> Clear cart
+          </button>
+        </header>
+
+        <div className="premium-cart-layout">
+          <section className="premium-cart-items-card">
+            {cart.map((item) => (
+              <article className="premium-cart-line" key={`${item.product.id}-${item.variantSku || item.size}-${item.color}`}>
+                <button className="premium-cart-product-image" onClick={() => setPage("product", item.product.id)}>
+                  <img src={item.product.image} alt={item.product.name} />
+                </button>
+
+                <div className="premium-cart-product-copy">
+                  <small>{item.product.brand || item.product.category || "ShopVibe"}</small>
+                  <button className="premium-cart-product-name" onClick={() => setPage("product", item.product.id)}>{item.product.name}</button>
+                  <div className="premium-cart-variants">
+                    <span>{item.size || "Standard"}</span>
+                    <span>{item.color || "Default"}</span>
+                  </div>
+                  <div className="premium-cart-line-bottom">
+                    <div className="premium-cart-qty">
+                      <button
+                        onClick={() => item.quantity <= 1
+                          ? removeFromCart(item.product.id, item.size, item.color)
+                          : updateQty(item.product.id, item.size, item.color, item.quantity - 1)}
+                        aria-label="Decrease quantity"
+                      ><Minus size={14} /></button>
+                      <b>{item.quantity}</b>
+                      <button onClick={() => updateQty(item.product.id, item.size, item.color, item.quantity + 1)} aria-label="Increase quantity"><Plus size={14} /></button>
+                    </div>
+                    <strong>{money(item.product.price * item.quantity)}</strong>
+                  </div>
+                </div>
+
+                <button className="premium-cart-remove" onClick={() => removeFromCart(item.product.id, item.size, item.color)} aria-label="Remove item"><X size={17} /></button>
+              </article>
+            ))}
+
+            <button className="premium-cart-continue" onClick={() => setPage("home")}>← Continue shopping</button>
+          </section>
+
+          <aside className="premium-cart-summary">
+            <div className="premium-cart-summary-head">
+              <div><small>ORDER</small><h2>Summary</h2></div>
+              <span>{itemCount}</span>
+            </div>
+
+            <div className="premium-coupon-block">
+              <label><Tag size={15} /><span>Promo code</span></label>
+              {couponApplied ? (
+                <div className="premium-coupon-success">
+                  <div><b>{couponCode || coupon}</b><small>Discount {money(discount)}</small></div>
+                  <button onClick={removeCoupon}><X size={15} /></button>
+                </div>
+              ) : (
+                <div className="premium-coupon-input-row">
+                  <input
+                    value={coupon}
+                    onChange={(event) => { setCoupon(event.target.value.toUpperCase()); setCouponError(""); }}
+                    placeholder="ENTER PROMO CODE"
+                  />
+                  <button disabled={couponLoading} onClick={() => void handleCoupon()}>{couponLoading ? "Checking…" : "Apply"}</button>
+                </div>
+              )}
+              {couponError && <p>{couponError}</p>}
+            </div>
+
+            <div className="premium-cart-totals">
+              <div><span>Subtotal</span><b>{money(subtotal)}</b></div>
+              {couponApplied && <div className="discount"><span>Discount</span><b>-{money(discount)}</b></div>}
+              <div><span>Shipping</span><b>{shipping === 0 ? "Free" : money(shipping)}</b></div>
+              <div className="premium-cart-grand"><span>Total</span><b>{money(total)}</b></div>
+            </div>
+
+            <button
+              className="premium-cart-checkout-button"
+              onClick={() => {
+                if (!isLoggedIn) {
+                  if (typeof window !== "undefined") sessionStorage.setItem("shopvibe_after_login", "checkout");
+                  setPage("login");
+                } else {
+                  setPage("checkout");
+                }
+              }}
+            >
+              <span>Proceed to checkout</span><ArrowRight size={17} />
+            </button>
+
+            <div className="premium-cart-secure">
+              <ShieldCheck size={16} />
+              <div><b>Protected checkout</b><span>Live totals are confirmed by your backend during checkout.</span></div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  );
 }

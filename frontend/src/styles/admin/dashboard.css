@@ -1,0 +1,119 @@
+/* ShopVibe admin dashboard overview. */
+
+.sv-admdashboard-001 > * + * {
+margin-top:1.25rem
+}
+
+.sv-admdashboard-002 {
+display:flex;justify-content:flex-end
+}
+
+.sv-admdashboard-003 {
+display:grid;gap:1rem
+}
+
+@media (min-width:40rem) {
+.sv-admdashboard-003 {
+grid-template-columns:repeat(2,minmax(0,1fr))
+}
+}
+
+@media (min-width:80rem) {
+.sv-admdashboard-003 {
+grid-template-columns:repeat(5,minmax(0,1fr))
+}
+}
+
+.sv-admdashboard-004 {
+border-radius:1rem;border-width:1px;border-style:solid;border-color:var(--app-border);background-color:var(--app-surface);padding:1.25rem;box-shadow:0 1px 2px rgba(0,0,0,.06)
+}
+
+.sv-admdashboard-005 {
+display:flex;align-items:center;justify-content:space-between
+}
+
+.sv-admdashboard-006 {
+font-size:.875rem;line-height:1.25rem;color:var(--app-muted)
+}
+
+.sv-admdashboard-007 {
+border-radius:.75rem;background-color:var(--app-violet-soft);padding:0.5rem;color:#7c3aed
+}
+
+.sv-admdashboard-008 {
+margin-top:0.75rem;font-size:1.5rem;line-height:2rem;font-weight:700;color:var(--app-text)
+}
+
+.sv-admdashboard-009 {
+display:grid;gap:1.25rem
+}
+
+@media (min-width:80rem) {
+.sv-admdashboard-009 {
+grid-template-columns:repeat(2,minmax(0,1fr))
+}
+}
+
+.sv-admdashboard-010 > * + * {
+margin-top:0.75rem
+}
+
+.sv-admdashboard-011 {
+display:flex;align-items:center;justify-content:space-between;border-radius:.75rem;background-color:var(--app-surface-soft);padding:0.75rem
+}
+
+.sv-admdashboard-012 {
+font-weight:600;color:var(--app-text)
+}
+
+.sv-admdashboard-013 {
+font-size:.75rem;line-height:1rem;color:var(--app-muted)
+}
+
+.sv-admdashboard-014 {
+font-weight:700;color:var(--app-text)
+}
+
+.sv-admdashboard-015 {
+display:flex;align-items:center;justify-content:space-between;border-radius:.75rem;border-width:1px;border-style:solid;border-color:var(--app-border);padding:0.75rem
+}
+
+.sv-admdashboard-016 {
+font-weight:600
+}
+
+.sv-admdashboard-017 {
+display:grid;gap:0.75rem
+}
+
+@media (min-width:40rem) {
+.sv-admdashboard-017 {
+grid-template-columns:repeat(2,minmax(0,1fr))
+}
+}
+
+@media (min-width:64rem) {
+.sv-admdashboard-017 {
+grid-template-columns:repeat(4,minmax(0,1fr))
+}
+}
+
+.sv-admdashboard-018 {
+border-radius:.75rem;background-color:var(--app-surface-soft);padding:1rem
+}
+
+.sv-admdashboard-019 {
+margin-top:0.5rem
+}
+
+.sv-admdashboard-020 {
+margin-top:0.5rem;font-size:.75rem;line-height:1rem;color:var(--app-muted)
+}
+
+.sv-admdashboard-021 {
+margin-top:0.5rem;font-weight:600
+}
+
+.sv-admdashboard-022 {
+margin-top:0.5rem;display:flex;flex-wrap:wrap;gap:0.375rem
+}

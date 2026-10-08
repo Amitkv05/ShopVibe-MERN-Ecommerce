@@ -1,0 +1,41 @@
+/* ShopVibe admin customer management screen. */
+
+.sv-admcustomers-001 {
+overflow-x:auto
+}
+
+.sv-admcustomers-002 {
+width:100%;font-size:.875rem;line-height:1.25rem
+}
+
+.sv-admcustomers-003 {
+text-align:left;font-size:.75rem;line-height:1rem;color:var(--app-muted)
+}
+
+.sv-admcustomers-004 {
+padding-bottom:0.75rem
+}
+
+.sv-admcustomers-005 {
+padding-bottom:0.75rem;text-align:right
+}
+
+.sv-admcustomers-006 {
+border-top-width:1px;border-top-style:solid;border-color:var(--app-border)
+}
+
+.sv-admcustomers-007 {
+padding-block:0.75rem;font-weight:600
+}
+
+.sv-admcustomers-008 {
+display:flex;justify-content:flex-end;gap:0.5rem
+}
+
+.sv-admcustomers-009 > * + * {
+margin-top:1rem
+}
+
+.sv-admcustomers-010 {
+font-size:.75rem;line-height:1rem;color:var(--app-muted)
+}

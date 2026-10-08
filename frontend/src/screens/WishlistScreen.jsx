@@ -1,63 +1,33 @@
-import { Heart, Trash2, ShoppingBag, ArrowRight } from "lucide-react";
+import { Heart, Trash2, ShoppingBag, ArrowRight, Sparkles } from "lucide-react";
 import { useStore } from "@/lib/store";
 import ProductCard from "@/components/product/ProductCard";
 import Button from "@/components/reusable/Button";
+
 export default function WishlistScreen() {
-    const { wishlist, toggleWishlist, addToCart, setPage } = useStore();
-    if (wishlist.length === 0) {
-        return (<div className="min-h-[70vh] flex items-center justify-center px-4">
-        <div className="text-center max-w-sm">
-          <div className="w-24 h-24 rounded-full bg-rose-50 flex items-center justify-center mx-auto mb-6">
-            <Heart size={40} className="text-rose-300"/>
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Your wishlist is empty</h2>
-          <p className="text-gray-500 mb-8">Save your favorite items here and shop them later!</p>
-          <Button onClick={() => setPage("shop")} size="lg" iconRight={<ArrowRight size={18}/>}>
-            Explore Products
-          </Button>
-        </div>
-      </div>);
-    }
-    return (<div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-              <Heart size={24} className="text-rose-500 fill-rose-500"/>
-              My Wishlist
-            </h1>
-            <p className="text-gray-500 text-sm mt-1">{wishlist.length} saved items</p>
-          </div>
-          <button onClick={() => {
-            wishlist.forEach((p) => toggleWishlist(p));
-        }} className="flex items-center gap-2 text-sm text-red-500 hover:text-red-700 font-medium transition-colors">
-            <Trash2 size={16}/>
-            Clear All
-          </button>
-        </div>
+  const { wishlist, toggleWishlist, addToCart, setPage } = useStore();
 
-        {/* Add All to Cart */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4 mb-6 flex items-center justify-between">
-          <div>
-            <p className="font-semibold text-gray-900">Love everything?</p>
-            <p className="text-sm text-gray-500">Add all wishlist items to your cart at once</p>
-          </div>
-          <Button onClick={() => {
-            wishlist.forEach((p) => addToCart(p, p.sizes[0], p.colors[0]));
-        }} icon={<ShoppingBag size={16}/>}>
-            Add All to Cart
-          </Button>
-        </div>
+  if (!wishlist.length) return <div className="premium-wishlist-empty-page">
+    <div className="premium-wishlist-empty-card">
+      <div className="premium-wishlist-art"><span/><Heart size={44}/><i/></div>
+      <span className="premium-eyebrow">YOUR COLLECTION</span>
+      <h1>Your wishlist is waiting</h1>
+      <p>Save products you love and come back whenever you&apos;re ready.</p>
+      <Button onClick={() => setPage("shop")} size="lg" iconRight={<ArrowRight size={18}/>}>Explore Products</Button>
+      <small><Sparkles size={13}/> Saved products stay synced with your account.</small>
+    </div>
+  </div>;
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-          {wishlist.map((product) => (<ProductCard key={product.id} product={product}/>))}
-        </div>
+  const addAll = async () => {
+    for (const product of wishlist) await addToCart(product, product.sizes?.[0] || "Standard", product.colors?.[0] || "Default");
+    window.dispatchEvent(new Event("shopvibe:cart-added"));
+  };
 
-        <div className="mt-8 text-center">
-          <Button variant="outline" onClick={() => setPage("shop")} iconRight={<ArrowRight size={18}/>}>
-            Continue Shopping
-          </Button>
-        </div>
-      </div>
-    </div>);
+  return <div className="premium-wishlist-page">
+    <div className="premium-page-shell">
+      <header className="premium-page-heading"><div><span>WISHLIST</span><h1>Saved for later</h1><p>{wishlist.length} products you&apos;ve marked as favorites.</p></div><button className="premium-text-danger" onClick={() => wishlist.forEach((product) => void toggleWishlist(product))}><Trash2 size={16}/> Clear all</button></header>
+      <section className="premium-wishlist-banner"><div><ShoppingBag size={20}/><div><b>Ready to checkout your favorites?</b><span>Add every saved product to your cart in one go.</span></div></div><Button onClick={addAll} icon={<ShoppingBag size={16}/>}>Add all to cart</Button></section>
+      <div className="catalog-products-grid">{wishlist.map((product) => <ProductCard key={product.id} product={product}/>)}</div>
+      <div className="premium-center-action"><Button variant="outline" onClick={() => setPage("shop")} iconRight={<ArrowRight size={18}/>}>Continue Shopping</Button></div>
+    </div>
+  </div>;
 }

@@ -224,43 +224,43 @@ export default function AdminCategories() {
         }
       >
         {items.length ? (
-          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+          <div className="sv-admcategories-001">
             {items.map((category) => (
               <div
                 key={category._id}
-                className="overflow-hidden rounded-2xl border border-gray-100 bg-white dark:border-gray-800 dark:bg-gray-900"
+                className="sv-admcategories-002"
               >
-                <div className="relative h-36 bg-gray-100 dark:bg-gray-800">
+                <div className="sv-admcategories-003">
                   {category.image?.url ? (
                     <img
                       src={category.image.url}
                       alt={category.name}
-                      className="h-full w-full object-cover"
+                      className="sv-admcategories-004"
                     />
                   ) : (
-                    <div className="flex h-full items-center justify-center text-sm text-gray-400">
+                    <div className="sv-admcategories-005">
                       No category image
                     </div>
                   )}
 
                   {category.icon?.url && (
-                    <div className="absolute bottom-3 left-3 flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl border-2 border-white bg-white shadow dark:border-gray-800 dark:bg-gray-900">
+                    <div className="sv-admcategories-006">
                       <img
                         src={category.icon.url}
                         alt={`${category.name} icon`}
-                        className="h-full w-full object-cover"
+                        className="sv-admcategories-004"
                       />
                     </div>
                   )}
                 </div>
 
-                <div className="p-4">
-                  <div className="flex items-start justify-between gap-3">
+                <div className="sv-admcategories-007">
+                  <div className="sv-admcategories-008">
                     <div>
-                      <p className="font-bold text-gray-900 dark:text-gray-100">
+                      <p className="sv-admcategories-009">
                         {category.name}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="sv-admcategories-010">
                         /{category.slug}
                       </p>
                     </div>
@@ -271,11 +271,11 @@ export default function AdminCategories() {
                     </StatusPill>
                   </div>
 
-                  <p className="mt-3 min-h-10 line-clamp-2 text-sm text-gray-600 dark:text-gray-300">
+                  <p className="sv-admcategories-011">
                     {category.description || "No description"}
                   </p>
 
-                  <div className="mt-4 flex gap-2">
+                  <div className="sv-admcategories-012">
                     <AdminButton tone="ghost" onClick={() => openEdit(category)}>
                       <Edit2 size={14} />
                       Edit
@@ -299,7 +299,7 @@ export default function AdminCategories() {
           title={editing.new ? "Create category" : "Edit category"}
           onClose={() => setEditing(null)}
         >
-          <div className="space-y-4">
+          <div className="sv-admcategories-013">
             <AdminField
               label="Name"
               required
@@ -339,7 +339,7 @@ export default function AdminCategories() {
               }
             />
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="sv-admcategories-014">
               <CategoryAssetField
                 label="Category Image"
                 help="Used on category cards and category browsing."
@@ -377,7 +377,7 @@ export default function AdminCategories() {
               />
             </div>
 
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="sv-admcategories-015">
               <input
                 type="checkbox"
                 checked={form.active}
@@ -391,7 +391,7 @@ export default function AdminCategories() {
               Active
             </label>
 
-            <div className="flex justify-end gap-2">
+            <div className="sv-admcategories-016">
               <AdminButton tone="ghost" onClick={() => setEditing(null)}>
                 Cancel
               </AdminButton>
@@ -416,20 +416,20 @@ function CategoryAssetField({
   compact = false,
 }) {
   return (
-    <div className="rounded-2xl border border-gray-200 p-4 dark:border-gray-700">
-      <div className="flex items-start justify-between gap-3">
+    <div className="sv-admcategories-017">
+      <div className="sv-admcategories-008">
         <div>
-          <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+          <p className="sv-admcategories-018">
             {label}
           </p>
-          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{help}</p>
+          <p className="sv-admcategories-019">{help}</p>
         </div>
 
         {asset?.url && (
           <button
             type="button"
             onClick={onRemove}
-            className="rounded-lg p-1.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"
+            className="sv-admcategories-020"
             aria-label={`Remove ${label}`}
           >
             <X size={16} />
@@ -438,30 +438,30 @@ function CategoryAssetField({
       </div>
 
       <div
-        className={`mt-3 overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800 ${
-          compact ? "h-24 w-24" : "h-32 w-full"
+        className={`sv-admcategories-021 ${
+          compact ? "sv-admcategories-022" : "sv-admcategories-023"
         }`}
       >
         {asset?.url ? (
           <img
             src={asset.url}
             alt=""
-            className="h-full w-full object-cover"
+            className="sv-admcategories-004"
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-xs text-gray-400">
+          <div className="sv-admcategories-024">
             No image
           </div>
         )}
       </div>
 
-      <label className="mt-3 inline-flex cursor-pointer items-center gap-2 rounded-xl border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800">
+      <label className="sv-admcategories-025">
         <ImagePlus size={15} />
         {busy ? "Uploading…" : asset?.url ? "Replace" : "Upload"}
         <input
           type="file"
           accept="image/*"
-          className="hidden"
+          className="sv-admcategories-026"
           disabled={busy}
           onChange={(event) => onUpload(event.target.files)}
         />

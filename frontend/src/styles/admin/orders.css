@@ -1,0 +1,123 @@
+/* ShopVibe admin order management screen. */
+
+.sv-admorders-001 {
+padding-block:0.5rem
+}
+
+.sv-admorders-002 {
+overflow-x:auto
+}
+
+.sv-admorders-003 {
+width:100%;font-size:.875rem;line-height:1.25rem
+}
+
+.sv-admorders-004 {
+text-align:left;font-size:.75rem;line-height:1rem;color:var(--app-muted)
+}
+
+.sv-admorders-005 {
+padding-bottom:0.75rem
+}
+
+.sv-admorders-006 {
+padding-bottom:0.75rem;text-align:right
+}
+
+.sv-admorders-007 {
+border-top-width:1px;border-top-style:solid;border-color:var(--app-border)
+}
+
+.sv-admorders-008 {
+padding-block:0.75rem;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;font-size:.75rem;line-height:1rem
+}
+
+.sv-admorders-009 {
+font-weight:500
+}
+
+.sv-admorders-010 {
+font-size:.75rem;line-height:1rem;color:var(--app-muted)
+}
+
+.sv-admorders-011 {
+display:flex;justify-content:flex-end;gap:0.5rem
+}
+
+.sv-admorders-012 {
+display:grid;gap:1.25rem
+}
+
+@media (min-width:64rem) {
+.sv-admorders-012 {
+grid-template-columns:repeat(2,minmax(0,1fr))
+}
+}
+
+.sv-admorders-013 {
+font-weight:600;margin-bottom:0.75rem
+}
+
+.sv-admorders-014 > * + * {
+margin-top:0.5rem
+}
+
+.sv-admorders-015 {
+display:flex;gap:0.75rem;border-radius:.75rem;border-width:1px;border-style:solid;padding:0.75rem
+}
+
+.sv-admorders-016 {
+height:3.5rem;width:3.5rem;border-radius:.5rem;object-fit:cover
+}
+
+.sv-admorders-017 {
+flex:1 1 0%
+}
+
+.sv-admorders-018 {
+font-weight:600
+}
+
+.sv-admorders-019 {
+margin-top:1rem;border-radius:.75rem;background-color:var(--app-surface-soft);padding:1rem;font-size:.875rem;line-height:1.25rem
+}
+
+.sv-admorders-020 {
+display:flex;justify-content:space-between
+}
+
+.sv-admorders-021 {
+margin-top:0.5rem;display:flex;justify-content:space-between;font-weight:700
+}
+
+.sv-admorders-022 > * + * {
+margin-top:1rem
+}
+
+.sv-admorders-023 {
+border-radius:.75rem;border-width:1px;border-style:solid;padding:1rem
+}
+
+.sv-admorders-024 {
+font-size:.875rem;line-height:1.25rem;color:var(--app-muted)
+}
+
+.sv-admorders-025 {
+font-size:.875rem;line-height:1.25rem;color:var(--app-muted)
+}
+
+.sv-admorders-026 {
+display:flex;align-items:center;justify-content:space-between
+}
+
+.sv-admorders-027 {
+font-size:.875rem;line-height:1.25rem;font-weight:500
+}
+
+.sv-admorders-028 {
+margin-top:0.5rem;font-size:.875rem;line-height:1.25rem;color:var(--app-muted)
+}
+
+.sv-admorders-029 {
+display:flex;gap:0.5rem
+}

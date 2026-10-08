@@ -1,0 +1,87 @@
+/* ShopVibe admin inventory management screen. */
+
+.sv-adminventory-001 > * + * {
+margin-top:1.25rem
+}
+
+.sv-adminventory-002 {
+display:grid;gap:0.75rem
+}
+
+@media (min-width:64rem) {
+.sv-adminventory-002 {
+grid-template-columns:repeat(2,minmax(0,1fr))
+}
+}
+
+.sv-adminventory-003 {
+border-radius:.75rem;border-width:1px;border-style:solid;border-color:#fef3c7;background-color:rgba(255,251,235,0.4);padding:1rem
+}
+
+.sv-adminventory-004 {
+display:flex;align-items:center;justify-content:space-between
+}
+
+.sv-adminventory-005 {
+font-weight:600;color:var(--app-text)
+}
+
+.sv-adminventory-006 {
+font-size:.75rem;line-height:1rem;color:var(--app-muted)
+}
+
+.sv-adminventory-007 {
+margin-top:0.75rem;display:flex;flex-wrap:wrap;gap:0.5rem;font-size:.75rem;line-height:1rem
+}
+
+.sv-adminventory-008 {
+border-radius:.5rem;background-color:var(--app-surface);padding-inline:0.625rem;padding-block:0.25rem;border-width:1px;border-style:solid
+}
+
+.sv-adminventory-009 {
+margin-top:0.75rem
+}
+
+.sv-adminventory-010 {
+color:var(--app-muted)
+}
+
+.sv-adminventory-011 {
+overflow-x:auto
+}
+
+.sv-adminventory-012 {
+width:100%;font-size:.875rem;line-height:1.25rem
+}
+
+.sv-adminventory-013 {
+text-align:left;font-size:.75rem;line-height:1rem;color:var(--app-muted)
+}
+
+.sv-adminventory-014 {
+padding-bottom:0.75rem
+}
+
+.sv-adminventory-015 {
+border-top-width:1px;border-top-style:solid;border-color:var(--app-border)
+}
+
+.sv-adminventory-016 {
+padding-block:0.75rem
+}
+
+.sv-adminventory-017 {
+color:#059669
+}
+
+.sv-adminventory-018 {
+color:#dc2626
+}
+
+.sv-adminventory-019 > * + * {
+margin-top:1rem
+}
+
+.sv-adminventory-020 {
+display:flex;justify-content:flex-end;gap:0.5rem
+}

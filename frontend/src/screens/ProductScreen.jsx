@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Heart, ShoppingBag, Share2, Star, ChevronLeft, ChevronRight, Truck, Shield, RotateCcw, CheckCircle, Minus, Plus } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { api } from "@/lib/api";
 import { adaptProduct, getVariantSku } from "@/lib/data";
-import ProductCard from "@/components/product/ProductCard";
+import ProductCard, { flyProductToCart } from "@/components/product/ProductCard";
 import StarRating from "@/components/reusable/StarRating";
 import Button from "@/components/reusable/Button";
 import Badge from "@/components/reusable/Badge";
+import NotFoundScreen from "@/screens/NotFoundScreen";
 export default function ProductScreen() {
     const { selectedProductId, selectedProduct, products, setPage, setSelectedCategory, openSubcategory, addToCart, toggleWishlist, wishlist, fetchProduct, fetchCatalog, isLoggedIn, showToast } = useStore();
     const product = selectedProduct?.id === selectedProductId ? selectedProduct : products.find((p) => p.id === selectedProductId) || null;
@@ -23,6 +24,9 @@ export default function ProductScreen() {
     const [reviewComment, setReviewComment] = useState("");
     const [reviewBusy, setReviewBusy] = useState(false);
     const [relatedProducts, setRelatedProducts] = useState([]);
+    const heroImageRef = useRef(null);
+    const [addingToCart, setAddingToCart] = useState(false);
+    const [addedToCart, setAddedToCart] = useState(false);
     useEffect(() => {
         if (!selectedProductId) return;
         let cancelled = false;
@@ -36,14 +40,7 @@ export default function ProductScreen() {
         setSelectedColor(product.colors[0] || "Default");
         setImgIdx(0);
     } }, [product?.id]);
-    if (!product) {
-        return (<div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-2xl font-bold text-gray-900 mb-4">Product not found</p>
-          <Button onClick={() => setPage("shop")}>Back to Shop</Button>
-        </div>
-      </div>);
-    }
+    if (!product) return <NotFoundScreen />;
     const isWishlisted = wishlist.some((p) => p.id === product.id);
     const related = relatedProducts.length ? relatedProducts : products.filter((p) => p.id !== product.id && (product.subcategory ? p.subcategory === product.subcategory : p.category === product.category)).slice(0, 4);
     const selectedSku = getVariantSku(product, selectedSize, selectedColor);
@@ -74,7 +71,7 @@ export default function ProductScreen() {
             setReviewBusy(false);
         }
     };
-    return (<div className="min-h-screen bg-gray-50">
+    return (<div className="min-h-screen bg-gray-50 product-premium-page">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">
@@ -91,11 +88,11 @@ export default function ProductScreen() {
           <span className="text-gray-900 font-medium line-clamp-1">{product.name}</span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 product-premium-grid">
           {/* Images */}
           <div className="space-y-4">
-            <div className="relative bg-white rounded-3xl overflow-hidden aspect-square border border-gray-100">
-              <img src={product.images[imgIdx]} alt={product.name} className="w-full h-full object-cover"/>
+            <div className="relative bg-white rounded-3xl overflow-hidden aspect-square border border-gray-100 product-gallery-main">
+              <img ref={heroImageRef} src={product.images[imgIdx]} alt={product.name} className="w-full h-full object-cover"/>
               {product.images.length > 1 && (<>
                   <button onClick={() => setImgIdx((i) => (i - 1 + product.images.length) % product.images.length)} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur text-gray-700 flex items-center justify-center hover:bg-white shadow-md transition-all">
                     <ChevronLeft size={20}/>
@@ -203,8 +200,8 @@ export default function ProductScreen() {
 
             {/* Add to Cart */}
             <div className="flex gap-3">
-              <Button onClick={() => addToCart(product, selectedSize, selectedColor, qty)} size="lg" className="flex-1" icon={<ShoppingBag size={20}/>} disabled={currentStock <= 0}>
-                Add to Cart
+              <Button onClick={async () => { if (addingToCart) return; setAddingToCart(true); setAddedToCart(false); try { await addToCart(product, selectedSize, selectedColor, qty); flyProductToCart(heroImageRef.current); setAddedToCart(true); window.dispatchEvent(new CustomEvent("shopvibe:cart-added", { detail: { productId: product.id } })); window.setTimeout(() => setAddedToCart(false), 1700); } finally { setAddingToCart(false); } }} size="lg" className={`flex-1 ${addedToCart ? "product-added-button" : ""}`} icon={addedToCart ? <CheckCircle size={20}/> : <ShoppingBag size={20}/>} loading={addingToCart} disabled={currentStock <= 0}>
+                {addingToCart ? "Adding…" : addedToCart ? "Added to Cart" : "Add to Cart"}
               </Button>
               <Button onClick={() => { void addToCart(product, selectedSize, selectedColor, qty).then(() => setPage("checkout")); }} size="lg" variant="secondary" className="flex-1" disabled={currentStock <= 0}>
                 Buy Now

@@ -1,0 +1,63 @@
+/* ShopVibe admin system diagnostics screen. */
+
+.sv-admsystem-001 > * + * {
+margin-top:1.25rem
+}
+
+.sv-admsystem-002 {
+display:flex;justify-content:flex-end
+}
+
+.sv-admsystem-003 {
+display:grid;gap:1.25rem
+}
+
+@media (min-width:64rem) {
+.sv-admsystem-003 {
+grid-template-columns:repeat(2,minmax(0,1fr))
+}
+}
+
+.sv-admsystem-004 {
+display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.75rem;font-size:.875rem;line-height:1.25rem
+}
+
+.sv-admsystem-005 {
+border-radius:.75rem;background-color:var(--app-surface-soft);padding:0.75rem
+}
+
+.sv-admsystem-006 {
+font-size:.75rem;line-height:1rem;color:var(--app-muted)
+}
+
+.sv-admsystem-007 {
+margin-top:0.25rem;font-weight:600
+}
+
+.sv-admsystem-008 {
+margin-top:0.25rem
+}
+
+.sv-admsystem-009 {
+display:grid;gap:0.75rem
+}
+
+@media (min-width:40rem) {
+.sv-admsystem-009 {
+grid-template-columns:repeat(2,minmax(0,1fr))
+}
+}
+
+@media (min-width:64rem) {
+.sv-admsystem-009 {
+grid-template-columns:repeat(4,minmax(0,1fr))
+}
+}
+
+.sv-admsystem-010 {
+display:flex;flex-wrap:wrap;gap:0.5rem
+}
+
+.sv-admsystem-011 {
+margin-top:1rem;font-size:.75rem;line-height:1rem;color:var(--app-muted)
+}

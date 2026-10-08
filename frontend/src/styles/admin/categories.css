@@ -1,0 +1,187 @@
+/* ShopVibe admin category management screen. */
+
+.sv-admcategories-001 {
+display:grid;gap:0.75rem
+}
+
+@media (min-width:48rem) {
+.sv-admcategories-001 {
+grid-template-columns:repeat(2,minmax(0,1fr))
+}
+}
+
+@media (min-width:80rem) {
+.sv-admcategories-001 {
+grid-template-columns:repeat(3,minmax(0,1fr))
+}
+}
+
+.sv-admcategories-002 {
+overflow:hidden;border-radius:1rem;border-width:1px;border-style:solid;border-color:var(--app-border);background-color:var(--app-surface)
+}
+
+.dark .sv-admcategories-002 {
+border-color:#1f2937;background-color:#111827
+}
+
+.sv-admcategories-003 {
+position:relative;height:9rem;background-color:var(--app-surface-muted)
+}
+
+.dark .sv-admcategories-003 {
+background-color:#1f2937
+}
+
+.sv-admcategories-004 {
+height:100%;width:100%;object-fit:cover
+}
+
+.sv-admcategories-005 {
+display:flex;height:100%;align-items:center;justify-content:center;font-size:.875rem;line-height:1.25rem;color:var(--app-muted)
+}
+
+.sv-admcategories-006 {
+position:absolute;bottom:0.75rem;left:0.75rem;display:flex;height:3rem;width:3rem;align-items:center;justify-content:center;overflow:hidden;border-radius:.75rem;border-width:2px;border-style:solid;border-color:#ffffff;background-color:var(--app-surface);box-shadow:0 1px 3px rgba(0,0,0,.10),0 1px 2px rgba(0,0,0,.06)
+}
+
+.dark .sv-admcategories-006 {
+border-color:#1f2937;background-color:#111827
+}
+
+.sv-admcategories-007 {
+padding:1rem
+}
+
+.sv-admcategories-008 {
+display:flex;align-items:flex-start;justify-content:space-between;gap:0.75rem
+}
+
+.sv-admcategories-009 {
+font-weight:700;color:var(--app-text)
+}
+
+.dark .sv-admcategories-009 {
+color:#f3f4f6
+}
+
+.sv-admcategories-010 {
+font-size:.75rem;line-height:1rem;color:var(--app-muted)
+}
+
+.dark .sv-admcategories-010 {
+color:var(--app-muted)
+}
+
+.sv-admcategories-011 {
+margin-top:0.75rem;min-height:2.5rem;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font-size:.875rem;line-height:1.25rem;color:var(--app-muted)
+}
+
+.dark .sv-admcategories-011 {
+color:#d1d5db
+}
+
+.sv-admcategories-012 {
+margin-top:1rem;display:flex;gap:0.5rem
+}
+
+.sv-admcategories-013 > * + * {
+margin-top:1rem
+}
+
+.sv-admcategories-014 {
+display:grid;gap:1rem
+}
+
+@media (min-width:40rem) {
+.sv-admcategories-014 {
+grid-template-columns:repeat(2,minmax(0,1fr))
+}
+}
+
+.sv-admcategories-015 {
+display:flex;align-items:center;gap:0.5rem;font-size:.875rem;line-height:1.25rem;font-weight:500;color:var(--app-text)
+}
+
+.dark .sv-admcategories-015 {
+color:#d1d5db
+}
+
+.sv-admcategories-016 {
+display:flex;justify-content:flex-end;gap:0.5rem
+}
+
+.sv-admcategories-017 {
+border-radius:1rem;border-width:1px;border-style:solid;border-color:var(--app-border);padding:1rem
+}
+
+.dark .sv-admcategories-017 {
+border-color:#374151
+}
+
+.sv-admcategories-018 {
+font-size:.875rem;line-height:1.25rem;font-weight:600;color:var(--app-text)
+}
+
+.dark .sv-admcategories-018 {
+color:#f3f4f6
+}
+
+.sv-admcategories-019 {
+margin-top:0.25rem;font-size:.75rem;line-height:1rem;color:var(--app-muted)
+}
+
+.dark .sv-admcategories-019 {
+color:var(--app-muted)
+}
+
+.sv-admcategories-020 {
+border-radius:.5rem;padding:0.375rem;color:#ef4444
+}
+
+.sv-admcategories-020:hover {
+background-color:#fef2f2
+}
+
+.dark .sv-admcategories-020:hover {
+background-color:rgba(69,10,10,0.3)
+}
+
+.sv-admcategories-021 {
+margin-top:0.75rem;overflow:hidden;border-radius:.75rem;background-color:var(--app-surface-muted)
+}
+
+.dark .sv-admcategories-021 {
+background-color:#1f2937
+}
+
+.sv-admcategories-022 {
+height:6rem;width:6rem
+}
+
+.sv-admcategories-023 {
+height:8rem;width:100%
+}
+
+.sv-admcategories-024 {
+display:flex;height:100%;align-items:center;justify-content:center;font-size:.75rem;line-height:1rem;color:var(--app-muted)
+}
+
+.sv-admcategories-025 {
+margin-top:0.75rem;display:inline-flex;cursor:pointer;align-items:center;gap:0.5rem;border-radius:.75rem;border-width:1px;border-style:solid;border-color:var(--app-border);padding-inline:0.75rem;padding-block:0.5rem;font-size:.875rem;line-height:1.25rem;font-weight:600;color:var(--app-text)
+}
+
+.sv-admcategories-025:hover {
+background-color:var(--app-surface-soft)
+}
+
+.dark .sv-admcategories-025 {
+border-color:#374151;color:#e5e7eb
+}
+
+.dark .sv-admcategories-025:hover {
+background-color:#1f2937
+}
+
+.sv-admcategories-026 {
+display:none
+}

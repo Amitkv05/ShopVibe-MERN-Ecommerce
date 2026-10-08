@@ -1,416 +1,816 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+
 import {
-  ArrowRight,
-  ChevronLeft,
-  ChevronRight,
   Headphones,
   RotateCcw,
-  Shield,
+  Rocket,
+  ShieldCheck,
   Truck,
-  Zap,
 } from "lucide-react";
-import { useStore } from "@/lib/store";
-import { BANNERS } from "@/lib/data";
-import { api } from "@/lib/api";
-import ProductCard from "@/components/product/ProductCard";
-import Button from "@/components/reusable/Button";
 
-function pageFromBannerPath(path = "/shop") {
-  if (path === "/new-arrivals") return "newArrivals";
-  if (path === "/categories") return "categories";
-  if (path === "/") return "home";
-  return "shop";
+import { useStore } from "@/lib/store";
+
+import { BANNERS } from "@/lib/data";
+
+import { api } from "@/lib/api";
+
+import ProductCard, {
+  flyProductToCart,
+  Rating,
+} from "@/components/product/ProductCard";
+
+const HERO_WAIT_MS = 4500;
+
+const CATEGORY_WAIT_MS = 2800;
+
+const BEST_SELLER_WAIT_MS = CATEGORY_WAIT_MS;
+const BEST_SELLER_VISIBLE_COUNT = 4;
+
+let homeCatalogCache = [];
+
+let homeCatalogPromise = null;
+
+let homeCatalogFetchedAt = 0;
+
+const HOME_CATALOG_TTL_MS = 15000;
+
+function money(value) {
+  return `₹${Number(value || 0).toFixed(0)}`;
+}
+
+function categoryIcon(category) {
+  const icon = category?.icon || "🛍️";
+
+  if (/^(https?:|data:|\/)/.test(icon)) return <img src={icon} alt="" />;
+
+  return <span style={{ fontSize: 28, lineHeight: 1 }}>{icon}</span>;
+}
+
+function bannerImage(banner) {
+  return banner?.image?.url || banner?.image || "";
 }
 
 export default function HomeScreen() {
   const {
-    setPage,
-    setSelectedCategory,
     products,
+
     categories,
+
     fetchCatalog,
+
     catalogLoading,
+
     catalogError,
+
+    setPage,
+
+    setSelectedCategory,
+
+    addToCart,
   } = useStore();
 
   const [remoteBanners, setRemoteBanners] = useState([]);
-  const [bannerIdx, setBannerIdx] = useState(0);
-  const [autoplay, setAutoplay] = useState(true);
+
+  const [homeProducts, setHomeProducts] = useState(() =>
+    homeCatalogCache.length ? homeCatalogCache : products,
+  );
+
+  const [heroIndex, setHeroIndex] = useState(0);
+
+  const [heroPaused, setHeroPaused] = useState(false);
+
+  const [categoryPaused, setCategoryPaused] = useState(false);
+
+  const [bestSellerIndex, setBestSellerIndex] = useState(0);
+
+  const [bestSellerPaused, setBestSellerPaused] = useState(false);
+
+  const [dealAdded, setDealAdded] = useState(false);
+
+  const [dealAdding, setDealAdding] = useState(false);
+
+  const [remaining, setRemaining] = useState(
+    5 * 86400 + 8 * 3600 + 27 * 60 + 16,
+  );
+
+  const categoryRef = useRef(null);
+
+  const dealImageRef = useRef(null);
 
   useEffect(() => {
-    if (!products.length) void fetchCatalog();
-  }, [fetchCatalog, products.length]);
+    let alive = true;
+
+    if (homeCatalogCache.length) setHomeProducts(homeCatalogCache);
+
+    const refreshHomeCatalog = async () => {
+      if (!homeCatalogPromise) {
+        homeCatalogPromise = fetchCatalog()
+          .then(() => {
+            const fullCatalog = useStore.getState().products;
+
+            if (fullCatalog.length) {
+              homeCatalogCache = fullCatalog;
+
+              homeCatalogFetchedAt = Date.now();
+            }
+          })
+
+          .finally(() => {
+            homeCatalogPromise = null;
+          });
+      }
+
+      await homeCatalogPromise;
+
+      if (alive && homeCatalogCache.length) setHomeProducts(homeCatalogCache);
+    };
+
+    if (
+      !homeCatalogCache.length ||
+      Date.now() - homeCatalogFetchedAt > HOME_CATALOG_TTL_MS
+    ) {
+      void refreshHomeCatalog().catch(() => undefined);
+    }
+
+    return () => {
+      alive = false;
+    };
+  }, [fetchCatalog]);
 
   useEffect(() => {
-    let active = true;
+    let alive = true;
 
     api("/banners")
-      .then((data) => {
-        if (active) setRemoteBanners(data.banners || []);
+      .then((d) => {
+        if (alive) setRemoteBanners(d.banners || []);
       })
+
       .catch(() => {
-        if (active) setRemoteBanners([]);
+        if (alive) setRemoteBanners([]);
       });
 
     return () => {
-      active = false;
+      alive = false;
     };
   }, []);
 
   const banners = remoteBanners.length ? remoteBanners : BANNERS;
 
   useEffect(() => {
-    if (bannerIdx >= banners.length) setBannerIdx(0);
-  }, [bannerIdx, banners.length]);
+    if (heroPaused || banners.length < 2) return undefined;
 
-  useEffect(() => {
-    if (!autoplay || banners.length <= 1) return undefined;
+    const id = window.setInterval(
+      () => setHeroIndex((v) => (v + 1) % banners.length),
 
-    const timer = window.setInterval(
-      () => setBannerIdx((index) => (index + 1) % banners.length),
-      4000
+      HERO_WAIT_MS,
     );
 
-    return () => window.clearInterval(timer);
-  }, [autoplay, banners.length]);
+    return () => window.clearInterval(id);
+  }, [heroPaused, banners.length]);
 
-  const categoryItems = useMemo(
-    () => [{ id: "All", label: "All", icon: "🛍️", image: "" }, ...categories],
-    [categories]
+  useEffect(() => {
+    if (heroIndex >= banners.length) setHeroIndex(0);
+  }, [heroIndex, banners.length]);
+
+  // Category side bar
+
+  useEffect(() => {
+    const el = categoryRef.current;
+
+    if (!el || categoryPaused || categories.length < 2) return undefined;
+
+    const id = window.setInterval(() => {
+      const card = el.querySelector(".category-card");
+
+      if (!card) return;
+
+      const step = card.getBoundingClientRect().width + 16;
+
+      const atEnd =
+        Math.ceil(el.scrollLeft + el.clientWidth) >= el.scrollWidth - 4;
+
+      el.scrollTo({
+        left: atEnd ? 0 : el.scrollLeft + step,
+
+        behavior: "smooth",
+      });
+    }, CATEGORY_WAIT_MS);
+
+    return () => window.clearInterval(id);
+  }, [categoryPaused, categories.length]);
+
+  useEffect(() => {
+    const id = window.setInterval(
+      () => setRemaining((v) => Math.max(0, v - 1)),
+
+      1000,
+    );
+
+    return () => window.clearInterval(id);
+  }, []);
+
+  const catalogProducts = homeProducts.length ? homeProducts : products;
+
+  const bestSellers = useMemo(
+    () =>
+      [...catalogProducts]
+
+        .sort((a, b) => (b.rating || 0) - (a.rating || 0))
+
+        .slice(0, 8),
+
+    [catalogProducts],
   );
 
-  const trending = products.filter((product) => product.isTrending).slice(0, 4);
-  const newArrivals = products.filter((product) => product.isNew).slice(0, 4);
-  const featured = products.slice(0, 8);
-  const banner = banners[bannerIdx] || BANNERS[0];
-  const imageUrl = banner?.image?.url || "";
+  // Best Seller sidebar: show 4 items and rotate one item at a time.
+  useEffect(() => {
+    if (bestSellerPaused || bestSellers.length <= BEST_SELLER_VISIBLE_COUNT) {
+      return undefined;
+    }
+
+    const id = window.setInterval(() => {
+      setBestSellerIndex((current) => (current + 1) % bestSellers.length);
+    }, BEST_SELLER_WAIT_MS);
+
+    return () => window.clearInterval(id);
+  }, [bestSellerPaused, bestSellers.length]);
+
+  useEffect(() => {
+    if (!bestSellers.length) {
+      if (bestSellerIndex !== 0) setBestSellerIndex(0);
+      return;
+    }
+
+    if (bestSellerIndex >= bestSellers.length) {
+      setBestSellerIndex(0);
+    }
+  }, [bestSellerIndex, bestSellers.length]);
+
+  const visibleBestSellers = useMemo(() => {
+    if (!bestSellers.length) return [];
+
+    const count = Math.min(BEST_SELLER_VISIBLE_COUNT, bestSellers.length);
+
+    return Array.from({ length: count }, (_, offset) => {
+      const index = (bestSellerIndex + offset) % bestSellers.length;
+      return bestSellers[index];
+    });
+  }, [bestSellers, bestSellerIndex]);
+
+  const newArrivals = useMemo(
+    () =>
+      catalogProducts
+
+        .filter((p) => p.isNew)
+
+        .slice(0, 4)
+
+        .concat(catalogProducts.slice(0, 4))
+
+        .slice(0, 4),
+
+    [catalogProducts],
+  );
+
+  const trending = useMemo(
+    () =>
+      catalogProducts
+
+        .filter((p) => p.isTrending)
+
+        .slice(0, 4)
+
+        .concat(catalogProducts.slice(4, 8))
+
+        .slice(0, 4),
+
+    [catalogProducts],
+  );
+
+  const topRated = useMemo(
+    () =>
+      [...catalogProducts]
+
+        .sort((a, b) => (b.rating || 0) - (a.rating || 0))
+
+        .slice(0, 4),
+
+    [catalogProducts],
+  );
+
+  const deal = trending[0] || catalogProducts[0];
+
+  const featured = catalogProducts.slice(0, 12);
+
+  const hero = banners[heroIndex] || banners[0] || {};
+
+  const days = Math.floor(remaining / 86400),
+    hours = Math.floor((remaining % 86400) / 3600),
+    mins = Math.floor((remaining % 3600) / 60),
+    secs = remaining % 60;
+
+  const openCategory = (category) => {
+    setSelectedCategory(category.label);
+
+    setPage("categories");
+  };
+
+  const addDeal = async () => {
+    if (!deal || dealAdding) return;
+
+    setDealAdding(true);
+
+    setDealAdded(false);
+
+    try {
+      await addToCart(
+        deal,
+
+        deal.sizes?.[0] || "Standard",
+
+        deal.colors?.[0] || "Default",
+      );
+
+      flyProductToCart(dealImageRef.current);
+
+      setDealAdded(true);
+
+      window.dispatchEvent(
+        new window.CustomEvent("shopvibe:cart-added", {
+          detail: { productId: deal.id },
+        }),
+      );
+
+      window.setTimeout(() => setDealAdded(false), 1650);
+    } finally {
+      setDealAdding(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
+    <div className="app storefront-page">
+      <section
+        className="hero container"
+        id="top"
+        onMouseEnter={() => setHeroPaused(true)}
+        onMouseLeave={() => setHeroPaused(false)}
+      >
         <div
-          className={`relative min-h-[320px] overflow-hidden rounded-3xl bg-gradient-to-r ${
-            banner.bg || "from-violet-700 via-purple-700 to-indigo-800"
-          } sm:min-h-[400px]`}
-          style={
-            imageUrl
-              ? {
-                  backgroundImage: `url(${imageUrl})`,
-                  backgroundPosition: "center",
-                  backgroundSize: "cover",
-                }
-              : undefined
-          }
-          onMouseEnter={() => setAutoplay(false)}
-          onMouseLeave={() => setAutoplay(true)}
+          className="hero-track"
+          style={{ transform: `translateX(-${heroIndex * 100}%)` }}
         >
-          {imageUrl ? (
-            <div
-              className="absolute inset-0 bg-black"
-              style={{ opacity: Number(banner.overlayOpacity ?? 0.3) }}
-            />
-          ) : (
-            <div className="absolute inset-0 overflow-hidden">
-              <div className="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-white/10" />
-              <div className="absolute -bottom-10 -right-10 h-60 w-60 rounded-full bg-white/10" />
-              <div className="absolute left-1/3 top-1/4 h-40 w-40 rounded-full bg-white/5" />
-            </div>
-          )}
-
-          <div
-            className="absolute w-[min(82%,680px)] -translate-x-1/2 -translate-y-1/2 text-white"
-            style={{
-              left: `${Number(banner.textX ?? 30)}%`,
-              top: `${Number(banner.textY ?? 50)}%`,
-              textAlign: banner.textAlign || "left",
-            }}
-          >
-            {banner.badge && (
-              <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1.5 text-sm font-semibold text-white backdrop-blur-sm">
-                <Zap size={14} /> {banner.badge}
-              </span>
-            )}
-
-            <h1 className="mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl">
-              {banner.title}
-            </h1>
-            <p className="mb-8 text-lg text-white/85">{banner.subtitle}</p>
-
-            <Button
-              size="lg"
-              variant="secondary"
-              onClick={() => setPage(pageFromBannerPath(banner.ctaPath))}
-              iconRight={<ArrowRight size={18} />}
-              className="!bg-white !text-gray-900 !shadow-xl hover:!bg-gray-100"
+          {banners.map((b, index) => (
+            <article
+              className="hero-slide"
+              key={b._id || `${b.title}-${index}`}
             >
-              {banner.ctaText || banner.cta || "Shop Now"}
-            </Button>
-          </div>
+              {bannerImage(b) ? (
+                <img src={bannerImage(b)} alt={b.title || "ShopVibe banner"} />
+              ) : (
+                <div className="hero-fallback" />
+              )}
 
-          {banners.length > 1 && (
-            <>
-              <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-2">
-                {banners.map((item, index) => (
+              {(b.badge || b.title || b.subtitle || b.ctaText || b.cta) && (
+                <div className="hero-copy">
+                  {b.badge && <p>{b.badge}</p>}
+
+                  {b.title && <h1>{b.title}</h1>}
+
+                  {b.subtitle && (
+                    <div className="hero-price">
+                      <span>{b.subtitle}</span>
+                    </div>
+                  )}
+
+                  {(b.ctaText || b.cta) && (
+                    <button
+                      onClick={() => {
+                        const path = b.ctaPath || "/";
+
+                        if (path === "/categories") setPage("categories");
+                        else if (path === "/wishlist") setPage("wishlist");
+                        else if (path === "/cart") setPage("cart");
+                        else if (path === "/new-arrivals")
+                          setPage("newArrivals");
+                        else if (path === "/shop") setPage("shop");
+                        else setPage("home");
+                      }}
+                    >
+                      {b.ctaText || b.cta}
+                    </button>
+                  )}
+                </div>
+              )}
+            </article>
+          ))}
+        </div>
+
+        {banners.length > 1 && (
+          <div className="hero-dots">
+            {banners.map((_, i) => (
+              <button
+                key={i}
+                className={i === heroIndex ? "active" : ""}
+                onClick={() => setHeroIndex(i)}
+                aria-label={`Slide ${i + 1}`}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section
+        className="hero-trust-wrap"
+        aria-label="ShopVibe shopping benefits"
+      >
+        <div className="hero-trust-strip">
+          {[
+            [Truck, "Free Shipping", "On eligible orders"],
+            [ShieldCheck, "Secure Payments", "Protected checkout"],
+            [RotateCcw, "Easy Returns", "Hassle-free support"],
+            [Headphones, "24/7 Support", "We’re here for you"],
+          ].map(([Icon, title, subtitle]) => (
+            <article key={title}>
+              <span>
+                <Icon size={20} />
+              </span>
+
+              <div>
+                <b>{title}</b>
+                <small>{subtitle}</small>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="category-shell container">
+        <div
+          className="category-scroll no-scrollbar"
+          ref={categoryRef}
+          onMouseEnter={() => setCategoryPaused(true)}
+          onMouseLeave={() => setCategoryPaused(false)}
+          onTouchStart={() => setCategoryPaused(true)}
+          onTouchEnd={() =>
+            window.setTimeout(() => setCategoryPaused(false), 1200)
+          }
+        >
+          {categories.map((category) => {
+            const count = Number(
+              category.raw?.productCount ||
+                catalogProducts.filter(
+                  (p) =>
+                    p.categoryRef === category.id ||
+                    p.category === category.label,
+                ).length ||
+                0,
+            );
+
+            return (
+              <article
+                className="category-card"
+                key={category.id}
+                onClick={() => openCategory(category)}
+              >
+                <div className="category-icon">{categoryIcon(category)}</div>
+
+                <div className="category-info">
+                  <div>
+                    <h3>{category.label}</h3>
+
+                    <span>({count})</span>
+                  </div>
+
                   <button
-                    type="button"
-                    key={item._id || `${item.title}-${index}`}
-                    onClick={() => setBannerIdx(index)}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      index === bannerIdx ? "w-8 bg-white" : "w-2 bg-white/50"
-                    }`}
-                    aria-label={`Show banner ${index + 1}`}
-                  />
+                    onClick={(e) => {
+                      e.stopPropagation();
+
+                      openCategory(category);
+                    }}
+                  >
+                    Show all
+                  </button>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Side Category Bar */}
+
+      {catalogError && (
+        <div className="container api-error">{catalogError}</div>
+      )}
+
+      {catalogLoading && !catalogProducts.length ? (
+        <div className="container api-loading">
+          Loading live ShopVibe catalog…
+        </div>
+      ) : (
+        <main className="container store-layout">
+          <aside className="sidebar-column">
+            <div className="sidebar-sticky">
+              {/* CATEGORY */}
+              <div className="sidebar-card">
+                <h3>Category</h3>
+
+                {categories.slice(0, 9).map((c) => (
+                  <button
+                    className="sidebar-category"
+                    key={c.id}
+                    onClick={() => openCategory(c)}
+                  >
+                    <span className="sidebar-category-icon">
+                      {categoryIcon(c)}
+                      {c.label}
+                    </span>
+
+                    <b>+</b>
+                  </button>
                 ))}
               </div>
 
-              <button
-                type="button"
-                onClick={() =>
-                  setBannerIdx(
-                    (index) => (index - 1 + banners.length) % banners.length
-                  )
+              {/* BEST SELLERS */}
+              <div
+                className="best-seller"
+                onMouseEnter={() => setBestSellerPaused(true)}
+                onMouseLeave={() => setBestSellerPaused(false)}
+                onTouchStart={() => setBestSellerPaused(true)}
+                onTouchEnd={() =>
+                  window.setTimeout(() => setBestSellerPaused(false), 1200)
                 }
-                className="absolute left-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/30"
-                aria-label="Previous banner"
               >
-                <ChevronLeft size={20} />
-              </button>
+                <h3>Best Sellers</h3>
 
-              <button
-                type="button"
-                onClick={() =>
-                  setBannerIdx((index) => (index + 1) % banners.length)
-                }
-                className="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/30"
-                aria-label="Next banner"
-              >
-                <ChevronRight size={20} />
-              </button>
-            </>
-          )}
-        </div>
-      </section>
+                <div
+                  className="best-seller-list"
+                  key={`best-seller-${bestSellerIndex}`}
+                >
+                  {visibleBestSellers.map((p) => (
+                    <article
+                      key={p.id}
+                      onClick={() => setPage("product", p.id)}
+                    >
+                      <img src={p.image} alt={p.name} />
 
-      <section className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          {[
-            { icon: <Truck size={24} />, title: "Free Shipping", desc: "On eligible orders" },
-            { icon: <Shield size={24} />, title: "Secure Payment", desc: "Protected checkout" },
-            { icon: <RotateCcw size={24} />, title: "Easy Returns", desc: "Simple return flow" },
-            { icon: <Headphones size={24} />, title: "Support", desc: "We are here to help" },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="flex items-center gap-3 rounded-2xl border border-gray-100 bg-white p-4 dark:border-gray-800 dark:bg-gray-900"
-            >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-50 text-violet-600 dark:bg-violet-950/50 dark:text-violet-300">
-                {item.icon}
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                  {item.title}
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">{item.desc}</p>
+                      <div>
+                        <h4>{p.name}</h4>
+
+                        <Rating rating={p.rating} />
+
+                        <div>
+                          {p.originalPrice > p.price && (
+                            <del>{money(p.originalPrice)}</del>
+                          )}{" "}
+                          <b>{money(p.price)}</b>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
+          </aside>
 
-      <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-        <div className="mb-5 flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              Shop by Category
-            </h2>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              Find exactly what you&apos;re looking for
-            </p>
-          </div>
-          <Button variant="outline" size="sm" onClick={() => setPage("categories")}>
-            View All
-          </Button>
-        </div>
+          <div className="content-column">
+            <div className="mini-groups">
+              {[
+                ["New Arrivals", newArrivals],
 
-        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-          {categoryItems.map((category) => (
-            <button
-              type="button"
-              key={category.id}
-              onClick={() => {
-                setSelectedCategory(category.label);
-                setPage("categories");
-              }}
-              className="group flex min-w-[100px] flex-col items-center gap-2 rounded-2xl border border-gray-100 bg-white p-4 transition-all duration-200 hover:border-violet-300 hover:shadow-md hover:shadow-violet-100 dark:border-gray-800 dark:bg-gray-900 dark:hover:shadow-none"
-            >
-              {category.image ? (
-                <img
-                  src={category.image}
-                  alt={category.label}
-                  className="h-14 w-14 rounded-xl object-cover transition-transform duration-200 group-hover:scale-105"
-                />
+                ["Trending", trending],
+
+                ["Top Rated", topRated],
+              ].map(([title, items]) => (
+                <section key={title}>
+                  <h2>{title}</h2>
+
+                  <div className="mini-list">
+                    {items.map((p) => (
+                      <article
+                        className="mini-product"
+                        key={p.id}
+                        onClick={() => setPage("product", p.id)}
+                      >
+                        <img src={p.image} alt={p.name} />
+
+                        <div>
+                          <h3>{p.name}</h3>
+
+                          <p>{p.brand || p.category}</p>
+
+                          <div>
+                            <b>{money(p.price)}</b>
+
+                            {p.originalPrice > p.price && (
+                              <del>{money(p.originalPrice)}</del>
+                            )}
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+
+            {deal && (
+              <section className="deal">
+                <h2>Deal Of The Day</h2>
+
+                <article
+                  className={`deal-card ${dealAdded ? "cart-added" : ""}`}
+                >
+                  <div className="deal-image">
+                    <img ref={dealImageRef} src={deal.image} alt={deal.name} />
+                  </div>
+
+                  <div className="deal-info">
+                    <Rating rating={deal.rating} />
+
+                    <h3>{deal.name.toUpperCase()}</h3>
+
+                    <p>
+                      {deal.description ||
+                        "A standout ShopVibe pick from your live product catalog."}
+                    </p>
+
+                    <div className="deal-price">
+                      <b>{money(deal.price)}</b>
+
+                      {deal.originalPrice > deal.price && (
+                        <del>{money(deal.originalPrice)}</del>
+                      )}
+                    </div>
+
+                    <button
+                      onClick={() => void addDeal()}
+                      disabled={dealAdding}
+                    >
+                      {dealAdding
+                        ? "ADDING…"
+                        : dealAdded
+                          ? "✓ ADDED"
+                          : "ADD TO CART"}
+                    </button>
+
+                    <div className="stock">
+                      <div>
+                        <span>
+                          Already sold: <b>{Math.max(1, deal.reviews || 12)}</b>
+                        </span>
+
+                        <span>
+                          Available: <b>{deal.stock}</b>
+                        </span>
+                      </div>
+
+                      <i>
+                        <u
+                          style={{
+                            width: `${Math.min(94, Math.max(12, 100 - (deal.stock || 20)))}%`,
+                          }}
+                        />
+                      </i>
+                    </div>
+
+                    <h4>HURRY UP! OFFER ENDS IN:</h4>
+
+                    <div className="countdown">
+                      {[
+                        [days, "Days"],
+
+                        [hours, "Hours"],
+
+                        [mins, "Min"],
+
+                        [secs, "Sec"],
+                      ].map(([v, l]) => (
+                        <div key={l}>
+                          <b>{String(v).padStart(2, "0")}</b>
+
+                          <span>{l}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              </section>
+            )}
+
+            <section id="products" className="products-section">
+              <h2>New Products</h2>
+
+              {featured.length ? (
+                <div className="product-grid">
+                  {featured.map((p) => (
+                    <ProductCard product={p} key={p.id} />
+                  ))}
+                </div>
               ) : (
-                <CategoryIcon category={category} />
+                <div className="api-empty">
+                  No products returned by the API yet.
+                </div>
               )}
-              <span className="whitespace-nowrap text-xs font-semibold text-gray-700 dark:text-gray-200">
-                {category.label}
-              </span>
-            </button>
-          ))}
-        </div>
-      </section>
+            </section>
+          </div>
+        </main>
+      )}
 
-      {catalogError && (
-        <section className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="rounded-2xl border border-red-100 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300">
-            {catalogError}
+      <div className="container">
+        <section className="experience-grid">
+          <div className="testimonial">
+            <h2>Testimonial</h2>
+
+            <div className="testimonial-card">
+              <div className="testimonial-avatar">SV</div>
+
+              <h3>SHOPVIBE CUSTOMER</h3>
+
+              <p>Verified shopper</p>
+
+              <div
+                style={{
+                  fontSize: 24,
+
+                  color: "var(--accent)",
+
+                  margin: "14px auto",
+                }}
+              >
+                “
+              </div>
+
+              <blockquote>
+                Premium products, smooth browsing and a checkout experience that
+                feels effortless.
+              </blockquote>
+            </div>
+          </div>
+
+          <div className="cta">
+            {bannerImage(hero) ? (
+              <img src={bannerImage(hero)} alt="Collection" />
+            ) : (
+              deal && <img src={deal.image} alt="Collection" />
+            )}
+
+            <div>
+              <span>Premium edit</span>
+
+              <h2>Season Collection</h2>
+
+              <p>Live catalog, updated by API</p>
+
+              <button onClick={() => setPage("shop")}>Shop now</button>
+            </div>
+          </div>
+
+          <div className="services">
+            <h2>Our Services</h2>
+
+            <div className="service-card">
+              {[
+                [Truck, "Worldwide Delivery", "Fast dispatch"],
+
+                [Rocket, "Quick Processing", "Tracked orders"],
+
+                [Headphones, "Online Support", "Customer-first help"],
+
+                [RotateCcw, "Return Policy", "Easy returns"],
+
+                [ShieldCheck, "Secure Checkout", "Protected payments"],
+              ].map(([Icon, title, sub]) => (
+                <div key={title}>
+                  <Icon size={28} />
+
+                  <span>
+                    <b>{title}</b>
+
+                    <small>{sub}</small>
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
-      )}
 
-      <ProductSection
-        title="🔥 Trending Now"
-        subtitle="Most popular picks"
-        products={trending}
-        loading={catalogLoading}
-        actionLabel="See All"
-        onAction={() => setPage("shop")}
-      />
+        <section className="blog-grid">
+          {catalogProducts.slice(0, 4).map((p, i) => (
+            <article key={p.id} onClick={() => setPage("product", p.id)}>
+              <div className="blog-img">
+                <img src={p.image} alt={p.name} />
+              </div>
 
-      <section className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <button
-            type="button"
-            onClick={() => setPage("newArrivals")}
-            className="group relative flex min-h-[180px] items-end overflow-hidden rounded-3xl bg-gradient-to-r from-rose-400 to-pink-600 p-8 text-left"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-rose-400 to-pink-600 transition-transform duration-500 group-hover:scale-105" />
-            <div className="relative">
-              <Badge className="mb-3">New Arrivals</Badge>
-              <h3 className="text-2xl font-bold text-white">Fresh Collection</h3>
-              <p className="mt-1 text-pink-100">Explore newly added products</p>
-            </div>
-          </button>
+              <p>{p.category}</p>
 
-          <button
-            type="button"
-            onClick={() => setPage("categories")}
-            className="group relative flex min-h-[180px] items-end overflow-hidden rounded-3xl bg-gradient-to-r from-blue-500 to-indigo-600 p-8 text-left"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-600 transition-transform duration-500 group-hover:scale-105" />
-            <div className="relative">
-              <Badge className="mb-3">Categories</Badge>
-              <h3 className="text-2xl font-bold text-white">Find Your Style</h3>
-              <p className="mt-1 text-blue-100">Browse the catalog by category</p>
-            </div>
-          </button>
-        </div>
-      </section>
+              <h3>{p.name}</h3>
 
-      <ProductSection
-        title="✨ New Arrivals"
-        subtitle="Fresh styles just added"
-        products={newArrivals}
-        loading={catalogLoading}
-        actionLabel="See All"
-        onAction={() => setPage("newArrivals")}
-      />
-
-      <ProductSection
-        title="Featured Products"
-        subtitle="Handpicked from the current catalog"
-        products={featured}
-        loading={catalogLoading}
-        actionLabel="Shop All"
-        onAction={() => setPage("shop")}
-      />
-
-      <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-        <div className="rounded-3xl bg-gradient-to-r from-violet-600 to-purple-700 p-8 text-center sm:p-12">
-          <h2 className="mb-3 text-3xl font-bold text-white">Get Exclusive Deals</h2>
-          <p className="mx-auto mb-8 max-w-md text-violet-200">
-            Subscribe to be the first to know about new arrivals and promotions.
-          </p>
-          <div className="mx-auto flex max-w-md flex-col gap-3 sm:flex-row">
-            <input
-              type="email"
-              placeholder="Enter your email..."
-              className="flex-1 rounded-xl border border-white/30 bg-white/20 px-5 py-3.5 text-sm text-white outline-none placeholder:text-white/60 focus:border-white"
-            />
-            <Button
-              variant="secondary"
-              className="shrink-0 !bg-white !text-violet-700 hover:!bg-gray-100"
-            >
-              Subscribe
-            </Button>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-}
-
-function ProductSection({ title, subtitle, products, loading, actionLabel, onAction }) {
-  return (
-    <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-      <div className="mb-5 flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{title}</h2>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{subtitle}</p>
-        </div>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={onAction}
-          iconRight={<ArrowRight size={14} />}
-        >
-          {actionLabel}
-        </Button>
-      </div>
-
-      {loading && !products.length ? (
-        <div className="py-10 text-center text-sm text-gray-500">Loading products…</div>
-      ) : products.length ? (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+              <small>ShopVibe Edit / #{i + 1}</small>
+            </article>
           ))}
-        </div>
-      ) : (
-        <div className="rounded-2xl border border-dashed border-gray-200 bg-white py-10 text-center text-sm text-gray-500 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
-          No matching products yet.
-        </div>
-      )}
-    </section>
-  );
-}
-
-function CategoryIcon({ category }) {
-  if (typeof category.icon === "string" && /^https?:\/\//i.test(category.icon)) {
-    return (
-      <img
-        src={category.icon}
-        alt=""
-        className="h-12 w-12 rounded-xl object-cover transition-transform duration-200 group-hover:scale-110"
-      />
-    );
-  }
-
-  return (
-    <span className="text-3xl transition-transform duration-200 group-hover:scale-110">
-      {category.icon || "🛍️"}
-    </span>
-  );
-}
-
-function Badge({ children, className }) {
-  return (
-    <span
-      className={`inline-flex rounded-full bg-white/20 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm ${
-        className ?? ""
-      }`}
-    >
-      {children}
-    </span>
+        </section>
+      </div>
+    </div>
   );
 }

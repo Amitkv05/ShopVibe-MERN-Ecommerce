@@ -1,0 +1,354 @@
+/* ShopVibe admin analytics screen. */
+
+.admin-analytics-stack {
+display: grid;
+  gap: 18px;
+  position: relative;
+  transition: opacity 0.18s ease;
+}
+
+.admin-analytics-panel {
+overflow: visible !important;
+}
+
+.admin-analytics-panel .admin-ui-panel-head {
+align-items: flex-end !important;
+  padding: 20px 22px !important;
+}
+
+.admin-analytics-panel .admin-ui-panel-actions {
+display: grid !important;
+  grid-template-columns: minmax(145px, 190px) minmax(145px, 190px) auto;
+  align-items: end !important;
+}
+
+.admin-analytics-panel .admin-ui-panel-body {
+padding: 22px !important;
+}
+
+.admin-inline-refresh {
+height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 14px;
+  padding: 0 11px;
+  border:1px solid #e8d884;
+  border-radius: 9px;
+  background:#fff8ce;
+  color:#75620b;
+  font-size: 8px;
+}
+
+.admin-inline-refresh span {
+width: 9px;
+  height: 9px;
+  border:2px solid rgba(117, 98, 11, 0.22);
+  border-top-color:#75620b;
+  border-radius: 50%;
+  animation: svAdminSpin 0.7s linear infinite;
+}
+
+.admin-analytics-kpis {
+display: grid;
+  grid-template-columns: 1.3fr repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.admin-analytics-kpis article {
+min-width: 0;
+  min-height: 100px;
+  display: grid;
+  align-content: space-between;
+  padding: 16px;
+  border:1px solid #e2dcc9;
+  border-radius: 14px;
+  background:linear-gradient(180deg, #fffef9, #f5f1e4);
+}
+
+.admin-analytics-kpis article.primary {
+background:linear-gradient(135deg, #171914, #2b2f27);
+  border-color:#171914;
+  color:#fff;
+}
+
+.admin-analytics-kpis small {
+font-size: 8px;
+  color:#8b8676;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.admin-analytics-kpis .primary small {
+color:#aaada3;
+}
+
+.admin-analytics-kpis strong {
+overflow: hidden;
+  font-size: 20px;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-analytics-kpis .primary strong {
+font-size: 23px;
+  color:#f2ce22;
+}
+
+.admin-analytics-kpis article > span {
+font-size: 7px;
+  color:#aaa491;
+}
+
+.admin-analytics-kpis .primary > span {
+color:#8f9388;
+}
+
+.admin-revenue-section {
+margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid #e7e0cc;
+}
+
+.admin-analytics-section-title {
+display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.admin-analytics-section-title small {
+font-size: 7px;
+  color:#9a9585;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+}
+
+.admin-analytics-section-title h3 {
+margin-top: 2px;
+  font-size: 17px;
+}
+
+.admin-analytics-section-title svg {
+color:#d6b407;
+}
+
+.admin-revenue-list {
+display: grid;
+  gap: 10px;
+}
+
+.admin-revenue-row {
+display: grid;
+  grid-template-columns: 90px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  font-size: 9px;
+}
+
+.admin-revenue-row > span {
+color:#858071;
+}
+
+.admin-revenue-row > div {
+height: 9px;
+  overflow: hidden;
+  border-radius: 999px;
+  background:#ece7d6;
+}
+
+.admin-revenue-row i {
+display: block;
+  height: 100%;
+  border-radius: inherit;
+  background:linear-gradient(90deg, #e9c71e, #f5d73b);
+  box-shadow: 0 0 18px rgba(233, 199, 30, 0.18);
+  transition: width 0.38s ease;
+}
+
+.admin-revenue-row b {
+min-width: 92px;
+  text-align: right;
+  font-size: 9px;
+}
+
+.admin-top-products-panel .admin-ui-panel-body {
+padding: 12px 18px 18px !important;
+}
+
+.admin-top-products-grid {
+display: grid;
+  gap: 8px;
+}
+
+.admin-top-products-grid article {
+display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border:1px solid #e5dfcd;
+  border-radius: 12px;
+  background:#fffef9;
+  transition: 0.2s;
+}
+
+.admin-top-products-grid article:hover {
+transform: translateY(-1px);
+  border-color:#d6bf52;
+  box-shadow: 0 10px 26px rgba(63, 56, 36, 0.055);
+}
+
+.admin-top-rank {
+width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background:#f1cc1e;
+  color:#171914;
+  font-size: 8px;
+  font-weight: 900;
+}
+
+.admin-top-products-grid h3 {
+font-size: 11px;
+  line-height: 1.35;
+}
+
+.admin-top-products-grid p {
+margin-top: 2px;
+  color:#8b8676;
+  font-size: 8px;
+}
+
+.admin-top-products-grid strong {
+font-size: 10px;
+}
+
+.admin-analytics-empty {
+padding: 18px;
+  color:#918c7c;
+  font-size: 9px;
+}
+
+.dark .admin-welcome h1,
+.dark .people-title h1,
+.dark .admin-ui-panel-copy h2,
+.dark .admin-analytics-section-title h3,
+.dark .admin-top-products-grid h3 {
+color:#f7f3e8 !important;
+}
+
+.dark .admin-analytics-kpis article {
+background:linear-gradient(180deg, #1c201a, #171a16);
+  border-color:#30362d;
+}
+
+.dark .admin-analytics-kpis article.primary {
+background:linear-gradient(135deg, #090b09, #20251e);
+  border-color:#30362d;
+}
+
+.dark .admin-analytics-kpis small {
+color:#969b8f;
+}
+
+.dark .admin-analytics-kpis article > span {
+color:#777d72;
+}
+
+.dark .admin-revenue-section {
+border-color:#30352d;
+}
+
+.dark .admin-revenue-row > div {
+background:#2b3028;
+}
+
+.dark .admin-top-products-grid article {
+background:#1c1f1a;
+  border-color:#30352d;
+}
+
+.dark .admin-top-products-grid article:hover {
+border-color:#c9ad23;
+  background:#20241d;
+}
+
+.dark .admin-top-products-grid p {
+color:#8f9588;
+}
+
+.dark .admin-inline-refresh {
+background:#2b2818;
+  border-color:#5a4f1c;
+  color:#e4ca51;
+}
+
+@media (max-width: 1100px) {
+.admin-analytics-kpis {
+grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.admin-analytics-kpis article.primary {
+grid-column: span 2;
+}
+}
+
+@media (max-width: 820px) {
+.admin-analytics-panel .admin-ui-panel-head {
+align-items: stretch !important;
+    flex-direction: column;
+}
+
+.admin-analytics-panel .admin-ui-panel-actions {
+grid-template-columns: 1fr 1fr auto;
+    width: 100%;
+}
+
+.admin-analytics-kpis {
+grid-template-columns: 1fr 1fr;
+}
+
+.admin-analytics-kpis article.primary {
+grid-column: 1/-1;
+}
+
+.admin-revenue-row {
+grid-template-columns: 72px minmax(0, 1fr);
+}
+
+.admin-revenue-row b {
+grid-column: 2;
+    text-align: right;
+}
+}
+
+@media (max-width: 600px) {
+.admin-analytics-panel .admin-ui-panel-actions {
+grid-template-columns: 1fr;
+}
+
+.admin-analytics-kpis {
+grid-template-columns: 1fr;
+}
+
+.admin-analytics-kpis article.primary {
+grid-column: auto;
+}
+
+.admin-top-products-grid article {
+grid-template-columns: 34px minmax(0, 1fr);
+}
+
+.admin-top-products-grid article > strong {
+grid-column: 2;
+}
+
+.admin-top-rank {
+width: 30px;
+    height: 30px;
+}
+}

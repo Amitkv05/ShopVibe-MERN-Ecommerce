@@ -1,0 +1,33 @@
+/* ShopVibe admin review moderation screen. */
+
+.sv-admreviews-001 > * + * {
+margin-top:0.75rem
+}
+
+.sv-admreviews-002 {
+border-radius:1rem;border-width:1px;border-style:solid;border-color:var(--app-border);padding:1rem
+}
+
+.sv-admreviews-003 {
+display:flex;align-items:flex-start;justify-content:space-between;gap:1rem
+}
+
+.sv-admreviews-004 {
+display:flex;align-items:center;gap:0.5rem
+}
+
+.sv-admreviews-005 {
+font-weight:600;color:var(--app-text)
+}
+
+.sv-admreviews-006 {
+display:inline-flex;align-items:center;gap:0.25rem;font-size:.75rem;line-height:1rem;font-weight:600;color:#d97706
+}
+
+.sv-admreviews-007 {
+margin-top:0.5rem;font-size:.875rem;line-height:1.25rem;color:var(--app-text)
+}
+
+.sv-admreviews-008 {
+margin-top:0.5rem;font-size:.75rem;line-height:1rem;color:var(--app-muted)
+}

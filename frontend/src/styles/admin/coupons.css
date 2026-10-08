@@ -1,0 +1,63 @@
+/* ShopVibe admin coupon management screen. */
+
+.sv-admcoupons-001 {
+overflow-x:auto
+}
+
+.sv-admcoupons-002 {
+width:100%;font-size:.875rem;line-height:1.25rem
+}
+
+.sv-admcoupons-003 {
+text-align:left;font-size:.75rem;line-height:1rem;color:var(--app-muted)
+}
+
+.sv-admcoupons-004 {
+padding-bottom:0.75rem
+}
+
+.sv-admcoupons-005 {
+padding-bottom:0.75rem;text-align:right
+}
+
+.sv-admcoupons-006 {
+border-top-width:1px;border-top-style:solid;border-color:var(--app-border)
+}
+
+.sv-admcoupons-007 {
+padding-block:0.75rem
+}
+
+.sv-admcoupons-008 {
+font-weight:700
+}
+
+.sv-admcoupons-009 {
+font-size:.75rem;line-height:1rem;color:var(--app-muted)
+}
+
+.sv-admcoupons-010 {
+display:flex;justify-content:flex-end;gap:0.5rem
+}
+
+.sv-admcoupons-011 {
+display:grid;gap:1rem
+}
+
+@media (min-width:40rem) {
+.sv-admcoupons-011 {
+grid-template-columns:repeat(2,minmax(0,1fr))
+}
+}
+
+.sv-admcoupons-012 {
+display:flex;align-items:center;gap:0.5rem;align-self:flex-end;padding-bottom:0.5rem;font-size:.875rem;line-height:1.25rem;font-weight:500;color:var(--app-text)
+}
+
+.sv-admcoupons-013 {
+margin-top:1rem
+}
+
+.sv-admcoupons-014 {
+margin-top:1.25rem;display:flex;justify-content:flex-end;gap:0.5rem
+}
