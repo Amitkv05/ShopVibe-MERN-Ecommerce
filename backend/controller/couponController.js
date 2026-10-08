@@ -9,7 +9,10 @@ export const listCoupons = handleAsyncError(async (req, res) => {
   res.json({ success: true, coupons });
 });
 export const createCoupon = handleAsyncError(async (req, res) => {
-  const coupon = await Coupon.create({ ...req.body, code: req.body.code.toUpperCase() });
+  const coupon = await Coupon.create({
+    ...req.body,
+    code: req.body.code.toUpperCase(),
+  });
   res.status(201).json({ success: true, coupon });
 });
 export const updateCoupon = handleAsyncError(async (req, res, next) => {
@@ -55,6 +58,15 @@ export const deleteCoupon = handleAsyncError(async (req, res, next) => {
   res.json({ success: true, message: "Coupon deleted" });
 });
 export const validateCoupon = handleAsyncError(async (req, res) => {
-  const quote = await buildOrderQuote(req.body.orderItems, { couponCode: req.body.couponCode, userId: req.user._id });
-  res.json({ success: true, couponCode: quote.couponCode, discountPrice: quote.discountPrice, totalPrice: quote.totalPrice, currency: quote.currency });
+  const quote = await buildOrderQuote(req.body.orderItems, {
+    couponCode: req.body.couponCode,
+    userId: req.user._id,
+  });
+  res.json({
+    success: true,
+    couponCode: quote.couponCode,
+    discountPrice: quote.discountPrice,
+    totalPrice: quote.totalPrice,
+    currency: quote.currency,
+  });
 });
