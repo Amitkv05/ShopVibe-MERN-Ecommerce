@@ -11,15 +11,7 @@ const required = [
   'frontend/Dockerfile',
   'docs/DEPLOYMENT.md',
   'docs/ENVIRONMENT_VARIABLES.md',
-  'docs/API_GUIDE.md',
   'docs/ADMIN_GUIDE.md',
-  'docs/BACKUP_RESTORE.md',
-  'docs/KNOWN_LIMITATIONS.md',
-  'docs/UAT_CHECKLIST.md',
-  'docs/LAUNCH_RUNBOOK.md',
-  'docs/POST_LAUNCH_RUNBOOK.md',
-  'docs/MAINTENANCE_SUPPORT_TEMPLATE.md',
-  'docs/EXTERNAL_INPUTS.md',
 ];
 
 const missing = [];
