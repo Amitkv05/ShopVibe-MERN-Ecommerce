@@ -548,32 +548,11 @@ The deployed SPA also includes route rewrite handling so direct navigation and b
 
 ## 🖥️ Screenshots
 
-<!--
-Recommended:
-Create the following folder inside the repository:
-
-docs/screenshots/
-
-Then add 4–6 strong screenshots such as:
-
-docs/screenshots/home.png
-docs/screenshots/product.png
-docs/screenshots/cart.png
-docs/screenshots/admin-dashboard.png
-docs/screenshots/admin-product.png
-docs/screenshots/mobile.png
-
-After adding them, replace this comment with:
-
-| Storefront | Product Details |
-|---|---|
-| ![Storefront](docs/screenshots/home.png) | ![Product](docs/screenshots/product.png) |
-
-| Cart | Admin Dashboard |
-|---|---|
-| ![Cart](docs/screenshots/cart.png) | ![Admin](docs/screenshots/admin-dashboard.png) |
-
--->
+<img width="1254" height="1254" alt="ShopVibe Neon E-commerce Showcase" src="https://github.com/user-attachments/assets/b28b3108-018d-48a1-b58f-4b6179e259a4" />
+<img width="1448" height="1086" alt="ShopVibe 01" src="https://github.com/user-attachments/assets/c68a2c9e-f723-4f7e-b79a-5b11a6672a42" />
+<img width="1448" height="1086" alt="shopVibe 02" src="https://github.com/user-attachments/assets/1e418955-04ab-4d54-adcd-e4f0fe8ea715" />
+<img width="1448" height="1086" alt="ShopVibe 03" src="https://github.com/user-attachments/assets/38da1082-98b5-4429-976e-fc51f08b51ac" />
+<img width="1672" height="941" alt="ShopVibe 04" src="https://github.com/user-attachments/assets/0ecf6027-c0bb-4aa7-a8d9-c8e79ccb212d" />
 
 Screenshots will be added to showcase the customer storefront, checkout flow, responsive interface, and admin dashboard.
 
