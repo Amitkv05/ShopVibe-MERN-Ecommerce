@@ -554,8 +554,6 @@ The deployed SPA also includes route rewrite handling so direct navigation and b
 <img width="1448" height="1086" alt="ShopVibe 03" src="https://github.com/user-attachments/assets/38da1082-98b5-4429-976e-fc51f08b51ac" />
 <img width="1672" height="941" alt="ShopVibe 04" src="https://github.com/user-attachments/assets/0ecf6027-c0bb-4aa7-a8d9-c8e79ccb212d" />
 
-Screenshots will be added to showcase the customer storefront, checkout flow, responsive interface, and admin dashboard.
-
 ---
 
 ## 📂 Project Structure
