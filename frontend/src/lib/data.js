@@ -19,15 +19,36 @@ export function adaptProduct(raw) {
       image: variant.image || "",
     }));
 
-  const attributes = variants.flatMap((variant) => Object.entries(variant.attributes));
+  const attributes = variants.flatMap((variant) =>
+    Object.entries(variant.attributes),
+  );
   const sizeKeys = ["size", "Size", "SIZE"];
   const colorKeys = ["color", "Color", "colour", "Colour", "COLOR"];
-  const sizes = [...new Set(attributes.filter(([key]) => sizeKeys.includes(key)).map(([, value]) => String(value)))];
-  const colors = [...new Set(attributes.filter(([key]) => colorKeys.includes(key)).map(([, value]) => String(value)))];
-  const images = (raw?.images || []).map((image) => (typeof image === "string" ? image : image?.url)).filter(Boolean);
+  const sizes = [
+    ...new Set(
+      attributes
+        .filter(([key]) => sizeKeys.includes(key))
+        .map(([, value]) => String(value)),
+    ),
+  ];
+  const colors = [
+    ...new Set(
+      attributes
+        .filter(([key]) => colorKeys.includes(key))
+        .map(([, value]) => String(value)),
+    ),
+  ];
+  const images = (raw?.images || [])
+    .map((image) => (typeof image === "string" ? image : image?.url))
+    .filter(Boolean);
   const created = raw?.createdAt ? new Date(raw.createdAt).getTime() : 0;
-  const activeVariantStock = variants.reduce((sum, variant) => sum + Number(variant.stock || 0), 0);
-  const stock = variants.length ? activeVariantStock : Number(raw?.stock ?? raw?.Stock ?? 0);
+  const activeVariantStock = variants.reduce(
+    (sum, variant) => sum + Number(variant.stock || 0),
+    0,
+  );
+  const stock = variants.length
+    ? activeVariantStock
+    : Number(raw?.stock ?? raw?.Stock ?? 0);
 
   return {
     id: String(raw?._id || raw?.id || ""),
@@ -39,11 +60,15 @@ export function adaptProduct(raw) {
     rating: Number(raw?.ratings || raw?.rating || 0),
     reviews: Number(raw?.numOfReviews || raw?.reviews?.length || 0),
     image: images[0] || "https://placehold.co/600x800?text=Product",
-    images: images.length ? images : ["https://placehold.co/600x800?text=Product"],
+    images: images.length
+      ? images
+      : ["https://placehold.co/600x800?text=Product"],
     category: raw?.category || "General",
     categoryRef: String(raw?.categoryRef?._id || raw?.categoryRef || ""),
     subcategory: raw?.subcategory || "",
-    subcategoryRef: String(raw?.subcategoryRef?._id || raw?.subcategoryRef || ""),
+    subcategoryRef: String(
+      raw?.subcategoryRef?._id || raw?.subcategoryRef || "",
+    ),
     description: raw?.description || "",
     sizes: sizes.length ? sizes : ["Standard"],
     colors: colors.length ? colors : ["Default"],
@@ -94,15 +119,43 @@ export function getVariantSku(product, size = "", color = "") {
   if (!product.variants.length) return "";
   const normalized = (value) => value.trim().toLowerCase();
   const found = product.variants.find((variant) => {
-    const values = Object.values(variant.attributes).map((value) => normalized(String(value)));
-    const sizeOk = !size || size === "Standard" || values.includes(normalized(size));
-    const colorOk = !color || color === "Default" || values.includes(normalized(color));
+    const values = Object.values(variant.attributes).map((value) =>
+      normalized(String(value)),
+    );
+    const sizeOk =
+      !size || size === "Standard" || values.includes(normalized(size));
+    const colorOk =
+      !color || color === "Default" || values.includes(normalized(color));
     return sizeOk && colorOk;
   });
   return found?.sku || product.variants[0]?.sku || "";
 }
 
 export const BANNERS = [
-  { title: "New Season. New Energy.", subtitle: "Fresh arrivals, now from your live catalog.", ctaText: "Shop Now", ctaPath: "/shop", badge: "Live Catalog", bg: "from-violet-700 via-purple-700 to-indigo-800", overlayOpacity: 0, textX: 28, textY: 50, textAlign: "left", image: { url: "" } },
-  { title: "Everyday Essentials", subtitle: "Browse products without signing in.", ctaText: "Explore", ctaPath: "/categories", badge: "Guest Shopping", bg: "from-slate-900 via-violet-900 to-purple-800", overlayOpacity: 0, textX: 28, textY: 50, textAlign: "left", image: { url: "" } },
+  {
+    // title: "New Season. New Energy.",
+    // subtitle: "Fresh arrivals, now from your live catalog.",
+    // ctaText: "Shop Now",
+    // ctaPath: "/shop",
+    // badge: "Live Catalog",
+    bg: "from-violet-700 via-purple-700 to-indigo-800",
+    overlayOpacity: 0,
+    textX: 28,
+    textY: 50,
+    textAlign: "left",
+    image: { url: "/images/bannerImage/banner.png" },
+  },
+  {
+    // title: "Everyday Essentials",
+    // subtitle: "Browse products without signing in.",
+    // ctaText: "Explore",
+    // ctaPath: "/categories",
+    // badge: "Guest Shopping",
+    bg: "from-slate-900 via-violet-900 to-purple-800",
+    overlayOpacity: 0,
+    textX: 28,
+    textY: 50,
+    textAlign: "left",
+    image: { url: "/images/categoryImage/category.png" },
+  },
 ];

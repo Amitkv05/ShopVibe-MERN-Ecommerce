@@ -1,0 +1,650 @@
+/* ============================================================
+   SHOPVIBE REGISTRATION — VANILLA CSS ONLY
+   Palette: black, white, rose (plus neutral tints)
+   All selectors are prefixed to avoid global style clashes.
+============================================================ */
+
+.sv-register-page {
+  --sv-black: #0c0c0f;
+  --sv-dark: #17171b;
+  --sv-white: #ffffff;
+  --sv-rose: #e11d48;
+  --sv-rose-bright: #f43f5e;
+  --sv-rose-soft: #fff0f3;
+  --sv-text: #16161b;
+  --sv-muted: #71717a;
+  --sv-border: #e9e9ecb2;
+  --sv-bg: #17181b;
+
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 3vw, 44px);
+  background:
+    radial-gradient(
+      ellipse at 10% 85%,
+      rgba(225, 29, 72, 0.15),
+      transparent 40%
+    ),
+    radial-gradient(
+      ellipse at 90% 5%,
+      rgba(225, 29, 72, 0.08),
+      transparent 38%
+    ),
+    var(--sv-black);
+  color: var(--sv-text);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  box-sizing: border-box;
+}
+
+.sv-register-page *,
+.sv-register-page *::before,
+.sv-register-page *::after {
+  box-sizing: border-box;
+}
+
+.sv-register-page button,
+.sv-register-page input {
+  font: inherit;
+}
+
+.sv-register-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.91fr) minmax(0, 1.09fr);
+  width: min(1180px, 100%);
+  min-height: 740px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 28px;
+  background: var(--sv-white);
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.32);
+}
+
+/* ---------------------- LEFT SIDE ---------------------- */
+.sv-register-showcase {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(30px, 4vw, 55px);
+  background: linear-gradient(155deg, #191218 0%, #0c0c0f 62%, #210b12 100%);
+  color: var(--sv-white);
+}
+
+.sv-register-showcase::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 92% 42%,
+      rgba(244, 63, 94, 0.21),
+      transparent 38%
+    ),
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size:
+    auto,
+    72px 72px,
+    72px 72px;
+}
+
+.sv-register-art {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  border: 1px solid rgba(244, 63, 94, 0.2);
+}
+.sv-register-art-one {
+  width: 460px;
+  height: 460px;
+  right: -270px;
+  top: 8%;
+  box-shadow:
+    0 0 100px rgba(244, 63, 94, 0.14),
+    inset 0 0 100px rgba(244, 63, 94, 0.06);
+}
+.sv-register-art-two {
+  width: 280px;
+  height: 280px;
+  right: -110px;
+  bottom: -95px;
+}
+.sv-register-art-three {
+  width: 130px;
+  height: 130px;
+  right: 32px;
+  top: 26%;
+  background: rgba(225, 29, 72, 0.08);
+}
+
+.sv-register-showcase-top,
+.sv-register-mobile-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sv-register-brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 43px;
+  height: 43px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: var(--sv-rose);
+  color: var(--sv-white);
+  box-shadow: 0 8px 22px rgba(225, 29, 72, 0.26);
+}
+.sv-register-showcase-top strong,
+.sv-register-mobile-brand strong {
+  font-size: 23px;
+  font-weight: 850;
+  letter-spacing: -1px;
+}
+.sv-register-showcase-top strong span,
+.sv-register-mobile-brand strong span {
+  color: var(--sv-rose-bright);
+}
+
+.sv-register-showcase-body {
+  position: relative;
+  z-index: 1;
+  margin: 75px 0;
+}
+.sv-register-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #f6b7c4;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+.sv-register-eyebrow > span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--sv-rose-bright);
+}
+.sv-register-showcase-body h1 {
+  margin: 22px 0 18px;
+  font-size: clamp(45px, 5vw, 74px);
+  font-weight: 850;
+  letter-spacing: -0.075em;
+  line-height: 1.04;
+  color: var(--sv-white);
+}
+.sv-register-showcase-body h1 em {
+  color: var(--sv-rose-bright);
+  font-style: normal;
+}
+.sv-register-showcase-body > p {
+  max-width: 390px;
+  margin: 0;
+  color: #c9c1c5;
+  font-size: 15px;
+  line-height: 1.75;
+}
+.sv-register-benefits {
+  display: grid;
+  gap: 15px;
+  margin-top: 40px;
+}
+.sv-register-benefit {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #eee7ea;
+}
+.sv-register-benefit svg {
+  color: var(--sv-rose-bright);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.sv-register-showcase-bottom {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #c6a6ae;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 1.7px;
+}
+.sv-register-showcase-line {
+  width: 27px;
+  height: 1px;
+  background: var(--sv-rose-bright);
+}
+
+/* ---------------------- RIGHT SIDE ---------------------- */
+.sv-register-form-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(26px, 3.9vw, 56px);
+  /* background: var(--sv-white); */
+  background: var(--sv-black);
+}
+.sv-register-form-wrap {
+  width: 100%;
+  max-width: 475px;
+  margin: 0 auto;
+}
+.sv-register-mobile-brand {
+  display: none;
+  margin-bottom: 28px;
+}
+.sv-register-heading {
+  margin-bottom: 24px;
+}
+.sv-register-kicker {
+  color: var(--sv-rose);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 2px;
+}
+.sv-register-heading h2 {
+  margin: 9px 0 8px;
+  color: var(--sv-white);
+  font-size: clamp(28px, 2.75vw, 41px);
+  font-weight: 850;
+  line-height: 1.1;
+  letter-spacing: -0.055em;
+}
+.sv-register-heading h2 span {
+  color: var(--sv-rose);
+}
+.sv-register-heading p {
+  margin: 0;
+  color: var(--sv-border);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.sv-register-form {
+  display: grid;
+  gap: 15px;
+}
+.sv-register-two-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+}
+.sv-register-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.sv-register-label {
+  margin-bottom: 7px;
+  color: var(--sv-white);
+  font-size: 12px;
+  font-weight: 750;
+}
+.sv-register-control {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 47px;
+  overflow: hidden;
+  border: 1px solid #dddde2;
+  border-radius: 11px;
+  background: var(--sv-bg);
+  /* background: #fafafa; */
+  color: var(--sv-white);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.sv-register-control:focus-within {
+  border-color: var(--sv-rose);
+  box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.12);
+  background: var(--sv-bg);
+}
+.sv-register-control.is-invalid {
+  border-color: var(--sv-rose);
+}
+.sv-register-control > svg {
+  margin-left: 14px;
+  flex-shrink: 0;
+}
+
+.sv-register-control input {
+  display: block;
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 45px;
+  padding: 10px 12px;
+  border: 0;
+  outline: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  color: var(--sv-text);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.sv-register-control input::placeholder {
+  /* color: #a0a0a8; */
+
+  opacity: 1;
+}
+.sv-register-control input:-webkit-autofill {
+  -webkit-text-fill-color: var(--sv-text);
+  -webkit-box-shadow: 0 0 0 1000px #fff inset;
+}
+.sv-register-trailing {
+  display: flex;
+
+  align-items: center;
+  padding-right: 6px;
+}
+.sv-register-visibility {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--sv-white);
+  cursor: pointer;
+}
+.sv-register-visibility:hover {
+  /* background: var(--sv-rose-soft); */
+  background: var(--sv-rose);
+  color: var(--sv-white);
+}
+.sv-register-visibility:focus-visible,
+.sv-register-submit:focus-visible,
+.sv-register-guest:focus-visible,
+.sv-register-after-form button:focus-visible {
+  outline: 2px solid var(--sv-rose);
+  outline-offset: 3px;
+}
+.sv-register-error,
+.sv-register-hint {
+  margin: 6px 0 0;
+  font-size: 11px;
+  line-height: 1.45;
+}
+.sv-register-error {
+  color: #be123c;
+}
+.sv-register-hint {
+  color: var(--sv-muted);
+}
+
+/* ------------------- STRENGTH BAR ------------------- */
+.sv-register-strength {
+  margin-top: -7px;
+}
+.sv-register-strength-bars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+.sv-register-strength-bars span {
+  height: 4px;
+  border-radius: 20px;
+  background: #ededf0;
+  transition: background 0.2s ease;
+}
+.sv-register-strength-bars span.is-filled {
+  background: var(--sv-rose);
+}
+.sv-register-strength p {
+  margin: 5px 0 0;
+  color: var(--sv-muted);
+  font-size: 10px;
+}
+.sv-register-strength strong {
+  color: var(--sv-rose);
+}
+
+/* ---------------------- CONSENT ---------------------- */
+.sv-register-consent {
+  margin-top: 1px;
+}
+.sv-register-checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+.sv-register-checkbox-row input {
+  appearance: auto;
+  accent-color: var(--sv-rose);
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  margin: 2px 0 0;
+  cursor: pointer;
+}
+.sv-register-checkbox-row > span {
+  color: var(--sv-border);
+  font-size: 11px;
+  line-height: 1.65;
+}
+.sv-register-policy {
+  color: var(--sv-rose);
+  font-weight: 700;
+}
+.sv-register-submit-error {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(225, 29, 72, 0.24);
+  border-radius: 8px;
+  background: var(--sv-rose-soft);
+  color: #be123c;
+  font-size: 12px;
+}
+
+/* ---------------------- CTA ---------------------- */
+.sv-register-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 49px;
+  margin-top: 2px;
+  padding: 12px 18px;
+  border: 1px solid var(--sv-rose);
+  border-radius: 10px;
+  background: var(--sv-rose);
+  color: var(--sv-white);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.15px;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(225, 29, 72, 0.19);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.sv-register-submit:not(:disabled):hover {
+  background: #be123c;
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(225, 29, 72, 0.27);
+}
+.sv-register-submit:disabled {
+  cursor: wait;
+  opacity: 0.74;
+}
+.sv-register-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: sv-register-spin 0.7s linear infinite;
+}
+@keyframes sv-register-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sv-register-after-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 17px;
+  margin-top: 22px;
+}
+.sv-register-after-form p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--sv-border);
+}
+.sv-register-after-form p button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--sv-rose);
+  font-weight: 800;
+  cursor: pointer;
+}
+.sv-register-after-form p button:hover {
+  text-decoration: underline;
+}
+.sv-register-guest {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 4px 6px;
+  border: 0;
+  background: transparent;
+  color: var(--sv-border);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.sv-register-guest:hover {
+  color: var(--sv-rose);
+}
+.sv-register-guest svg {
+  transition: transform 0.2s ease;
+}
+.sv-register-guest:hover svg {
+  transform: translateX(3px);
+}
+
+/* ---------------------- RESPONSIVE ---------------------- */
+@media (max-width: 1050px) {
+  .sv-register-layout {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+  .sv-register-showcase {
+    padding: 34px;
+  }
+  .sv-register-form-panel {
+    padding: 35px;
+  }
+  .sv-register-showcase-body h1 {
+    font-size: clamp(43px, 5vw, 63px);
+  }
+  .sv-register-two-fields {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 760px) {
+  .sv-register-page {
+    padding: 16px;
+  }
+  .sv-register-layout {
+    grid-template-columns: 1fr;
+    width: min(550px, 100%);
+    min-height: 0;
+    border-radius: 20px;
+  }
+  .sv-register-showcase {
+    display: none;
+  }
+  .sv-register-form-panel {
+    padding: clamp(24px, 6vw, 40px);
+  }
+  .sv-register-mobile-brand {
+    display: flex;
+  }
+  .sv-register-heading h2 {
+    font-size: clamp(29px, 6vw, 37px);
+  }
+  .sv-register-two-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 510px) {
+  .sv-register-page {
+    padding: 0;
+    place-items: stretch;
+    background: #fff;
+  }
+  .sv-register-layout {
+    width: 100%;
+    min-height: 100dvh;
+    border: 0;
+    border-radius: 0;
+  }
+  .sv-register-form-panel {
+    align-items: flex-start;
+    padding: 24px 20px 32px;
+  }
+  .sv-register-two-fields {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .sv-register-heading {
+    margin-bottom: 24px;
+  }
+  .sv-register-form {
+    gap: 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sv-register-page *,
+  .sv-register-page *::before,
+  .sv-register-page *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+.sv-register-control input:-webkit-autofill,
+.sv-register-control input:-webkit-autofill:hover,
+.sv-register-control input:-webkit-autofill:focus,
+.sv-register-control input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--sv-bg) inset !important;
+  box-shadow: 0 0 0 1000px var(--sv-bg) inset !important;
+
+  -webkit-text-fill-color: var(--sv-white) !important;
+  caret-color: #111111 !important;
+
+  background-color: var(--sv-bg) !important;
+  border-radius: inherit;
+}

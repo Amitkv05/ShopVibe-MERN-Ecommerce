@@ -1,176 +1,419 @@
 import { useState } from "react";
-import { Eye, EyeOff, Mail, Lock, User, Phone, ShoppingBag, ArrowRight, CheckCircle } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Mail,
+  Lock,
+  User,
+  Phone,
+  ShoppingBag,
+  ArrowRight,
+  CheckCircle,
+} from "lucide-react";
 import { useStore } from "@/lib/store";
-import Button from "@/components/reusable/Button";
-import Input from "@/components/reusable/Input";
-export default function RegisterScreen() {
-    const { register, setPage, showToast } = useStore();
-    const [form, setForm] = useState({ name: "", email: "", phone: "", password: "", confirm: "" });
-    const [showPw, setShowPw] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [agreed, setAgreed] = useState(false);
-    const [errors, setErrors] = useState({});
-    const update = (key, value) => {
-        setForm((f) => ({ ...f, [key]: value }));
-        setErrors((e) => ({ ...e, [key]: "" }));
-    };
-    const validate = () => {
-        const e = {};
-        if (!form.name.trim())
-            e.name = "Full name is required";
-        if (!form.email)
-            e.email = "Email is required";
-        else if (!/\S+@\S+\.\S+/.test(form.email))
-            e.email = "Invalid email";
-        if (!form.password)
-            e.password = "Password is required";
-        else if (form.password.length < 8)
-            e.password = "Min 8 characters";
-        if (!form.confirm)
-            e.confirm = "Please confirm your password";
-        else if (form.confirm !== form.password)
-            e.confirm = "Passwords do not match";
-        if (!agreed)
-            e.agreed = "You must agree to the terms";
-        return e;
-    };
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const errs = validate();
-        if (Object.keys(errs).length) {
-            setErrors(errs);
-            return;
-        }
-        setLoading(true);
-        try {
-            await register(form.name.trim(), form.email.trim().toLowerCase(), form.password);
-            setPage("profile");
-        }
-        catch (error) {
-            const message = error instanceof Error ? error.message : "Registration failed";
-            setErrors((prev) => ({ ...prev, email: message }));
-            showToast(message, "error");
-        }
-        finally {
-            setLoading(false);
-        }
-    };
-    const passwordStrength = () => {
-        const p = form.password;
-        if (!p)
-            return { score: 0, label: "", color: "" };
-        let score = 0;
-        if (p.length >= 8)
-            score++;
-        if (/[A-Z]/.test(p))
-            score++;
-        if (/[0-9]/.test(p))
-            score++;
-        if (/[^A-Za-z0-9]/.test(p))
-            score++;
-        const levels = [
-            { label: "Weak", color: "bg-red-400" },
-            { label: "Fair", color: "bg-amber-400" },
-            { label: "Good", color: "bg-yellow-400" },
-            { label: "Strong", color: "bg-emerald-400" },
-            { label: "Very Strong", color: "bg-emerald-500" },
-        ];
-        return { score, ...levels[score] };
-    };
-    const strength = passwordStrength();
-    return (<div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-purple-50 flex">
-      {/* Left Panel */}
-      <div className="hidden lg:flex lg:w-1/2 relative bg-gradient-to-br from-violet-700 via-purple-700 to-indigo-800 items-center justify-center p-12 overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(5)].map((_, i) => (<div key={i} className="absolute rounded-full bg-white/5" style={{ width: `${150 + i * 80}px`, height: `${150 + i * 80}px`, top: `${10 + i * 12}%`, left: `${-20 + i * 15}%` }}/>))}
-        </div>
-        <div className="relative text-white text-center max-w-sm">
-          <div className="w-20 h-20 rounded-3xl bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-8">
-            <ShoppingBag size={40} className="text-white"/>
-          </div>
-          <h1 className="text-4xl font-bold mb-4">Join ShopVibe</h1>
-          <p className="text-violet-200 text-lg mb-10">Create your free account and unlock exclusive deals.</p>
-          <div className="space-y-4">
-            {[
-            "Free shipping on your first order",
-            "Exclusive member-only discounts",
-            "Early access to new collections",
-            "Easy returns & exchanges",
-        ].map((benefit) => (<div key={benefit} className="flex items-center gap-3 text-left">
-                <CheckCircle size={20} className="text-emerald-400 shrink-0"/>
-                <span className="text-violet-100">{benefit}</span>
-              </div>))}
-          </div>
-        </div>
+import "../styles/RegisterScreen.css";
+
+const benefits = [
+  "Free shipping on your first order",
+  "Exclusive member-only discounts",
+  "Early access to new collections",
+  "Easy returns & exchanges",
+];
+
+function getPasswordStrength(password) {
+  if (!password) return { score: 0, label: "" };
+
+  const score = [
+    password.length >= 8,
+    /[A-Z]/.test(password),
+    /[0-9]/.test(password),
+    /[^A-Za-z0-9]/.test(password),
+  ].filter(Boolean).length;
+
+  const labels = ["Weak", "Weak", "Fair", "Good", "Strong"];
+  return { score, label: labels[score] };
+}
+
+function Field({
+  id,
+  label,
+  icon: Icon,
+  error,
+  trailing,
+  hint,
+  ...inputProps
+}) {
+  return (
+    <div className="sv-register-field">
+      <label htmlFor={id} className="sv-register-label">
+        {label}
+      </label>
+      <div className={`sv-register-control${error ? " is-invalid" : ""}`}>
+        <Icon size={18} strokeWidth={1.9} aria-hidden="true" />
+        <input
+          id={id}
+          aria-invalid={Boolean(error)}
+          aria-describedby={
+            error ? `${id}-error` : hint ? `${id}-hint` : undefined
+          }
+          {...inputProps}
+        />
+        {trailing && <div className="sv-register-trailing">{trailing}</div>}
       </div>
+      {error ? (
+        <p id={`${id}-error`} className="sv-register-error" role="alert">
+          {error}
+        </p>
+      ) : hint ? (
+        <p id={`${id}-hint`} className="sv-register-hint">
+          {hint}
+        </p>
+      ) : null}
+    </div>
+  );
+}
 
-      {/* Right Panel */}
-      <div className="flex-1 flex items-center justify-center p-6">
-        <div className="w-full max-w-md">
-          <div className="lg:hidden flex justify-center mb-8">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-600 to-purple-700 flex items-center justify-center shadow-xl shadow-violet-200">
-                <ShoppingBag size={24} className="text-white"/>
-              </div>
-              <span className="text-2xl font-bold text-gray-900">ShopVibe</span>
+export default function RegisterScreen() {
+  const { register, setPage, showToast } = useStore();
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirm: "",
+  });
+  const [showPw, setShowPw] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [agreed, setAgreed] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const update = (key, value) => {
+    setForm((current) => ({ ...current, [key]: value }));
+    setErrors((current) => ({ ...current, [key]: "", submit: "" }));
+  };
+
+  const validate = () => {
+    const next = {};
+    if (!form.name.trim()) next.name = "Please enter your full name.";
+
+    const email = form.email.trim();
+    if (!email) next.email = "Please enter your email address.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      next.email = "Enter a valid email address.";
+    }
+
+    if (!form.password) next.password = "Please create a password.";
+    else if (form.password.length < 8) {
+      next.password = "Use at least 8 characters.";
+    }
+
+    if (!form.confirm) next.confirm = "Please confirm your password.";
+    else if (form.confirm !== form.password) {
+      next.confirm = "Passwords do not match.";
+    }
+
+    if (!agreed) next.agreed = "Please accept the terms to continue.";
+    return next;
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (loading) return;
+
+    const nextErrors = validate();
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      // Keep the existing backend/store registration contract unchanged.
+      await register(
+        form.name.trim(),
+        form.email.trim().toLowerCase(),
+        form.password,
+      );
+      setPage("profile");
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Registration failed";
+      setErrors((current) => ({ ...current, submit: message }));
+      showToast(message, "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const strength = getPasswordStrength(form.password);
+
+  return (
+    <main className="sv-register-page">
+      <div className="sv-register-layout">
+        <aside
+          className="sv-register-showcase"
+          aria-label="ShopVibe membership benefits"
+        >
+          <div
+            className="sv-register-art sv-register-art-one"
+            aria-hidden="true"
+          />
+          <div
+            className="sv-register-art sv-register-art-two"
+            aria-hidden="true"
+          />
+          <div
+            className="sv-register-art sv-register-art-three"
+            aria-hidden="true"
+          />
+
+          <div className="sv-register-showcase-top">
+            <span className="sv-register-brand-mark">
+              <ShoppingBag size={22} />
+            </span>
+            <strong>
+              Shop<span>Vibe</span>
+            </strong>
+          </div>
+
+          <div className="sv-register-showcase-body">
+            <span className="sv-register-eyebrow">
+              <span /> YOUR STYLE, YOUR SPACE
+            </span>
+            <h1>
+              Good things
+              <br />
+              start <em>here.</em>
+            </h1>
+            <p>
+              Create your free account to save your favorites, discover new
+              drops, and enjoy a smoother shopping experience.
+            </p>
+            <div className="sv-register-benefits">
+              {benefits.map((benefit) => (
+                <div className="sv-register-benefit" key={benefit}>
+                  <CheckCircle size={18} strokeWidth={2} aria-hidden="true" />
+                  <span>{benefit}</span>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="bg-white rounded-3xl shadow-xl shadow-gray-100 border border-gray-100 p-8">
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-gray-900">Create account</h2>
-              <p className="text-gray-500 mt-1">Join thousands of happy shoppers.</p>
+          <div className="sv-register-showcase-bottom">
+            <span className="sv-register-showcase-line" />
+            <span>DISCOVER MORE. SHOP BETTER.</span>
+          </div>
+        </aside>
+
+        <section
+          className="sv-register-form-panel"
+          aria-labelledby="sv-register-title"
+        >
+          <div className="sv-register-form-wrap">
+            <div className="sv-register-mobile-brand">
+              <span className="sv-register-brand-mark">
+                <ShoppingBag size={20} />
+              </span>
+              <strong>
+                Shop<span>Vibe</span>
+              </strong>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <Input label="Full Name" value={form.name} onChange={(e) => update("name", e.target.value)} placeholder="Alex Johnson" error={errors.name} leftIcon={<User size={16}/>}/>
-              <Input label="Email Address" type="email" value={form.email} onChange={(e) => update("email", e.target.value)} placeholder="you@example.com" error={errors.email} leftIcon={<Mail size={16}/>}/>
-              <Input label="Phone Number" type="tel" value={form.phone} onChange={(e) => update("phone", e.target.value)} placeholder="+1 (555) 000-0000" leftIcon={<Phone size={16}/>}/>
+            <div className="sv-register-heading">
+              <span className="sv-register-kicker">JOIN THE COMMUNITY</span>
+              <h2 id="sv-register-title">
+                Create your account<span>.</span>
+              </h2>
+              <p>Just a few details and you're ready to shop.</p>
+            </div>
 
-              <div>
-                <Input label="Password" type={showPw ? "text" : "password"} value={form.password} onChange={(e) => update("password", e.target.value)} placeholder="••••••••" error={errors.password} leftIcon={<Lock size={16}/>} rightIcon={<button type="button" onClick={() => setShowPw(!showPw)}>
-                      {showPw ? <EyeOff size={16}/> : <Eye size={16}/>}
-                    </button>}/>
-                {form.password && (<div className="mt-2">
-                    <div className="flex gap-1 mb-1">
-                      {[...Array(4)].map((_, i) => (<div key={i} className={`h-1.5 flex-1 rounded-full transition-all duration-300 ${i < strength.score ? strength.color : "bg-gray-100"}`}/>))}
-                    </div>
-                    <p className="text-xs text-gray-500">Strength: <span className="font-medium">{strength.label}</span></p>
-                  </div>)}
+            <form
+              onSubmit={handleSubmit}
+              className="sv-register-form"
+              noValidate
+            >
+              <div className="sv-register-two-fields">
+                <Field
+                  id="sv-register-name"
+                  label="Full name"
+                  icon={User}
+                  value={form.name}
+                  onChange={(event) => update("name", event.target.value)}
+                  placeholder="Alex Johnson"
+                  autoComplete="name"
+                  error={errors.name}
+                  required
+                />
+                <Field
+                  id="sv-register-phone"
+                  label="Phone number (optional)"
+                  icon={Phone}
+                  type="tel"
+                  value={form.phone}
+                  onChange={(event) => update("phone", event.target.value)}
+                  placeholder="+91 98765 43210"
+                  autoComplete="tel"
+                />
               </div>
 
-              <Input label="Confirm Password" type="password" value={form.confirm} onChange={(e) => update("confirm", e.target.value)} placeholder="••••••••" error={errors.confirm} leftIcon={<Lock size={16}/>}/>
+              <Field
+                id="sv-register-email"
+                label="Email address"
+                icon={Mail}
+                type="email"
+                value={form.email}
+                onChange={(event) => update("email", event.target.value)}
+                placeholder="you@example.com"
+                autoComplete="email"
+                error={errors.email}
+                required
+              />
 
-              <div>
-                <label className="flex items-start gap-3 cursor-pointer">
-                  <input type="checkbox" checked={agreed} onChange={(e) => { setAgreed(e.target.checked); setErrors((p) => ({ ...p, agreed: "" })); }} className="w-4 h-4 mt-0.5 rounded accent-violet-600 shrink-0"/>
-                  <span className="text-sm text-gray-600">
+              <Field
+                id="sv-register-password"
+                label="Password"
+                icon={Lock}
+                type={showPw ? "text" : "password"}
+                value={form.password}
+                onChange={(event) => update("password", event.target.value)}
+                placeholder="Minimum 8 characters"
+                autoComplete="new-password"
+                error={errors.password}
+                required
+                trailing={
+                  <button
+                    type="button"
+                    className="sv-register-visibility"
+                    onClick={() => setShowPw((previous) => !previous)}
+                    aria-label={showPw ? "Hide password" : "Show password"}
+                    aria-pressed={showPw}
+                  >
+                    {showPw ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                }
+              />
+
+              {form.password && (
+                <div className="sv-register-strength" aria-live="polite">
+                  <div className="sv-register-strength-bars" aria-hidden="true">
+                    {[1, 2, 3, 4].map((level) => (
+                      <span
+                        key={level}
+                        className={level <= strength.score ? "is-filled" : ""}
+                      />
+                    ))}
+                  </div>
+                  <p>
+                    Password strength: <strong>{strength.label}</strong>
+                  </p>
+                </div>
+              )}
+
+              <Field
+                id="sv-register-confirm"
+                label="Confirm password"
+                icon={Lock}
+                type={showConfirm ? "text" : "password"}
+                value={form.confirm}
+                onChange={(event) => update("confirm", event.target.value)}
+                placeholder="Repeat your password"
+                autoComplete="new-password"
+                error={errors.confirm}
+                required
+                trailing={
+                  <button
+                    type="button"
+                    className="sv-register-visibility"
+                    onClick={() => setShowConfirm((previous) => !previous)}
+                    aria-label={
+                      showConfirm
+                        ? "Hide confirmed password"
+                        : "Show confirmed password"
+                    }
+                    aria-pressed={showConfirm}
+                  >
+                    {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                }
+              />
+
+              <div className="sv-register-consent">
+                <label
+                  className="sv-register-checkbox-row"
+                  htmlFor="sv-register-agree"
+                >
+                  <input
+                    id="sv-register-agree"
+                    type="checkbox"
+                    checked={agreed}
+                    onChange={(event) => {
+                      setAgreed(event.target.checked);
+                      setErrors((current) => ({ ...current, agreed: "" }));
+                    }}
+                    aria-invalid={Boolean(errors.agreed)}
+                    aria-describedby={
+                      errors.agreed ? "sv-register-agree-error" : undefined
+                    }
+                  />
+                  <span>
                     I agree to the{" "}
-                    <button type="button" className="text-violet-600 font-medium hover:underline">Terms of Service</button>
-                    {" "}and{" "}
-                    <button type="button" className="text-violet-600 font-medium hover:underline">Privacy Policy</button>
+                    <span className="sv-register-policy">Terms of Service</span>{" "}
+                    and{" "}
+                    <span className="sv-register-policy">Privacy Policy</span>
                   </span>
                 </label>
-                {errors.agreed && <p className="text-xs text-red-500 mt-1">{errors.agreed}</p>}
+                {errors.agreed && (
+                  <p
+                    id="sv-register-agree-error"
+                    className="sv-register-error"
+                    role="alert"
+                  >
+                    {errors.agreed}
+                  </p>
+                )}
               </div>
 
-              <Button type="submit" fullWidth size="lg" loading={loading} iconRight={<ArrowRight size={18}/>}>
-                Create Account
-              </Button>
+              {errors.submit && (
+                <p className="sv-register-submit-error" role="alert">
+                  {errors.submit}
+                </p>
+              )}
+
+              <button
+                className="sv-register-submit"
+                type="submit"
+                disabled={loading}
+              >
+                <span>
+                  {loading ? "Creating account..." : "Create account"}
+                </span>
+                {loading ? (
+                  <span className="sv-register-spinner" aria-hidden="true" />
+                ) : (
+                  <ArrowRight size={19} />
+                )}
+              </button>
             </form>
 
-            <p className="text-center text-sm text-gray-500 mt-6">
-              Already have an account?{" "}
-              <button onClick={() => setPage("login")} className="text-violet-600 font-semibold hover:text-violet-800">
-                Sign in
+            <div className="sv-register-after-form">
+              <p>
+                Already have an account?{" "}
+                <button type="button" onClick={() => setPage("login")}>
+                  Sign in
+                </button>
+              </p>
+              <button
+                type="button"
+                className="sv-register-guest"
+                onClick={() => setPage("home")}
+              >
+                Continue as guest <ArrowRight size={16} />
               </button>
-            </p>
+            </div>
           </div>
-
-          <button onClick={() => setPage("home")} className="mt-4 w-full text-center text-sm text-gray-500 hover:text-gray-700 transition-colors">
-            ← Continue as guest
-          </button>
-        </div>
+        </section>
       </div>
-    </div>);
+    </main>
+  );
 }

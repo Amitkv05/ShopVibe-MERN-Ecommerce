@@ -34,6 +34,14 @@
   --app-info-soft: #eef5ff;
   --app-violet-soft: #f5f3ff;
   --app-amber-soft: #fffbeb;
+
+  /* --sv-global-background:
+    radial-gradient(
+      ellipse at 70% 0%,
+      rgba(225, 29, 72, 0.055),
+      transparent 43%
+    ),
+    #f8f8fa; */
 }
 
 :root.dark {
@@ -62,6 +70,10 @@
   --sv-admin-ink: #f4f1e8;
   --sv-shadow: 0 18px 60px rgba(0, 0, 0, 0.32);
   --sv-shadow-card: 0 12px 34px rgba(0, 0, 0, 0.28);
+
+  /* --sv-global-background:
+    radial-gradient(ellipse at 70% 0%, rgba(225, 29, 72, 0.1), transparent 43%),
+    #0c0c0f; */
 }
 
 @layer base {
@@ -91,6 +103,9 @@
       background-color 180ms ease,
       color 180ms ease;
     overflow-x: hidden;
+    /* .premium-app-shell {
+      background: var(--sv-global-background);
+    } */
   }
   button,
   input,

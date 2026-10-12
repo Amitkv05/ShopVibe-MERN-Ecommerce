@@ -1,5 +1,5 @@
 /* ShopVibe admin stylesheet entry point. */
-@import "./admin.css";
+@import "./AdminScreen.css";
 @import "./dashboard.css";
 @import "./analytics.css";
 @import "./products.css";
