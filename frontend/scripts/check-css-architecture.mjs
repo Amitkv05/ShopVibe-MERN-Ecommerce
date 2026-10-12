@@ -15,7 +15,7 @@ const allowedFiles = [
   "account.css",
   "not-found.css",
   "admin/index.css",
-  "admin/admin.css",
+  "admin/AdminScreen.css",
   "admin/dashboard.css",
   "admin/analytics.css",
   "admin/products.css",
@@ -36,7 +36,7 @@ const legacyFiles = [
   "premium-v4.css",
   "premium-v5.css",
   "admin-premium-normal.css",
-  "admin.css",
+  "AdminScreen.css",
 ];
 
 for (const file of allowedFiles) {

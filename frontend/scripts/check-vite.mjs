@@ -20,7 +20,7 @@ const required = [
   "src/styles/account.css",
   "src/styles/not-found.css",
   "src/styles/admin/index.css",
-  "src/styles/admin/admin.css",
+  "src/styles/admin/AdminScreen.css",
   "src/styles/admin/dashboard.css",
   "src/styles/admin/analytics.css",
   "src/styles/admin/products.css",
@@ -65,8 +65,8 @@ const forbiddenFiles = allFiles.filter((file) => /(^|[\\/])next\.config\.|(^|[\\
 if (forbiddenFiles.length) { console.error("Next.js/TypeScript framework files are not allowed:", forbiddenFiles); process.exit(1); }
 const pkg = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
 const deps = { ...pkg.dependencies, ...pkg.devDependencies };
-for (const name of ["next","typescript","eslint-config-next","@types/react","@types/react-dom","@types/node"]) if (deps[name]) throw new Error(`Forbidden dependency found: ${name}`);
-for (const name of ["react","react-dom","vite","@vitejs/plugin-react"]) if (!deps[name]) throw new Error(`Required React/Vite dependency missing: ${name}`);
+for (const name of ["next", "typescript", "eslint-config-next", "@types/react", "@types/react-dom", "@types/node"]) if (deps[name]) throw new Error(`Forbidden dependency found: ${name}`);
+for (const name of ["react", "react-dom", "vite", "@vitejs/plugin-react"]) if (!deps[name]) throw new Error(`Required React/Vite dependency missing: ${name}`);
 const api = fs.readFileSync(path.join(root, "src/lib/api.js"), "utf8");
 if (!api.includes("import.meta.env.VITE_API_URL")) throw new Error("API client is not using VITE_API_URL");
 const theme = fs.readFileSync(path.join(root, "src/components/reusable/ThemeProvider.jsx"), "utf8");

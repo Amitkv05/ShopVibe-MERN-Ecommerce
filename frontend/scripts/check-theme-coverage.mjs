@@ -51,7 +51,7 @@ for (const file of fs.readdirSync(adminDir).filter((name) => name.endsWith(".css
   const source = fs.readFileSync(path.join(adminDir, file), "utf8");
   const visualFile = /background|color|border/i.test(source);
   if (!visualFile) continue;
-  const themeAware = source.includes("var(--app-") || source.includes(".dark ") || file === "admin.css";
+  const themeAware = source.includes("var(--app-") || source.includes(".dark ") || file === "AdminScreen.css";
   if (!themeAware) failures.push(`Admin stylesheet is not theme-aware: admin/${file}`);
 }
 
